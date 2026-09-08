@@ -5,6 +5,14 @@ import react from '@vitejs/plugin-react'
 // PocketBase (ver STACK.md) solo lo toca la zona de admin, aparte de esto.
 export default defineConfig({
   plugins: [react()],
+  server: {
+    // Escucha en todas las interfaces para que el reenvío de puertos del
+    // Codespace pueda llegar al servidor.
+    host: true,
+    // Vite rechaza peticiones con un Host que no conoce. Sin esta línea el
+    // enlace público del Codespace responde "Blocked request".
+    allowedHosts: ['.app.github.dev'],
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
