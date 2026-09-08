@@ -32,26 +32,6 @@
   text-decoration: none;
 }
 
-.cabecera__cubo {
-  display: grid;
-  place-items: center;
-  width: 2.2rem;
-  height: 2.2rem;
-  border: var(--filo);
-  border-radius: 8px;
-  background: var(--acento);
-  color: #fff;
-  box-shadow: 2px 2px 0 var(--tinta);
-}
-
-.cabecera__nombre {
-  font-weight: 900;
-  font-size: 1.1rem;
-  letter-spacing: -.02em;
-}
-
-.cabecera__nombre-acento { color: var(--acento); }
-
 /* Los enlaces van en monoespaciada mayúscula, como el resto de las etiquetas. */
 .cabecera__nav a {
   font-family: var(--mono);

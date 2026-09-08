@@ -1,5 +1,6 @@
-import { Boxes, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 
+import Marca from "./Marca.jsx";
 import { TEL_BONITO } from "../data/sitio.js";
 import { linkWhatsApp } from "../lib/whatsapp.js";
 import "./Footer.css";
@@ -10,12 +11,7 @@ export default function Footer() {
       <div className="contenedor pie__grilla">
         <div>
           <div className="pie__marca">
-            <span className="pie__cubo" aria-hidden="true">
-              <Boxes size={19} strokeWidth={2.4} />
-            </span>
-            <span className="pie__nombre">
-              Aronys<span className="pie__nombre-acento">Tech</span>
-            </span>
+            <Marca sobreOscuro alto="2.6rem" />
           </div>
           <p className="pie__texto">
             Impresiones 3D hechas por encargo en Panamá. Todo en PLA, pieza por

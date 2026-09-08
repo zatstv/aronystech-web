@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Boxes, MessageCircle, Menu, X } from "lucide-react";
+import { MessageCircle, Menu, X } from "lucide-react";
 
+import Marca from "./Marca.jsx";
 import { linkWhatsApp } from "../lib/whatsapp.js";
 import "./Header.css";
 
@@ -16,13 +17,8 @@ export default function Header() {
   return (
     <header className="cabecera">
       <div className="contenedor cabecera__barra">
-        <a className="cabecera__marca" href="#inicio">
-          <span className="cabecera__cubo" aria-hidden="true">
-            <Boxes size={19} strokeWidth={2.4} />
-          </span>
-          <span className="cabecera__nombre">
-            Aronys<span className="cabecera__nombre-acento">Tech</span>
-          </span>
+        <a className="cabecera__marca" href="#inicio" aria-label="AronysTech, ir al inicio">
+          <Marca alto="2.9rem" />
         </a>
 
         {/* En celular los enlaces no desaparecen: bajan a una segunda fila.

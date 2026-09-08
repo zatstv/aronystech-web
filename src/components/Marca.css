@@ -1,0 +1,53 @@
+.marca {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.marca img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;   /* sirva cual sirva la proporción del archivo */
+}
+
+/* Sobre el papel: multiplicar hace desaparecer el fondo blanco del archivo
+   sin necesidad de que tenga transparencia. */
+.marca--suelto img { mix-blend-mode: multiply; }
+
+/* Sobre la tinta del pie, multiplicar lo borraría entero. Se apoya sobre una
+   etiqueta de papel con filo y sombra dura. */
+.marca--etiqueta {
+  padding: .5rem .75rem;
+  background: #fff;
+  border: var(--filo);
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 var(--papel);
+}
+
+/* --- Reserva: el lockup de texto, si falta el archivo --- */
+
+.marca--texto { gap: .6rem; }
+
+.marca__cubo {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  background: var(--acento);
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.marca--texto:not(.es-oscuro) .marca__cubo { border: var(--filo); }
+
+.marca--texto.es-oscuro .marca__cubo { box-shadow: none; }
+
+.marca__nombre {
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: -.02em;
+}
+
+.marca__nombre-acento { color: var(--acento); }

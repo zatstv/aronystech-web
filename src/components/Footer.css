@@ -19,24 +19,6 @@
   margin-bottom: .85rem;
 }
 
-.pie__cubo {
-  display: grid;
-  place-items: center;
-  width: 2.2rem;
-  height: 2.2rem;
-  background: var(--acento);
-  color: #fff;
-  border-radius: 8px;
-}
-
-.pie__nombre {
-  font-size: 1.1rem;
-  font-weight: 900;
-  letter-spacing: -.02em;
-}
-
-.pie__nombre-acento { color: var(--acento); }
-
 .pie__texto,
 .pie__tel {
   font-size: .88rem;
