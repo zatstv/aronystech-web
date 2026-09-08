@@ -5,9 +5,8 @@ import "./Marca.css";
 
 /* El logotipo de la marca.
 
-   El archivo lo pone Hugo en public/img/logo-aronystech.png. Si todavía no
-   está, se dibuja el lockup de texto en su lugar: así la página nunca muestra
-   una imagen rota, y se cambia sola en cuanto el archivo aparece.
+   Si el archivo faltara, o el navegador no entendiera WebP, se dibuja el
+   lockup de texto en su lugar: la página nunca muestra una imagen rota.
 
    `sobreOscuro` es para el pie: el logo viene con fondo blanco, y el truco de
    multiplicar que lo disuelve sobre el papel no sirve contra la tinta. Ahí se
@@ -31,7 +30,7 @@ export default function Marca({ sobreOscuro = false, alto = "2.4rem" }) {
   return (
     <span className={`marca ${sobreOscuro ? "marca--etiqueta" : "marca--suelto"}`}>
       <img
-        src="/img/logo-aronystech.png"
+        src="/img/logo-aronystech.webp"
         alt="AronysTech"
         style={{ height: alto }}
         onError={() => setFalta(true)}
