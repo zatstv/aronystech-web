@@ -1,0 +1,20 @@
+# La llave de Gemini nunca va acá. Vive en ~/.config/aronystech/gemini.key
+*.key
+.env
+
+# Node y la compilación
+node_modules/
+dist/
+*.log
+
+# Material de trabajo pesado: las fotos crudas y los videos no van al repo.
+# Lo que la página usa vive en public/img y public/modelo.
+fotos/
+*.zip
+
+# Copias de la etapa anterior: las fotos y modelos que usa la página ahora viven
+# en public/, y la carpeta que se publica la genera `npm run build` en dist/.
+# Los archivos siguen en tu disco, solo no se suben al repo.
+/img/
+/modelo/
+/publicar/
