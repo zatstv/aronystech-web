@@ -1,126 +1,161 @@
-/* Portada. Composición de PROYECTO.md §6e: la foto se sale del contenedor y
-   llega al borde de la pantalla, el titular es grande de verdad, y el armador
-   se monta encima de la foto cruzando el límite entre las dos columnas.
-   Que un elemento cruce el borde de otro es lo que evita que la página se lea
-   como una grilla de cajas. */
+/* Portada. Composición tomada de la referencia: texto a la izquierda con
+   pastilla, titular a dos líneas con la segunda en acento, dos botones y una
+   fila de datos; foto a la derecha con una ficha de colores montada en la
+   esquina cruzando su borde. */
 
-.hero {
-  position: relative;
-  padding-block: clamp(2rem, 7vw, 4.5rem) var(--aire);
-  overflow: hidden;
-}
+/* Abajo lleva la mitad del aire: el catálogo ya aporta su propio espacio
+   arriba, y sumar los dos dejaba un hueco enorme. */
+.hero { padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 4vw, 3.5rem); }
 
 .hero__grilla {
   display: grid;
-  gap: clamp(2rem, 5vw, 3rem);
+  gap: clamp(2.5rem, 5vw, 3.5rem);
   align-items: center;
 }
 
-/* --- Columna del texto --- */
+/* --- Texto --- */
+
+.hero__pastilla {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .4rem .9rem;
+  border: var(--filo);
+  border-radius: 999px;
+  background: var(--papel);
+  box-shadow: 2px 2px 0 var(--tinta);
+  font-family: var(--mono);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.hero__punto {
+  width: .5rem;
+  height: .5rem;
+  border-radius: 999px;
+  background: var(--acento);
+}
 
 .hero__nombre {
-  margin-bottom: clamp(.25rem, 1.5vw, .75rem);
-  margin-inline: -2%;   /* el trazo respira más que el bloque de texto */
+  margin-block: clamp(.75rem, 2vw, 1.25rem) 0;
+  margin-inline: -2%;
 }
 
 .hero__titular {
-  font-size: clamp(2.3rem, 7vw, 4rem);
-  margin-block: .5rem 1rem;
+  font-size: clamp(2.2rem, 6.5vw, 3.6rem);
+  margin-bottom: 1rem;
 }
 
+.hero__titular-acento { color: var(--acento); }
+
 .hero__bajada {
-  max-width: 42ch;
+  max-width: 44ch;
   color: var(--tinta-suave);
-  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
 }
 
 .hero__acciones {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
+  gap: .85rem;
   margin-top: 1.75rem;
 }
 
-.hero__tel {
+/* Segundo botón: mismo filo y sombra, sin el relleno de acento. */
+.boton--hueco {
+  background: var(--papel);
+  color: var(--tinta);
+}
+
+/* --- Los tres datos, separados por una línea de capas --- */
+
+.hero__datos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  max-width: 34rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1.5px dashed color-mix(in srgb, var(--tinta) 35%, transparent);
+}
+
+.hero__datos dt {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
   font-family: var(--mono);
-  font-size: .82rem;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
   color: var(--tinta-suave);
 }
 
-/* --- La foto, a sangre ---
-   En celular ocupa todo el ancho de la pantalla, no el del contenedor. */
+.hero__datos dd {
+  margin: .3rem 0 0;
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  font-weight: 900;
+  letter-spacing: -.02em;
+}
+
+/* --- Foto y ficha de colores --- */
+
+.hero__lado { position: relative; }
 
 .hero__foto {
-  position: relative;
-  margin-inline: calc(var(--margen) * -1);
-  border-block: var(--filo);
+  overflow: hidden;
+  border: var(--filo);
+  border-radius: 16px;
+  box-shadow: var(--sombra-honda);
   background: var(--papel-hondo);
 }
 
-/* La foto es vertical (896x1195). A ancho completo se estira tanto que empuja
-   el botón fuera de la pantalla, así que se le pone techo y se recorta por
-   arriba y abajo. El encuadre 38% deja a la vista los cubos y la manzana. */
 .hero__foto img {
+  display: block;
   width: 100%;
   height: auto;
-  max-height: min(62vh, 520px);
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: center 38%;
 }
 
-/* --- El armador, montado sobre la foto --- */
-
-.hero__armador {
+/* Montada sobre la esquina de la foto: cruzar el borde es lo que evita que
+   se lea como una grilla de cajas. */
+.hero__colores {
   position: relative;
   z-index: 2;
-  margin-top: -3.5rem;      /* cruza el borde de la foto */
-  margin-inline: var(--margen);
-  padding: 1.25rem;
+  margin: -2.25rem 0 0 1rem;
+  width: max-content;
+  max-width: calc(100% - 2rem);
+  padding: .85rem 1rem;
   background: var(--papel);
   border: var(--filo);
-  border-radius: var(--radio);
-  box-shadow: var(--sombra-honda);
+  border-radius: 12px;
+  box-shadow: var(--sombra);
 }
 
-/* Estado vacío del armador: cinco ranuras punteadas esperando las letras,
-   no una frase suelta (§6c). */
-.hero__ranuras {
+.hero__puntos {
   display: flex;
-  gap: .5rem;
-  margin-top: .75rem;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: .55rem;
 }
 
-.hero__ranura {
-  flex: 0 0 auto;
-  width: 2.6rem;
-  height: 2.6rem;
-  border: 1.5px dashed var(--tinta-suave);
-  border-radius: 8px;
-  opacity: .55;
+.hero__puntos span {
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1.5px solid var(--tinta);
+  border-radius: 999px;
 }
-
-/* --- De tablet para arriba: dos columnas y la foto sangra a la derecha --- */
 
 @media (min-width: 62rem) {
   .hero__grilla {
-    grid-template-columns: 1fr 0.85fr;
-    gap: clamp(2rem, 4vw, 3.5rem);
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2.5rem, 4vw, 4rem);
   }
 
-  .hero__foto img { max-height: min(78vh, 660px); }
-
-  .hero__foto {
-    margin-inline: 0 calc(50% - 50vw);   /* llega al borde derecho de la pantalla */
-    border: var(--filo);
-    border-right: 0;
-    border-radius: var(--radio) 0 0 var(--radio);
-    overflow: hidden;
-  }
-
-  .hero__armador {
-    margin-top: -5rem;
-    margin-inline: 0 -18%;   /* se monta encima de la foto */
-    max-width: 26rem;
-  }
+  .hero__colores { margin-left: -1.75rem; }
 }

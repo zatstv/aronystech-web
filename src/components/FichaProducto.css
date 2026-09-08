@@ -1,0 +1,127 @@
+/* Ficha de producto: una pieza apoyada sobre la página. Al pasar el mouse
+   se levanta y la sombra se alarga; no cambia de color ni se ilumina. */
+
+.ficha {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 14px;
+  box-shadow: var(--sombra);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.ficha:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--sombra-honda);
+}
+
+.ficha__foto {
+  position: relative;
+  overflow: hidden;
+  border-bottom: var(--filo);
+  background: var(--papel-hondo);
+}
+
+.ficha__foto img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+
+.ficha:hover .ficha__foto img { transform: scale(1.04); }
+
+/* Todo se hace desde cero, así que no hay "listo para entregar". */
+.ficha__sello {
+  position: absolute;
+  top: .7rem;
+  left: .7rem;
+  padding: .25rem .6rem;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 999px;
+  box-shadow: 2px 2px 0 var(--tinta);
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.ficha__cuerpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: .7rem;
+  padding: 1.15rem;
+}
+
+.ficha__encabezado {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.ficha__encabezado h3 {
+  font-size: 1.1rem;
+  line-height: 1.15;
+}
+
+.ficha__precio {
+  flex-shrink: 0;
+  padding: .2rem .55rem;
+  background: var(--acento);
+  color: #fff;
+  border: var(--filo);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 var(--tinta);
+  font-family: var(--mono);
+  font-size: .95rem;
+  font-weight: 700;
+  transform: rotate(2.5deg);
+}
+
+.ficha__texto {
+  font-size: .9rem;
+  color: var(--tinta-suave);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ficha__pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-top: auto;
+  padding-top: .35rem;
+}
+
+.ficha__colores { display: flex; gap: .3rem; }
+
+.ficha__colores span {
+  width: 1rem;
+  height: 1rem;
+  border: 1.5px solid var(--tinta);
+  border-radius: 999px;
+}
+
+.ficha__categoria,
+.ficha__unidad {
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.ficha__unidad { margin-top: -.35rem; }
+
+.ficha__boton { width: 100%; justify-content: center; }

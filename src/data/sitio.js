@@ -81,11 +81,33 @@ export const PREGUNTAS = [
   },
 ];
 
+/* Categorías del catálogo. El orden es el de los botones del filtro. */
+export const CATEGORIAS = [
+  "Llaveros",
+  "Soportes y utilidades",
+  "Decoración y hogar",
+  "Regalos",
+];
+
+/* Los tres datos del hero. Son hechos verificables de PROYECTO.md, no
+   métricas de relleno: el mínimo de 1 es el diferenciador contra la
+   competencia, el envío nacional está decidido, y todo se imprime en PLA. */
+export const DATOS = [
+  { icono: "package", etiqueta: "Pedido mínimo", valor: "1 unidad" },
+  { icono: "truck", etiqueta: "Envíos", valor: "Todo Panamá" },
+  { icono: "layers", etiqueta: "Material", valor: "PLA" },
+];
+
+/* Opciones del formulario de pedido. */
+export const TAMANOS = ["Pequeño", "Mediano", "Grande"];
+
 /* El catálogo. El orden de esta lista es el orden en la página y en el índice,
    y el `id` es el ancla del enlace (#p1, #p2...). */
 export const PRODUCTOS = [
   {
     id: "p1",
+    textoLibre: true,
+    categoria: "Llaveros",
     nombre: "Llavero de nombre",
     precio: "$9",
     unidad: "hasta 10 letras",
@@ -102,6 +124,8 @@ export const PRODUCTOS = [
   },
   {
     id: "p2",
+    textoLibre: true,
+    categoria: "Llaveros",
     nombre: "Llavero de números",
     precio: "$9",
     unidad: "hasta 10 dígitos",
@@ -118,6 +142,7 @@ export const PRODUCTOS = [
   },
   {
     id: "p3",
+    categoria: "Soportes y utilidades",
     nombre: "Soporte de celular",
     precio: "$7",
     unidad: "por unidad",
@@ -134,6 +159,7 @@ export const PRODUCTOS = [
   },
   {
     id: "p4",
+    categoria: "Decoración y hogar",
     nombre: "Monedero manzana",
     precio: "$14",
     unidad: "por unidad",
@@ -150,6 +176,7 @@ export const PRODUCTOS = [
   },
   {
     id: "p5",
+    categoria: "Regalos",
     nombre: "Caja de regalo armada",
     precio: "$18",
     unidad: "caja completa",

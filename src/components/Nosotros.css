@@ -1,0 +1,16 @@
+.nosotros { padding-block: var(--aire); }
+
+.nosotros__caja {
+  max-width: 46rem;
+  text-align: center;
+}
+
+.nosotros__titulo {
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+  margin-block: .5rem 1rem;
+}
+
+.nosotros__texto {
+  color: var(--tinta-suave);
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+}

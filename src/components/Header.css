@@ -1,0 +1,121 @@
+/* Barra fija. Filo sólido abajo en vez de la línea gris tímida. */
+
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--papel) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: var(--filo);
+}
+
+/* Con un modal abierto se apaga el desenfoque, si no la barra queda
+   iluminada por encima del velo. */
+[data-modal-abierto] .cabecera {
+  backdrop-filter: none;
+  background: transparent;
+  border-bottom-color: transparent;
+}
+
+.cabecera__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4rem;
+}
+
+.cabecera__marca {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  text-decoration: none;
+}
+
+.cabecera__cubo {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: var(--filo);
+  border-radius: 8px;
+  background: var(--acento);
+  color: #fff;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.cabecera__nombre {
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: -.02em;
+}
+
+.cabecera__nombre-acento { color: var(--acento); }
+
+/* Los enlaces van en monoespaciada mayúscula, como el resto de las etiquetas. */
+.cabecera__nav a {
+  font-family: var(--mono);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+
+.cabecera__nav a:hover { color: var(--acento); }
+
+.cabecera__acciones {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.boton--chico {
+  padding: .5rem .9rem;
+  font-size: .85rem;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.boton--chico:hover { box-shadow: 4px 4px 0 var(--tinta); }
+
+.cabecera__menu {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.cabecera__menu:active { transform: translate(2px, 2px); box-shadow: none; }
+
+/* --- Celular: los enlaces bajan a una segunda fila que se despliega --- */
+@media (max-width: 51.9375rem) {
+  .cabecera__nav {
+    display: none;
+    order: 3;
+    flex-basis: 100%;
+    gap: 1.25rem;
+    padding-bottom: .9rem;
+  }
+
+  .cabecera__nav.esta-abierto { display: flex; flex-wrap: wrap; }
+  /* Con un modal abierto se apaga el desenfoque, si no la barra queda
+   iluminada por encima del velo. */
+[data-modal-abierto] .cabecera {
+  backdrop-filter: none;
+  background: transparent;
+  border-bottom-color: transparent;
+}
+
+.cabecera__barra { flex-wrap: wrap; }
+}
+
+@media (min-width: 52rem) {
+  .cabecera__nav { display: flex; gap: 2rem; }
+  .cabecera__menu { display: none; }
+}

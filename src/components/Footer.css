@@ -1,0 +1,103 @@
+/* El pie invierte la superficie: acá la tinta es el fondo. */
+
+.pie {
+  background: var(--tinta);
+  color: var(--papel);
+  border-top: var(--filo);
+}
+
+.pie__grilla {
+  display: grid;
+  gap: 2.5rem;
+  padding-block: 3rem;
+}
+
+.pie__marca {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .85rem;
+}
+
+.pie__cubo {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  background: var(--acento);
+  color: #fff;
+  border-radius: 8px;
+}
+
+.pie__nombre {
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: -.02em;
+}
+
+.pie__nombre-acento { color: var(--acento); }
+
+.pie__texto,
+.pie__tel {
+  font-size: .88rem;
+  color: color-mix(in srgb, var(--papel) 65%, transparent);
+  max-width: 38ch;
+}
+
+.pie__rotulo {
+  margin-bottom: .85rem;
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--papel) 60%, transparent);
+}
+
+.pie__enlaces {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  font-size: .92rem;
+}
+
+.pie__enlaces a {
+  text-decoration: none;
+  color: color-mix(in srgb, var(--papel) 80%, transparent);
+  transition: color .15s ease;
+}
+
+.pie__enlaces a:hover { color: var(--papel); }
+
+/* Sobre fondo oscuro la sombra de tinta no se ve: se usa el papel. */
+.pie__boton {
+  box-shadow: 3px 3px 0 var(--papel);
+  border-color: var(--papel);
+}
+
+.pie__boton:hover { box-shadow: 5px 5px 0 var(--papel); }
+.pie__boton:active { box-shadow: 1px 1px 0 var(--papel); }
+
+.pie__tel {
+  margin-top: .85rem;
+  font-family: var(--mono);
+}
+
+.pie__legal {
+  padding: 1rem;
+  text-align: center;
+  border-top: 1.5px solid color-mix(in srgb, var(--papel) 22%, transparent);
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--papel) 50%, transparent);
+}
+
+@media (min-width: 48rem) {
+  .pie__grilla { grid-template-columns: 1.4fr 1fr 1fr; gap: 3rem; }
+}

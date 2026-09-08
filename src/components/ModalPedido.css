@@ -1,0 +1,190 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: end center;
+  padding: 0;
+}
+
+.modal__fondo {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--tinta) 45%, transparent);
+  border: 0;
+  cursor: pointer;
+}
+
+.modal__caja {
+  position: relative;
+  width: 100%;
+  max-width: 30rem;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 16px 16px 0 0;
+  box-shadow: var(--sombra-honda);
+}
+
+.modal__caja:focus { outline: none; }
+
+.modal__cabeza {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--papel);
+  border-bottom: var(--filo);
+}
+
+.modal__titulo { font-size: 1.4rem; margin-top: .2rem; }
+
+.modal__cerrar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.modal__cerrar:active { transform: translate(2px, 2px); box-shadow: none; }
+
+.modal__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem;
+}
+
+.modal__campo {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.modal__campo input,
+.modal__campo textarea {
+  width: 100%;
+  padding: .6rem .75rem;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 8px;
+  box-shadow: var(--sombra-hundida);
+  resize: vertical;
+}
+
+.modal__colores { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+.modal__color {
+  width: 2rem;
+  height: 2rem;
+  border: var(--filo);
+  border-radius: 999px;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+/* El elegido se hunde y suma un anillo, para que no dependa solo del color:
+   sobre el negro o el blanco un borde de color no se distinguiría. */
+.modal__color.esta-activo {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+  outline: 2.5px solid var(--acento);
+  outline-offset: 2px;
+}
+
+.modal__opciones { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+.modal__opcion {
+  padding: .45rem .9rem;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 999px;
+  box-shadow: 2px 2px 0 var(--tinta);
+  font-family: var(--mono);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.modal__opcion.esta-activo {
+  background: var(--acento);
+  color: #fff;
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.modal__contador {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  width: max-content;
+  padding: .25rem;
+  border: var(--filo);
+  border-radius: 999px;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.modal__contador button {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  background: var(--papel-hondo);
+  border: 0;
+  border-radius: 999px;
+}
+
+.modal__contador span {
+  min-width: 2.5rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-weight: 700;
+}
+
+.modal__pie {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--papel);
+  border-top: var(--filo);
+}
+
+.modal__precio {
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.modal__precio span {
+  display: block;
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+/* En pantallas grandes deja de ser una hoja que sube desde abajo y se centra. */
+@media (min-width: 40rem) {
+  .modal { place-items: center; padding: 1.5rem; }
+  .modal__caja { border-radius: 16px; }
+}
