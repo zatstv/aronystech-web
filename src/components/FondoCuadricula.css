@@ -1,0 +1,16 @@
+/* Queda detrás de todo y no intercepta ni un clic: la página se usa igual
+   que si no estuviera. */
+.cuadricula {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* El contenido se apoya encima. Sin esto la cuadrícula lo taparía. */
+.contenido {
+  position: relative;
+  z-index: 1;
+}

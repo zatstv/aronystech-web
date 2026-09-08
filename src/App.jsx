@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 
 import Catalogo from "./components/Catalogo.jsx";
+import FondoCuadricula from "./components/FondoCuadricula.jsx";
 import Footer from "./components/Footer.jsx";
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
@@ -20,16 +21,22 @@ export default function App() {
 
   return (
     <>
-      <Header />
+      <FondoCuadricula />
 
-      <main>
-        <Hero />
-        <Catalogo alPedir={setPedido} />
-        <Personalizados />
-        <Nosotros />
-      </main>
+      {/* Todo lo demás se apoya encima de la cuadrícula. */}
+      <div className="contenido">
+        <Header />
 
-      <Footer />
+        <main>
+          <Hero />
+          <Catalogo alPedir={setPedido} />
+          <Personalizados />
+          <Nosotros />
+        </main>
+
+        <Footer />
+      </div>
+
       <ModalPedido producto={pedido} alCerrar={cerrar} />
     </>
   );
