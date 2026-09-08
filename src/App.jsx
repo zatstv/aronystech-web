@@ -1,38 +1,37 @@
-import Aviso from "./components/Aviso";
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Minimo from "./components/Minimo";
-import Proceso from "./components/Proceso";
-import Entrega from "./components/Entrega";
-import Ocasiones from "./components/Ocasiones";
-import Preguntas from "./components/Preguntas";
-import Catalogo from "./components/Catalogo";
-import Cierre from "./components/Cierre";
-import Footer from "./components/Footer";
-import BotonFlotante from "./components/BotonFlotante";
-import { useReveal } from "./hooks/useReveal";
-import { useAnclaInicial } from "./hooks/useAnclaInicial";
+import Hero from "./components/Hero.jsx";
+import { useAnclaInicial } from "./hooks/useAnclaInicial.js";
+import { useReveal } from "./hooks/useReveal.js";
+
+/* El orden de las secciones está decidido en PROYECTO.md §7:
+   las informativas arriba y el catálogo al final, en formato de lista
+   con índice, para que el visitante entienda el negocio antes de ver precios.
+
+   A medida que vayan llegando los componentes se importan arriba y se
+   descomenta su línea acá abajo. */
 
 export default function App() {
-  useReveal();
   useAnclaInicial();
+  useReveal();
 
   return (
     <>
-      <Aviso />
-      <Header />
-      <main id="inicio">
+      {/* <Header /> */}
+
+      <main>
         <Hero />
-        <Minimo />
-        <Proceso />
-        <Entrega />
-        <Ocasiones />
-        <Preguntas />
-        <Catalogo />
-        <Cierre />
+
+        {/* 2. <Minimo />      el pedido mínimo es 1: el diferenciador */}
+        {/* 3. <Proceso />     cómo funciona + visor 3D fijo al lado */}
+        {/* 4. <Ocasiones />   para qué lo piden */}
+        {/* 5. <Entrega />     entrega a todo Panamá y métodos de pago */}
+        {/* 6. <Preguntas />   preguntas frecuentes */}
+        {/* 7. <Catalogo />    índice de productos y después uno por uno */}
+        {/* 8. <Cierre />      contacto */}
       </main>
-      <Footer />
-      <BotonFlotante />
+
+      {/* <BotonFlotante /> */}
+      {/* <Footer /> */}
     </>
   );
 }
+

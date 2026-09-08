@@ -1,83 +1,66 @@
-import { useState } from "react";
-import { SUELTOS } from "../data/sitio";
-import ArmadorCubos from "./ArmadorCubos";
-import Visor3D from "./Visor3D";
+import { motion, useReducedMotion } from "motion/react";
+
+import NombreDibujado from "./NombreDibujado.jsx";
+import { TEL_BONITO } from "../data/sitio.js";
+import { linkWhatsApp } from "../lib/whatsapp.js";
+import "./Hero.css";
+
+/* La entrada se escalona: rótulo, nombre, titular. Una sola curva para todo,
+   así el movimiento se siente de una pieza y no de tres animaciones sueltas. */
+const CURVA = [0.22, 1, 0.36, 1];
+
+function entrada(retraso, quieto) {
+  if (quieto) return {};
+  return {
+    initial: { opacity: 0, y: 14 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay: retraso, ease: CURVA },
+  };
+}
 
 export default function Hero() {
-  const [modeloListo, setModeloListo] = useState(false);
+  const quieto = Boolean(useReducedMotion());
 
   return (
-    <section className="hero">
-      {SUELTOS.map((s, i) => (
-        <span
-          className="suelto"
-          key={i}
-          aria-hidden="true"
-          style={{
-            "--giro": s.giro,
-            width: s.lado,
-            height: s.lado,
-            top: s.top,
-            bottom: s.bottom,
-            left: s.left,
-            right: s.right,
-            background: s.color,
-            animationDelay: s.retraso,
-          }}
-        />
-      ))}
+    <section className="hero" id="inicio">
+      <div className="contenedor hero__grilla">
+        <div>
+          <motion.p className="rotulo" {...entrada(0, quieto)}>
+            Impresión 3D · Panamá
+          </motion.p>
 
-      <div className="wrap hero-grid">
-        <div className="hero-texto">
-          {/* El hero ya muestra el render del logo como imagen, así que el WebGL
-              espera a que cargue el resto y no se pelea con el LCP. */}
-          <Visor3D
-            as="h1"
-            className="hero-logo"
-            mostrarCarga={false}
-            cuando="load"
-            src="modelo/aronystech-logo-3d.glb"
-            alt="Logo de AronysTech impreso en 3D: una manzana junto a las letras ARONYS TECH, girable"
-            /* El logo es muy apaisado. model-viewer encuadra la esfera envolvente con
-               el FOV vertical, así que con radio automático queda diminuto; y de cerca,
-               el FOV horizontal se abre a ~87 grados y lo deforma como un gran angular.
-               Cámara lejos con FOV angosto: mismo encuadre, perspectiva plana de logo.
-               Radio y FOV quedan fijos, así que camera-controls solo gira la pieza. */
-            orbit="0deg 90deg 2m"
-            minOrbit="auto 25deg 2m"
-            maxOrbit="auto 155deg 2m"
-            fov="4deg"
-            /* es el título de la página: girando mostraría el texto espejado media
-               vuelta, así que se queda quieto y se gira arrastrando */
-            sinGiro
-            onCargado={() => setModeloListo(true)}
+          {/* El nombre se dibuja solo, en loop. */}
+          <motion.div
+            className="hero__nombre"
+            {...(quieto
+              ? {}
+              : {
+                  initial: { opacity: 0, scale: 0.985 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { duration: 0.9, delay: 0.12, ease: CURVA },
+                })}
           >
-            <span className="solo-lectores">AronysTech — tu nombre, impreso en 3D</span>
-            <img
-              className={modeloListo ? "oculto" : undefined}
-              src="img/logo-3d.png"
-              width="900"
-              height="258"
-              alt=""
-              fetchPriority="high"
-            />
-          </Visor3D>
-
-          <p className="hero-sub">
-            Llaveros, soportes y regalos hechos a la medida. Escribí tu nombre y mirá
-            cómo queda.
-          </p>
-
-          <ArmadorCubos />
+            {/* El SVG ya se anuncia como imagen con el nombre de la marca,
+                así que no hace falta repetirlo en un título oculto. */}
+            <NombreDibujado texto="AronysTech" cajaAncho={760} cajaAlto={180} tamano={110} grosor={3} />  
+          </motion.div>
         </div>
 
-        <div className="hero-foto">
-          <img
-            src="img/portada.jpg"
-            width="896"
-            height="1195"
-            alt="Manzana roja impresa en 3D con el nombre ARONYS TECH y el número de teléfono formados con llaveros de cubos de letras y números"
-          />
+        <div>
+
+
+          {/* Ranuras del armador. Cuando mandes el componente, reemplaza este
+              bloque por <ArmadorCubos /> y el resto del hero queda igual. */}
+          <div className="hero__armador">
+            <p className="rotulo">Armá tu llavero</p>
+            <div className="hero__ranuras" aria-hidden="true">
+              <span className="hero__ranura" />
+              <span className="hero__ranura" />
+              <span className="hero__ranura" />
+              <span className="hero__ranura" />
+              <span className="hero__ranura" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
