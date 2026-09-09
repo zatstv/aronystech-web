@@ -1,0 +1,252 @@
+/* Pantallas de acceso — vista previa.
+
+   El componente original traía sus propias variables (--main-color,
+   --bg-color, --input-focus). Se mapean a los tokens de la página para que
+   herede el papel, la tinta, el acento y el modo oscuro:
+
+     --main-color  -> var(--tinta)
+     --bg-color    -> var(--papel)
+     --input-focus -> var(--acento)
+     lightgrey     -> var(--papel-hondo)
+
+   La sombra dura de 4px y el hundirse 3px al apretar ya eran iguales a las
+   de la página: de ahí que encaje sin pelearse. */
+
+.acceso {
+  min-height: 100vh;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.acceso__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.acceso__volver {
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+/* El aviso no es decorativo: la pantalla no autentica nada. */
+.acceso__aviso {
+  max-width: 62ch;
+  padding: .8rem 1rem;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-left: 5px solid var(--acento);
+  border-radius: 10px;
+  font-size: .9rem;
+}
+
+.acceso__piezas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(2rem, 6vw, 4rem);
+  align-items: flex-start;
+  justify-content: center;
+  padding-block: 1rem 3rem;
+}
+
+.acceso__pieza { display: grid; gap: 1.25rem; justify-items: center; }
+
+/* --- Piezas compartidas --- */
+
+.acceso__titulo {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -.02em;
+  text-align: center;
+}
+
+.acceso__form { display: grid; gap: 1rem; justify-items: center; }
+
+.acceso__campo {
+  width: min(15.5rem, 72vw);
+  height: 2.6rem;
+  padding: .3rem .7rem;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 8px;
+  box-shadow: var(--sombra);
+  font-weight: 600;
+  outline: none;
+}
+
+.acceso__campo::placeholder { color: var(--tinta-suave); opacity: .85; }
+
+.acceso__campo:focus {
+  border-color: var(--acento);
+  outline: 2px solid color-mix(in srgb, var(--acento) 40%, transparent);
+  outline-offset: 1px;
+}
+
+.acceso__boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  min-width: 7.5rem;
+  height: 2.6rem;
+  padding-inline: 1.1rem;
+  background: var(--acento);
+  color: #fff;
+  border: var(--filo);
+  border-radius: 8px;
+  box-shadow: var(--sombra);
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+
+.acceso__boton:active { transform: translate(3px, 3px); box-shadow: none; }
+
+/* --- Tarjeta que gira --- */
+
+.giro { display: grid; gap: 2rem; justify-items: center; }
+
+.giro__interruptor {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.giro__lado { color: var(--tinta-suave); }
+.giro__lado.esta-activo { color: var(--tinta); text-decoration: underline; text-underline-offset: 4px; }
+
+.palanca { position: relative; width: 3.1rem; height: 1.4rem; cursor: pointer; }
+
+.palanca input {
+  position: absolute;
+  inset: 0;
+  /* Encima del riel: si no, el span visual le tapa los clics al checkbox.
+     El <label> lo salvaba igual, pero el input tiene que ser el que recibe
+     el toque, también para lectores de pantalla y pruebas. */
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  margin: 0;
+}
+
+.palanca__riel {
+  position: absolute;
+  inset: 0;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 6px;
+  box-shadow: 3px 3px 0 var(--tinta);
+  transition: background .25s ease;
+}
+
+.palanca__riel::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  bottom: 1px;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 6px;
+  box-shadow: 0 3px 0 var(--tinta);
+  transition: transform .25s ease;
+}
+
+.palanca input:checked + .palanca__riel { background: var(--acento); }
+.palanca input:checked + .palanca__riel::before { transform: translateX(1.85rem); }
+.palanca input:focus-visible + .palanca__riel { outline: 3px solid var(--acento); outline-offset: 3px; }
+
+.giro__caja {
+  position: relative;
+  width: min(19rem, 84vw);
+  height: 24rem;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform .8s;
+}
+
+.giro__caja.esta-girada { transform: rotateY(180deg); }
+
+.giro__cara {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-radius: 12px;
+  box-shadow: var(--sombra);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.giro__cara--dorso { transform: rotateY(180deg); }
+
+/* --- Registro con botones de terceros --- */
+
+.registro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-radius: 12px;
+  box-shadow: var(--sombra);
+}
+
+.registro__titulo { text-align: left; margin-bottom: .5rem; }
+
+.registro__titulo span {
+  display: block;
+  margin-top: .2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--tinta-suave);
+}
+
+.registro__terceros { display: flex; gap: 1rem; }
+
+.registro__tercero {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 999px;
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+
+.registro__tercero:active { transform: translate(3px, 3px); box-shadow: none; }
+
+.registro__tercero svg { width: 1.35rem; height: 1.35rem; fill: var(--tinta); }
+
+.registro__enviar { margin: 1.25rem auto 0; }
+
+/* Quien pidió menos movimiento no ve el giro: la tarjeta cambia de cara y ya. */
+@media (prefers-reduced-motion: reduce) {
+  .giro__caja { transition: none; }
+}
