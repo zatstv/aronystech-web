@@ -13,6 +13,12 @@ export default defineConfig({
     // enlace público del Codespace responde "Blocked request".
     allowedHosts: ['.app.github.dev'],
   },
+  // `vite preview` no hereda la configuración de `server`, así que el
+  // dominio del Codespace hay que repetirlo acá.
+  preview: {
+    host: true,
+    allowedHosts: ['.app.github.dev'],
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
