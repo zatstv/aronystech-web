@@ -9,6 +9,7 @@ const ENLACES = [
   { href: "#catalogo", texto: "Catálogo" },
   { href: "#galeria", texto: "Galería" },
   { href: "#nosotros", texto: "Nosotros" },
+  { href: "#login", texto: "Iniciar sesión" },
 ];
 
 export default function Header() {
