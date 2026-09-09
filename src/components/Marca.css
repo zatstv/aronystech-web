@@ -1,3 +1,10 @@
+/* El logotipo de la marca.
+
+   El archivo tiene fondo transparente, así que se apoya igual sobre el papel
+   claro, sobre la tinta del pie y en modo oscuro. Antes venía con fondo
+   blanco y hacía falta multiplicarlo para disolverlo, truco que se apagaba
+   contra los fondos oscuros: eso ya no existe. */
+
 .marca {
   display: inline-flex;
   align-items: center;
@@ -9,20 +16,6 @@
   width: auto;
   max-width: 100%;
   object-fit: contain;   /* sirva cual sirva la proporción del archivo */
-}
-
-/* Sobre el papel: multiplicar hace desaparecer el fondo blanco del archivo
-   sin necesidad de que tenga transparencia. */
-.marca--suelto img { mix-blend-mode: multiply; }
-
-/* Sobre la tinta del pie, multiplicar lo borraría entero. Se apoya sobre una
-   etiqueta de papel con filo y sombra dura. */
-.marca--etiqueta {
-  padding: .5rem .75rem;
-  background: #fff;
-  border: var(--filo);
-  border-radius: 10px;
-  box-shadow: 3px 3px 0 var(--papel);
 }
 
 /* --- Reserva: el lockup de texto, si falta el archivo --- */
