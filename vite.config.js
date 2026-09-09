@@ -15,6 +15,11 @@ export default defineConfig({
     // Escucha en todas las interfaces para que el reenvío de puertos del
     // Codespace pueda llegar al servidor.
     host: true,
+    // Puerto fijo. Sin strictPort, si el 5173 está ocupado Vite se corre solo
+    // al siguiente y no avisa: quedan dos servidores vivos, el túnel reenvía
+    // el que no es y el enlace da 404. Mejor que falle y se vea.
+    port: 5173,
+    strictPort: true,
     // Vite rechaza peticiones con un Host que no conoce. Sin esta línea el
     // enlace público del Codespace responde "Blocked request".
     allowedHosts: ['.app.github.dev'],
@@ -24,6 +29,8 @@ export default defineConfig({
   // dominio del Codespace hay que repetirlo acá.
   preview: {
     host: true,
+    port: 4173,
+    strictPort: true,
     allowedHosts: ['.app.github.dev'],
   },
   build: {
