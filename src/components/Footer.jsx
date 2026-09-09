@@ -37,7 +37,7 @@ export default function Footer() {
             rel="noopener noreferrer"
           >
             <MessageCircle size={17} strokeWidth={2.4} />
-            Escribinos por WhatsApp
+            Escríbenos por WhatsApp
           </a>
           <p className="pie__tel">{TEL_BONITO}</p>
         </div>

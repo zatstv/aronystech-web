@@ -7,11 +7,7 @@ export default function Nosotros() {
         <p className="rotulo">Nosotros</p>
         <h2 className="nosotros__titulo">Un taller chico que imprime de a uno</h2>
         <p className="nosotros__texto">
-          Somos un taller independiente en Panamá. Empezamos con los llaveros de
-          cubos y hoy imprimimos soportes, monederos y piezas de repuesto. No
-          pedimos mínimos: si necesitás una sola, se hace una sola. Cada pedido
-          se limpia a mano antes de salir. ¿Tenés una idea? Escribinos y la
-          armamos.
+          Somos un taller de impresión 3D en Panamá por encargo, que diseña y fabrica piezas únicas, una a la vez. Todo lo que hacemos es artesanal, hecho a mano y con mucho cuidado. No tenemos stock: cada pedido es especial y se hace a medida.
         </p>
       </div>
     </section>
