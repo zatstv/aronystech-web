@@ -1,0 +1,181 @@
+/* Panel de acceso colgado de la barra de arriba.
+
+   Reemplaza al CSS de Uiverse, que además de venir con nombres genéricos
+   (.wrapper, .title, .slider) traía un translateY(-200px) para acomodar la
+   tarjeta a mano y una variable mal escrita (--bg-colorcolor). Acá las piezas
+   se apoyan con los tokens del sitio. */
+
+.login__ancla { position: relative; display: inline-flex; }
+
+.login {
+  position: absolute;
+  top: calc(100% + .7rem);
+  right: 0;
+  z-index: 60;
+  display: grid;
+  gap: .9rem;
+  width: min(20rem, calc(100vw - 2 * var(--margen)));
+  padding: 1.1rem;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-honda);
+}
+
+.login__cabeza {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.login__cerrar {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  background: transparent;
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 7px;
+}
+
+.login__cerrar:active { transform: translate(2px, 2px); }
+
+.login__aviso {
+  padding: .5rem .65rem;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-radius: 8px;
+  font-size: .8rem;
+  line-height: 1.45;
+  color: var(--tinta-suave);
+}
+
+.login__aviso b { color: var(--tinta); }
+
+/* --- Las dos solapas --- */
+
+.login__interruptor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .4rem;
+}
+
+.login__solapa {
+  padding: .5rem .3rem;
+  background: var(--papel);
+  color: var(--tinta-suave);
+  border: var(--filo);
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 var(--tinta);
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: background .15s ease, color .15s ease;
+}
+
+.login__solapa.esta-activo {
+  background: var(--acento);
+  color: #fff;
+}
+
+.login__solapa:active { transform: translate(2px, 2px); box-shadow: none; }
+
+/* --- La tarjeta que gira --- */
+
+.login__caja {
+  position: relative;
+  /* Alto fijo: las dos caras están superpuestas y absolutas, así que ninguna
+     puede dictarle el alto a la caja. Es lo que mide la cara de crear cuenta,
+     que tiene un campo más. */
+  height: 17rem;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform .7s ease;
+}
+
+.login__caja.esta-girada { transform: rotateY(180deg); }
+
+.login__cara {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .7rem;
+  padding: 1rem;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-radius: 10px;
+  box-shadow: var(--sombra);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.login__cara--dorso { transform: rotateY(180deg); }
+
+.login__titulo {
+  margin-bottom: .2rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: -.02em;
+  text-align: center;
+}
+
+.login__campo { display: block; }
+
+.login__entrada {
+  width: 100%;
+  height: 2.4rem;
+  padding: .3rem .65rem;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--tinta);
+  font-weight: 600;
+  outline: none;
+}
+
+.login__entrada::placeholder { color: var(--tinta-suave); opacity: .85; }
+
+.login__entrada:focus {
+  border-color: var(--acento);
+  outline: 2px solid color-mix(in srgb, var(--acento) 40%, transparent);
+  outline-offset: 1px;
+}
+
+.login__boton {
+  height: 2.5rem;
+  margin-top: .2rem;
+  background: var(--acento);
+  color: #fff;
+  border: var(--filo);
+  border-radius: 8px;
+  box-shadow: var(--sombra);
+  font-weight: 800;
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+
+.login__boton:hover { transform: translate(-1px, -1px); box-shadow: var(--sombra-honda); }
+.login__boton:active { transform: translate(3px, 3px); box-shadow: var(--sombra-hundida); }
+
+/* En celular el panel no se cuelga de un botón que está al borde: se centra
+   bajo la barra y ocupa el ancho disponible. */
+@media (max-width: 32rem) {
+  .login {
+    position: fixed;
+    top: 4.6rem;
+    right: var(--margen);
+    left: var(--margen);
+    width: auto;
+  }
+}
+
+/* Quien pidió menos movimiento no ve el giro: cambia de cara y ya. */
+@media (prefers-reduced-motion: reduce) {
+  .login__caja { transition: none; }
+}

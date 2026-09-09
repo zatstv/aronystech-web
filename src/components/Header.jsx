@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { MessageCircle, Menu, X } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+import { LogIn, MessageCircle, Menu, X } from "lucide-react";
 
+import Login from "./Login.jsx";
 import Marca from "./Marca.jsx";
 import { linkWhatsApp } from "../lib/whatsapp.js";
 import "./Header.css";
@@ -9,11 +10,13 @@ const ENLACES = [
   { href: "#catalogo", texto: "Catálogo" },
   { href: "#galeria", texto: "Galería" },
   { href: "#nosotros", texto: "Nosotros" },
-  { href: "#login", texto: "Iniciar sesión" },
 ];
 
 export default function Header() {
   const [abierto, setAbierto] = useState(false);
+  const [acceso, setAcceso] = useState(false);
+  const cerrarAcceso = useCallback(() => setAcceso(false), []);
+  const anclaAcceso = useRef(null);
 
   return (
     <header className="cabecera">
@@ -33,6 +36,22 @@ export default function Header() {
         </nav>
 
         <div className="cabecera__acciones">
+          {/* Iniciar sesión era un enlace a #login, que no existía en ninguna
+              parte: no llevaba a nada. Ahora abre el panel acá mismo. */}
+          <div className="login__ancla" ref={anclaAcceso}>
+            <button
+              type="button"
+              className="cabecera__acceso"
+              aria-expanded={acceso}
+              onClick={() => setAcceso((v) => !v)}
+            >
+              <LogIn size={16} strokeWidth={2.4} />
+              <span className="cabecera__acceso-texto">Iniciar sesión</span>
+            </button>
+
+            <Login abierto={acceso} alCerrar={cerrarAcceso} anclaRef={anclaAcceso} />
+          </div>
+
           <a
             className="boton boton--chico"
             href={linkWhatsApp("Hola, quisiera información sobre sus impresiones 3D.")}
