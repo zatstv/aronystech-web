@@ -101,6 +101,22 @@ export const DATOS = [
 /* Opciones del formulario de pedido. */
 export const TAMANOS = ["Pequeño", "Mediano", "Grande"];
 
+/* Las fotos de la galería. Son las que hay hoy; cuando estén las nuevas de
+   referencias/GUIA-FOTOS.md se cambian acá y nada más.
+   Los formatos vienen mezclados (unas apaisadas y otras verticales), así que
+   la galería las muestra enteras sobre un fondo en vez de recortarlas. */
+export const GALERIA = [
+  { src: "img/portada.jpg", alt: "Monedero manzana de malla roja con ARONYS TECH en cubos arriba y el teléfono en cubos abajo" },
+  { src: "img/cubos-letras-detalle.jpg", alt: "La palabra ARONYSTECH formada con cubos de colores sobre fondo verde" },
+  { src: "img/hero-manzana-cubos.jpg", alt: "Monedero manzana rojo rodeado de llaveros de cubos con letras y números" },
+  { src: "img/cubos-numeros.jpg", alt: "Llavero de cubos turquesa con números sobre base roja" },
+  { src: "img/soportes-celular.jpg", alt: "Cuatro soportes de celular impresos en 3D: mármol, negro, naranja y turquesa" },
+  { src: "img/surtido.jpg", alt: "Soportes de celular de varios colores junto a llaveros de cubos con letras" },
+  { src: "img/cubos-letras.jpg", alt: "Surtido de soportes de celular amarillo, turquesa, negro, blanco y morado con llaveros de cubos" },
+  { src: "img/manzana-piezas.jpg", alt: "Piezas sueltas del monedero manzana: tapas de malla, bases negras, hoja turquesa y tallo" },
+  { src: "img/cajas-regalo.jpg", alt: "Caja de regalo transparente con dulces y cinta, junto a llaveros de cubos" },
+];
+
 /* El catálogo. El orden de esta lista es el orden en la página y en el índice,
    y el `id` es el ancla del enlace (#p1, #p2...). */
 export const PRODUCTOS = [

@@ -3,11 +3,11 @@ import { useCallback, useState } from "react";
 import Catalogo from "./components/Catalogo.jsx";
 import FondoCuadricula from "./components/FondoCuadricula.jsx";
 import Footer from "./components/Footer.jsx";
+import Galeria from "./components/Galeria.jsx";
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
 import ModalPedido from "./components/ModalPedido.jsx";
 import Nosotros from "./components/Nosotros.jsx";
-import Personalizados from "./components/Personalizados.jsx";
 import { useAnclaInicial } from "./hooks/useAnclaInicial.js";
 import { useReveal } from "./hooks/useReveal.js";
 
@@ -30,7 +30,7 @@ export default function App() {
         <main>
           <Hero />
           <Catalogo alPedir={setPedido} />
-          <Personalizados />
+          <Galeria />
           <Nosotros />
         </main>
 

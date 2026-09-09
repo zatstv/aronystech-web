@@ -7,7 +7,7 @@ import "./Header.css";
 
 const ENLACES = [
   { href: "#catalogo", texto: "Catálogo" },
-  { href: "#personalizados", texto: "Personalizados" },
+  { href: "#galeria", texto: "Galería" },
   { href: "#nosotros", texto: "Nosotros" },
 ];
 

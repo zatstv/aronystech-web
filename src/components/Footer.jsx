@@ -23,7 +23,7 @@ export default function Footer() {
           <h3 className="pie__rotulo">Mirá</h3>
           <ul className="pie__enlaces">
             <li><a href="#catalogo">Catálogo</a></li>
-            <li><a href="#personalizados">Personalizados</a></li>
+            <li><a href="#galeria">Galería</a></li>
             <li><a href="#nosotros">Nosotros</a></li>
           </ul>
         </div>
