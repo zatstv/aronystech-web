@@ -23,15 +23,13 @@ export default function Hero() {
           </div>
 
           <h1 className="hero__titular">
-            Tu nombre,
+            Diseñamos tu idea,
             <br />
-            <span className="hero__titular-acento">en cubos que encajan.</span>
+            <span className="hero__titular-acento">y lo imprimimos en 3D.</span>
           </h1>
 
           <p className="hero__bajada">
-            Llaveros, soportes y piezas útiles impresas en 3D. Elegís el color y
-            el texto; nosotros lo imprimimos y te lo mandamos. El pedido se
-            cierra por WhatsApp.
+            diseñamos o imprimimos tu idea en 3D, pieza por pieza, desde una sola unidad. Todo en PLA, hecho a mano y por encargo.
           </p>
 
           <div className="hero__acciones">
