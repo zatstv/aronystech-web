@@ -79,6 +79,36 @@ export default function Login({ abierto, alCerrar, anclaRef }) {
     return () => document.removeEventListener("pointerdown", alTocar);
   }, [abierto, alCerrar, anclaRef]);
 
+  /* En escritorio el panel sale al costado de la barra lateral, que tiene su
+     propio scroll: si se posicionara dentro, en vez de asomar por el borde le
+     correría el scroll horizontal al riel. Va fijo a la ventana, y la altura
+     se mide contra el renglón que lo abre para que salga a su lado y no se
+     pase del borde de abajo. */
+  useEffect(() => {
+    if (!abierto) return;
+
+    const ubicar = () => {
+      const ancla = anclaRef?.current;
+      const panel = panelRef.current;
+      if (!ancla || !panel) return;
+      const arriba = ancla.getBoundingClientRect().top;
+      const tope = Math.max(
+        12,
+        Math.min(arriba, window.innerHeight - panel.offsetHeight - 12)
+      );
+      panel.style.setProperty("--login-arriba", `${tope}px`);
+    };
+
+    ubicar();
+    window.addEventListener("resize", ubicar);
+    /* En captura: el riel scrollea por dentro y ese evento no burbujea. */
+    window.addEventListener("scroll", ubicar, true);
+    return () => {
+      window.removeEventListener("resize", ubicar);
+      window.removeEventListener("scroll", ubicar, true);
+    };
+  }, [abierto, anclaRef]);
+
   if (!abierto) return null;
 
   return (

@@ -5,8 +5,8 @@ import Catalogo from "./components/Catalogo.jsx";
 import FondoCuadricula from "./components/FondoCuadricula.jsx";
 import Footer from "./components/Footer.jsx";
 import Galeria from "./components/Galeria.jsx";
-import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
+import Lateral from "./components/Lateral.jsx";
 import ModalPedido from "./components/ModalPedido.jsx";
 import Nosotros from "./components/Nosotros.jsx";
 import { useAnclaInicial } from "./hooks/useAnclaInicial.js";
@@ -42,7 +42,7 @@ export default function App() {
 
       {/* Todo lo demás se apoya encima de la cuadrícula. */}
       <div className="contenido">
-        <Header />
+        <Lateral />
 
         <main>
           <Hero />

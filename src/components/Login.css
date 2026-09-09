@@ -5,8 +5,6 @@
    tarjeta a mano y una variable mal escrita (--bg-colorcolor). Acá las piezas
    se apoyan con los tokens del sitio. */
 
-.login__ancla { position: relative; display: inline-flex; }
-
 .login {
   position: absolute;
   top: calc(100% + .7rem);
@@ -162,18 +160,6 @@
 
 .login__boton:hover { transform: translate(-1px, -1px); box-shadow: var(--sombra-honda); }
 .login__boton:active { transform: translate(3px, 3px); box-shadow: var(--sombra-hundida); }
-
-/* En celular el panel no se cuelga de un botón que está al borde: se centra
-   bajo la barra y ocupa el ancho disponible. */
-@media (max-width: 32rem) {
-  .login {
-    position: fixed;
-    top: 4.6rem;
-    right: var(--margen);
-    left: var(--margen);
-    width: auto;
-  }
-}
 
 /* Quien pidió menos movimiento no ve el giro: cambia de cara y ya. */
 @media (prefers-reduced-motion: reduce) {

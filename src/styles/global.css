@@ -41,18 +41,38 @@
   --ancho: 1160px;
   --aire: clamp(4rem, 9vw, 7.5rem);   /* separación entre secciones */
   --margen: clamp(1.15rem, 5vw, 2.5rem);
+  --lateral: 16.5rem;      /* ancho de la barra lateral en escritorio */
+
+  color-scheme: light;
 }
 
 /* Modo oscuro. La cama de impresión sube de tono para que las piezas negras
-   no desaparezcan contra el fondo (PROYECTO.md §6d). */
+   no desaparezcan contra el fondo (PROYECTO.md §6d).
+
+   Va en dos bloques porque ahora se puede elegir desde la barra lateral: el
+   primero es el automático, que cede si alguien pidió claro a mano; el
+   segundo es la elección explícita, que manda incluso con un sistema claro.
+   Los valores están repetidos a propósito: CSS no deja compartir una lista de
+   declaraciones entre dos selectores, y la indirección con más variables sale
+   más cara de leer que estas cinco líneas. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-tema="claro"]) {
+    color-scheme: dark;
     --papel: #17191D;
     --papel-hondo: #212429;
     --tinta: #F0EDE6;
     --tinta-suave: #A2A7B0;
     --acento: #FF6A52;    /* subido de tono: a 4.5:1 sobre el fondo oscuro */
   }
+}
+
+:root[data-tema="oscuro"] {
+  color-scheme: dark;
+  --papel: #17191D;
+  --papel-hondo: #212429;
+  --tinta: #F0EDE6;
+  --tinta-suave: #A2A7B0;
+  --acento: #FF6A52;
 }
 
 /* ------------------------------------------------------------

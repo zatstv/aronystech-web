@@ -1,0 +1,250 @@
+/* Barra lateral fija. Antes esto era una franja arriba; ahora la navegación
+   vive de costado y el contenido se corre para dejarle lugar. */
+
+.lateral {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  width: var(--lateral);
+  /* dvh y no vh: en celular la barra del navegador se recoge al hacer scroll
+     y con vh el pie del panel quedaba debajo del borde. */
+  height: 100dvh;
+  padding: 1.35rem 1rem 1rem;
+  background: var(--papel);
+  border-right: var(--filo);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.lateral__marca {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: .45rem;
+  text-decoration: none;
+}
+
+.lateral__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  /* Empuja el selector de tema contra el borde de abajo. */
+  flex: 1;
+}
+
+.lateral__grupo-titulo {
+  margin-bottom: .4rem;
+  padding-inline: .55rem;
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.lateral__lista {
+  display: flex;
+  flex-direction: column;
+  gap: .12rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* --- Cada renglón --- */
+
+.lateral__enlace {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  width: 100%;
+  padding: .5rem .55rem;
+  background: transparent;
+  color: var(--tinta-suave);
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  font-size: .95rem;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease;
+}
+
+.lateral__enlace:hover {
+  background: var(--papel-hondo);
+  color: var(--tinta);
+}
+
+/* La sección que se está mirando queda hundida, como una tecla apretada. */
+.lateral__enlace.esta-activo {
+  background: var(--papel-hondo);
+  color: var(--tinta);
+  border-color: var(--tinta);
+}
+
+.lateral__texto { flex: 1; }
+
+/* La tecla que salta a esa sección. Es la letra que hay que apretar, no un
+   número de orden: por eso va en monoespaciada y con el mismo aire que las
+   etiquetas del resto del sitio. */
+.lateral__tecla {
+  flex-shrink: 0;
+  min-width: 1.1rem;
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--tinta-suave);
+  opacity: .65;
+}
+
+.lateral__enlace:hover .lateral__tecla,
+.lateral__enlace.esta-activo .lateral__tecla { opacity: 1; }
+
+/* El panel de acceso cuelga de su renglón. */
+.lateral__ancla-acceso { position: relative; }
+
+/* --- Claro / Oscuro / Auto --- */
+
+.lateral__pie { padding-top: .6rem; }
+
+.lateral__tema {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  padding: 3px;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-radius: 9px;
+}
+
+.lateral__tema-opcion {
+  padding: .4rem .2rem;
+  background: transparent;
+  color: var(--tinta-suave);
+  border: 0;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  transition: background .15s ease, color .15s ease;
+}
+
+.lateral__tema-opcion:hover { color: var(--tinta); }
+
+.lateral__tema-opcion.esta-activo {
+  background: var(--papel);
+  color: var(--tinta);
+  box-shadow: 1.5px 1.5px 0 var(--tinta);
+}
+
+/* --- Escritorio: la barra siempre está y el contenido se corre --- */
+
+@media (min-width: 64rem) {
+  .lateral__movil { display: none; }
+  .lateral__velo { display: none; }
+
+  /* El corrimiento vive acá y no en la hoja de la cuadrícula: lo causa esta
+     barra, así que si algún día se saca, se va con ella. */
+  .contenido { padding-left: var(--lateral); }
+
+  /* Sin franja arriba, el ancla no necesita tanto respiro. */
+  html { scroll-padding-top: 2rem; }
+
+  /* El panel de acceso no cabe debajo del renglón: sale al costado del riel.
+     Fijo a la ventana y no absoluto, porque el riel scrollea por dentro y un
+     hijo absoluto que se pasa del ancho le corre el scroll en vez de asomar.
+     La altura la mide Login.jsx contra su renglón. */
+  .lateral__ancla-acceso .login {
+    position: fixed;
+    top: var(--login-arriba, 6rem);
+    right: auto;
+    left: calc(var(--lateral) + .8rem);
+  }
+}
+
+/* --- Celular y tablet: franja arriba y la lateral entra deslizándose --- */
+
+@media (max-width: 63.9375rem) {
+  .lateral__movil {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.9rem;
+    padding-inline: var(--margen);
+    background: color-mix(in srgb, var(--papel) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: var(--filo);
+  }
+
+  /* Con un modal abierto se apaga el desenfoque, si no la franja queda
+     iluminada por encima del velo. */
+  [data-modal-abierto] .lateral__movil {
+    backdrop-filter: none;
+    background: transparent;
+    border-bottom-color: transparent;
+  }
+
+  .lateral__menu {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    background: var(--papel);
+    border: var(--filo);
+    border-radius: 8px;
+    box-shadow: 2px 2px 0 var(--tinta);
+  }
+
+  .lateral__menu:active { transform: translate(2px, 2px); box-shadow: none; }
+
+  .lateral {
+    width: min(17rem, 82vw);
+    transform: translateX(-100%);
+    box-shadow: var(--sombra-honda);
+    /* La visibilidad también entra en la transición: si cambiara de golpe,
+       el panel desaparecería antes de terminar de salir. */
+    transition: transform .25s ease, visibility .25s;
+  }
+
+  .lateral.esta-abierto { transform: none; }
+
+  /* Cerrada no debe recibir el tabulador: si no, con teclado se recorre un
+     menú que no se ve. */
+  .lateral:not(.esta-abierto) { visibility: hidden; }
+  .lateral.esta-abierto { visibility: visible; }
+
+  .lateral__marca--rail { display: none; }
+
+  /* Dentro del cajón no hay lugar al costado ni abajo: el panel de acceso se
+     abre en el propio renglón y empuja lo que sigue. */
+  .lateral__ancla-acceso .login {
+    position: static;
+    width: 100%;
+    margin-top: .5rem;
+    box-shadow: var(--sombra);
+  }
+
+  .lateral__velo {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    width: 100%;
+    padding: 0;
+    background: color-mix(in srgb, #000 45%, transparent);
+    border: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lateral { transition: none; }
+}
