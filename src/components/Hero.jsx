@@ -77,14 +77,7 @@ export default function Hero() {
 
           {/* Los colores del armador, no un muestrario de filamentos: la §9
               decidió no publicar la lista ni prometer cantidades. */}
-          <div className="hero__colores">
-            <p className="rotulo">Colores para combinar</p>
-            <div className="hero__puntos">
-              {PALETA.map((c) => (
-                <span key={c.nombre} title={c.nombre} style={{ background: c.hex }} />
-              ))}
-            </div>
-          </div>
+
         </div>
       </div>
     </section>

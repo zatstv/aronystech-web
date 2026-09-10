@@ -27,10 +27,9 @@ export default function Catalogo({ alPedir }) {
         <div className="catalogo__cabeza">
           <div>
             <p className="rotulo">Catálogo</p>
-            <h2 className="titulo-seccion catalogo__titulo">Lo que imprimimos</h2>
+            <h2 className="titulo-seccion catalogo__titulo">ESTE ES NUESTRO CATALOGO</h2>
             <p className="catalogo__intro">
-              Cada pieza se hace por encargo, en los colores que elijas. Los
-              precios son por unidad y bajan a partir de 20 iguales.
+              de cada impresion que hemos hecho, de cada pieza que hemos diseñado y de cada idea que hemos materializado. Todo lo que ves acá se puede encargar, y si no está en el catálogo podemos diseñarlo para ti.
             </p>
           </div>
 

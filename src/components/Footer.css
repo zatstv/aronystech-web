@@ -9,13 +9,13 @@
      ventana: en escritorio la barra lateral se lleva 16.5rem y con vw se
      pasaba de largo. */
   container-type: inline-size;
-  background: var(--tinta);
-  color: var(--papel);
+  background: var(--papel-hondo);
+  color: var(--acento);
   border-top: var(--filo);
 }
 
 .pie__celda,
-.pie__canal { border: 1.5px solid color-mix(in srgb, var(--papel) 22%, transparent); }
+.pie__canal { border: 1.5px solid color-mix(in srgb, var(--acento) 22%, transparent); }
 
 /* Los filos se comparten entre celdas vecinas. */
 .pie__alta,
@@ -39,10 +39,10 @@
   max-width: 46ch;
   /* Deja libre la esquina donde se apoya el logotipo. */
   padding-right: 9rem;
-  font-family: var(--mono);
+  font-family: var(--acento);
   font-size: .8rem;
   line-height: 1.75;
-  color: color-mix(in srgb, var(--papel) 72%, transparent);
+  color: color-mix(in srgb, var(--acento) 72%, transparent);
 }
 
 /* El logotipo apoyado arriba a la derecha de su celda, como el sello de la
@@ -95,20 +95,20 @@
   padding-bottom: .5rem;
   /* La raya de puntos de la referencia: el renglón se lee como un campo por
      llenar, no como una lista de viñetas. */
-  border-bottom: 1.5px dashed color-mix(in srgb, var(--papel) 38%, transparent);
-  font-family: var(--mono);
+  border-bottom: 1.5px dashed color-mix(in srgb, var(--acento) 38%, transparent);
+  font-family: var(--acento);
   font-size: .78rem;
   font-weight: 700;
   letter-spacing: .1em;
   text-transform: uppercase;
   text-decoration: none;
-  color: color-mix(in srgb, var(--papel) 80%, transparent);
+  color: color-mix(in srgb, var(--acento) 80%, transparent);
   transition: color .15s ease, border-color .15s ease;
 }
 
 .pie__renglon a:hover {
-  color: var(--papel);
-  border-bottom-color: var(--papel);
+  color: var(--acento);
+  border-bottom-color: var(--acento);
 }
 
 .pie__renglon svg { flex-shrink: 0; }
@@ -138,14 +138,14 @@
   width: fit-content;
 }
 
-.pie__escribinos a:hover { border-bottom-color: var(--papel); }
+.pie__escribinos a:hover { border-bottom-color: var(--acento); }
 
 .pie__rubros {
   display: inline-flex;
   align-items: center;
   gap: .6rem;
   font-weight: 700;
-  color: color-mix(in srgb, var(--papel) 78%, transparent);
+  color: color-mix(in srgb, var(--acento) 78%, transparent);
 }
 
 /* Una celda cuadrada por canal, como los íconos de la referencia. */
@@ -153,13 +153,13 @@
   display: grid;
   place-items: center;
   min-height: 4.5rem;
-  color: color-mix(in srgb, var(--papel) 85%, transparent);
+  color: color-mix(in srgb, var(--acento) 85%, transparent);
   transition: background .15s ease, color .15s ease;
 }
 
 .pie__canal:hover {
-  background: color-mix(in srgb, var(--papel) 12%, transparent);
-  color: var(--papel);
+  background: color-mix(in srgb, var(--acento) 12%, transparent);
+  color: var(--acento);
 }
 
 /* --- La marca a lo ancho --- */
@@ -180,7 +180,7 @@
   letter-spacing: -.045em;
   text-align: center;
   padding: clamp(.6rem, 2cqw, 1.6rem) 0 clamp(1rem, 3cqw, 2.4rem);
-  border-bottom: 1.5px solid color-mix(in srgb, var(--papel) 22%, transparent);
+  border-bottom: 1.5px solid color-mix(in srgb, var(--acento) 22%, transparent);
 }
 
 /* La raya del medio es más angosta que el guion largo suelto. */
@@ -200,7 +200,7 @@
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--papel) 55%, transparent);
+  color: color-mix(in srgb, var(--acento) 55%, transparent);
 }
 
 /* --- Angosto: las celdas se apilan --- */

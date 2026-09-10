@@ -3,8 +3,6 @@
 
 .galeria {
   padding-block: var(--aire);
-  background: var(--papel-hondo);
-  border-block: var(--filo);
 }
 
 .galeria__titulo { margin-block: .4rem .7rem; }
