@@ -113,13 +113,14 @@
   background: var(--papel-hondo);
 }
 
+/* La foto entra entera: manda la proporción del archivo. Antes el marco la
+   forzaba a 4/5 y la recortaba con object-fit, que servía cuando la portada
+   era una foto vertical; la de ahora es apaisada y se comía casi todo el
+   ancho del llavero. */
 .hero__foto img {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: center 38%;
 }
 
 /* Montada sobre la esquina de la foto: cruzar el borde es lo que evita que
@@ -153,7 +154,9 @@
 
 @media (min-width: 62rem) {
   .hero__grilla {
-    grid-template-columns: 1.15fr 0.85fr;
+    /* Casi en partes iguales: con la foto apaisada, la columna angosta de
+       antes la dejaba del alto de un botón. */
+    grid-template-columns: 1fr 1fr;
     gap: clamp(2.5rem, 4vw, 4rem);
   }
 

@@ -66,11 +66,18 @@ export default function Hero() {
 
         <div className="hero__lado">
           <div className="hero__foto">
+            {/* Recorte de llavero-selection.png, que traía el llavero ocupando
+                el 58% del ancho y flotaba dentro del marco. El original sigue
+                en public/img por si hace falta otro encuadre.
+
+                Las medidas son las del archivo: con ellas el navegador reserva
+                el hueco antes de bajarlo y la portada no salta al cargar. Si
+                se cambia la foto, hay que cambiarlas. */}
             <img
-              src="/img/llavero-selection.png"
-              width="896"
-              height="1195"
-              alt="Monedero manzana rojo junto a llaveros de cubos con letras de colores"
+              src="/img/llavero-hero.png"
+              width="1484"
+              height="873"
+              alt="Llavero rectangular impreso en 3D con el logotipo de AronysTech en relieve, rojo y turquesa"
               fetchPriority="high"
             />
           </div>
