@@ -67,8 +67,8 @@ export default function Hero() {
         <div className="hero__lado">
           <div className="hero__foto">
             <img
-              src="/img/hero-manzana-cubos.jpg"
-              width="896"
+              src="/img/llavero-selection.png"
+              width="950"
               height="1195"
               alt="Monedero manzana rojo junto a llaveros de cubos con letras de colores"
               fetchPriority="high"
