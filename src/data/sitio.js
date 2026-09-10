@@ -4,6 +4,18 @@
 export const TEL = "50767955170";
 export const TEL_BONITO = "+507 6795 5170";
 
+/* Redes sociales, para la fila de íconos del pie.
+
+   Va vacío a propósito: Instagram, TikTok y Facebook siguen pendientes
+   (PROYECTO.md §2) y un ícono que no lleva a ningún lado es peor que no
+   tenerlo. Cuando haya cuenta se agrega acá y la celda aparece sola:
+
+     { id: "instagram", nombre: "Instagram", url: "https://instagram.com/..." }
+
+   El id solo tiene que ser distinto entre sí. Los íconos de marca no vienen
+   en lucide 1.x: hoy todas entran con un eslabón genérico. */
+export const REDES = [];
+
 /* Los ocho colores del armador. El orden importa: así se reparten
    los cubos cuando el cliente elige "colores surtidos". */
 export const PALETA = [

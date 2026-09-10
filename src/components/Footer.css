@@ -1,85 +1,238 @@
-/* El pie invierte la superficie: acá la tinta es el fondo. */
+/* El pie invierte la superficie: acá la tinta es el fondo.
+
+   Adentro va todo del mismo color, sin acento: el rojo es uno solo en toda
+   la interfaz (PROYECTO.md §6b) y acá no hace falta gastarlo. Los filos que
+   arman las celdas son ese mismo papel bajado de intensidad. */
 
 .pie {
+  /* La marca de abajo se mide contra el ancho del pie y no contra el de la
+     ventana: en escritorio la barra lateral se lleva 16.5rem y con vw se
+     pasaba de largo. */
+  container-type: inline-size;
   background: var(--tinta);
   color: var(--papel);
   border-top: var(--filo);
 }
 
-.pie__grilla {
+.pie__celda,
+.pie__canal { border: 1.5px solid color-mix(in srgb, var(--papel) 22%, transparent); }
+
+/* Los filos se comparten entre celdas vecinas. */
+.pie__alta,
+.pie__franja { display: grid; }
+
+.pie__alta > * + *,
+.pie__franja > * + * { margin-left: -1.5px; }
+
+.pie__celda { position: relative; padding: clamp(1.4rem, 3.5vw, 2.4rem); }
+
+/* --- Quiénes somos --- */
+
+.pie__copy {
+  margin-bottom: .9rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.pie__texto {
+  max-width: 46ch;
+  /* Deja libre la esquina donde se apoya el logotipo. */
+  padding-right: 9rem;
+  font-family: var(--mono);
+  font-size: .8rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--papel) 72%, transparent);
+}
+
+/* El logotipo apoyado arriba a la derecha de su celda, como el sello de la
+   referencia. Se va en pantallas angostas: ahí el texto necesita el ancho. */
+.pie__sello {
+  position: absolute;
+  top: clamp(1.4rem, 3.5vw, 2.4rem);
+  right: clamp(1.4rem, 3.5vw, 2.4rem);
+}
+
+/* Las cruces de las esquinas. Son el mismo gesto de la referencia: marcan
+   dónde se cruzan los filos de la grilla. */
+.pie__cruz {
+  position: absolute;
+  opacity: .5;
+}
+
+.pie__cruz--abajo-izq { bottom: 1rem; left: 1rem; }
+.pie__cruz--abajo-der { bottom: 1rem; right: 1rem; }
+
+/* --- Las dos columnas de enlaces --- */
+
+.pie__mapa {
   display: grid;
-  gap: 2.5rem;
-  padding-block: 3rem;
-}
-
-.pie__marca {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  margin-bottom: .85rem;
-}
-
-.pie__texto,
-.pie__tel {
-  font-size: .88rem;
-  color: color-mix(in srgb, var(--papel) 65%, transparent);
-  max-width: 38ch;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-content: start;
 }
 
 .pie__rotulo {
-  margin-bottom: .85rem;
-  font-family: var(--mono);
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--papel) 60%, transparent);
+  margin-bottom: 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
 }
 
-.pie__enlaces {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.pie__lista {
   display: flex;
   flex-direction: column;
-  gap: .55rem;
-  font-size: .92rem;
+  gap: .95rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.pie__enlaces a {
+.pie__renglon a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: .5rem;
+  /* La raya de puntos de la referencia: el renglón se lee como un campo por
+     llenar, no como una lista de viñetas. */
+  border-bottom: 1.5px dashed color-mix(in srgb, var(--papel) 38%, transparent);
+  font-family: var(--mono);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
   text-decoration: none;
   color: color-mix(in srgb, var(--papel) 80%, transparent);
-  transition: color .15s ease;
+  transition: color .15s ease, border-color .15s ease;
 }
 
-.pie__enlaces a:hover { color: var(--papel); }
-
-/* Sobre fondo oscuro la sombra de tinta no se ve: se usa el papel. */
-.pie__boton {
-  box-shadow: 3px 3px 0 var(--papel);
-  border-color: var(--papel);
+.pie__renglon a:hover {
+  color: var(--papel);
+  border-bottom-color: var(--papel);
 }
 
-.pie__boton:hover { box-shadow: 5px 5px 0 var(--papel); }
-.pie__boton:active { box-shadow: 1px 1px 0 var(--papel); }
+.pie__renglon svg { flex-shrink: 0; }
 
-.pie__tel {
-  margin-top: .85rem;
-  font-family: var(--mono);
+/* --- Franja de contacto --- */
+
+.pie__contacto {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding-block: 1.35rem;
 }
+
+.pie__escribinos {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.pie__escribinos a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1.5px solid transparent;
+  width: fit-content;
+}
+
+.pie__escribinos a:hover { border-bottom-color: var(--papel); }
+
+.pie__rubros {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--papel) 78%, transparent);
+}
+
+/* Una celda cuadrada por canal, como los íconos de la referencia. */
+.pie__canal {
+  display: grid;
+  place-items: center;
+  min-height: 4.5rem;
+  color: color-mix(in srgb, var(--papel) 85%, transparent);
+  transition: background .15s ease, color .15s ease;
+}
+
+.pie__canal:hover {
+  background: color-mix(in srgb, var(--papel) 12%, transparent);
+  color: var(--papel);
+}
+
+/* --- La marca a lo ancho --- */
+
+.pie__gigante {
+  /* Medida contra el ancho del pie. El número sale de medirlo hasta que
+     "Aronys—Tech" toca los dos bordes: son 11 signos, si el texto cambia hay
+     que volver a medirlo. */
+  font-size: 16.7cqw;
+  font-weight: 900;
+  line-height: .82;
+  /* En una sola línea: partido en dos deja de ser una banda y pasa a ser un
+     titular. El tamaño está calculado para que entre justo. */
+  white-space: nowrap;
+  /* Si Outfit no llegara a cargar, la tipografía de reserva mide distinto y
+     el nombre se pasaría de ancho: acá se recorta en vez de estirar la página. */
+  overflow: hidden;
+  letter-spacing: -.045em;
+  text-align: center;
+  padding: clamp(.6rem, 2cqw, 1.6rem) 0 clamp(1rem, 3cqw, 2.4rem);
+  border-bottom: 1.5px solid color-mix(in srgb, var(--papel) 22%, transparent);
+}
+
+/* La raya del medio es más angosta que el guion largo suelto. */
+.pie__gigante span { letter-spacing: -.08em; }
+
+/* --- Renglón final --- */
 
 .pie__legal {
-  padding: 1rem;
-  text-align: center;
-  border-top: 1.5px solid color-mix(in srgb, var(--papel) 22%, transparent);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem 1rem;
+  padding: 1rem clamp(1.4rem, 3.5vw, 2.4rem);
   font-family: var(--mono);
   font-size: .66rem;
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--papel) 50%, transparent);
+  color: color-mix(in srgb, var(--papel) 55%, transparent);
+}
+
+/* --- Angosto: las celdas se apilan --- */
+
+@media (max-width: 47.9375rem) {
+  /* El sello no entra al lado del texto, y sin sello el hueco que le dejaba
+     el párrafo no tiene sentido. */
+  .pie__sello { display: none; }
+  .pie__texto { padding-right: 0; }
+
+  /* Las celdas se achican y las cruces, que están fuera del flujo, terminan
+     encima del texto. Son un adorno: en angosto no van. */
+  .pie__cruz { display: none; }
+
+  .pie__alta > * + *,
+  .pie__franja > * + * { margin-left: 0; margin-top: -1.5px; }
+
+  .pie__mapa { grid-template-columns: 1fr; }
+
+  /* Los canales quedan en su propia fila, repartiéndose el ancho entre los
+     que haya: con un número fijo de columnas, la fila quedaba a medio llenar. */
+  .pie__franja { grid-template-columns: repeat(var(--canales, 2), 1fr); }
+  .pie__contacto { grid-column: 1 / -1; }
+  .pie__franja > .pie__canal + .pie__canal { margin-left: -1.5px; margin-top: 0; }
+  .pie__franja > .pie__canal:first-of-type { margin-top: -1.5px; }
 }
 
 @media (min-width: 48rem) {
-  .pie__grilla { grid-template-columns: 1.4fr 1fr 1fr; gap: 3rem; }
+  .pie__alta { grid-template-columns: 1fr 1fr; }
+  .pie__mapa { grid-template-columns: 1fr 1fr; }
+
+  /* El texto de contacto se queda con lo que sobre; cada canal, con su
+     cuadrado. */
+  .pie__franja { grid-template-columns: 1fr repeat(var(--canales, 2), 5.5rem); }
 }
