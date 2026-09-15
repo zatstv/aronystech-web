@@ -11,15 +11,35 @@
     />
     <link rel="icon" type="image/png" href="/img/logo-3d.png" />
 
-    <!-- Redes sociales -->
+    <!-- Redes sociales.
+
+         OJO: las direcciones de acá abajo tienen que ser ABSOLUTAS. WhatsApp,
+         Facebook e Instagram no resuelven rutas relativas: con "/img/portada.jpg"
+         el enlace se comparte sin imagen, y el negocio se mueve por WhatsApp.
+
+         Al publicar hay que cambiar las tres por el dominio real (el que da
+         Netlify sirve: https://aronystech.netlify.app). Está anotado en el
+         README, en "Publicar". -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AronysTech" />
     <meta property="og:title" content="AronysTech — Impresiones 3D personalizadas" />
     <meta
       property="og:description"
       content="Llaveros de cubos con letras, soportes y piezas impresas en 3D a tu medida. Pedido mínimo: 1."
     />
-    <meta property="og:image" content="/img/portada.jpg" />
+    <meta property="og:url" content="https://CAMBIAR-POR-EL-DOMINIO/" />
+    <meta property="og:image" content="https://CAMBIAR-POR-EL-DOMINIO/img/portada.jpg" />
+    <meta property="og:image:alt" content="Llaveros de cubos con letras y monedero manzana impresos en 3D" />
     <meta property="og:locale" content="es_PA" />
+    <link rel="canonical" href="https://CAMBIAR-POR-EL-DOMINIO/" />
+
+    <!-- La tarjeta grande, para que el enlace se vea con la foto entera. -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Tiñe la barra del navegador en el celular. Los dos valores son los
+         mismos --papel de global.css, claro y oscuro. -->
+    <meta name="theme-color" content="#F5F2EC" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#17191D" media="(prefers-color-scheme: dark)" />
 
     <!-- Outfit 900 para titulares, JetBrains Mono para etiquetas (PROYECTO.md §6b) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

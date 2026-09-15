@@ -45,11 +45,42 @@ legacy/index.html     la versión anterior en un solo archivo, de referencia
 Los colores, tamaños y espacios del diseño están arriba de `src/styles/global.css`,
 como variables CSS.
 
+## Publicar
+
+El sitio se compila a archivos estáticos: no hay servidor ni base de datos
+detrás, así que sirve cualquier hosting de estáticos. Los dos valores que pide
+cualquiera de ellos son siempre los mismos:
+
+| Comando de construcción | Carpeta que se publica |
+|---|---|
+| `npm run build` | `dist` |
+
+**Netlify** (recomendado para empezar) ya los lee solos de `netlify.toml`:
+entrás a netlify.com, "Add new site" → "Import an existing project", elegís
+este repositorio de GitHub y listo. Cada `git push` vuelve a publicar.
+En **Cloudflare Pages** es lo mismo, cargando esos dos valores a mano.
+
+### Antes de publicar de verdad
+
+Estas tres cosas hay que tocarlas o el sitio sale mal, y ninguna avisa:
+
+1. **`public/robots.txt`** bloquea a todos los buscadores (`Disallow: /`).
+   Está bien para una prueba; si sale así, Google no lo indexa nunca.
+2. **Las tres direcciones `CAMBIAR-POR-EL-DOMINIO` de `index.html`.** Son las
+   que usan WhatsApp y Facebook para armar la vista previa del enlace. Tienen
+   que ser absolutas: con una ruta relativa el enlace se comparte sin imagen,
+   y el negocio se mueve por WhatsApp.
+3. **`#acceso`** es una pantalla de ingreso que no valida nada, y se llega
+   desde "Tu cuenta" en el pie. Avisa que es una vista previa, pero conviene
+   decidir si sale al aire o se saca el enlace.
+
 ## Pendientes conocidos
 
-- `public/robots.txt` todavía bloquea a los buscadores: es una versión de prueba.
-  Hay que cambiarlo antes de publicar de verdad.
 - Las tipografías van por CDN. Al publicar conviene auto-hospedarlas.
+- Las fotos de la galería pesan 4,8 MB entre todas, en JPEG mal comprimido.
+  Pasarlas a WebP las deja en 0,5 MB sin pérdida visible.
+- Los tres modelos de `public/modelo` (2,4 MB) no los usa ningún componente
+  todavía, pero se publican igual.
 - Los precios y textos son de ejemplo (ver el aviso de arriba de la página).
 
 Las decisiones de dónde publicar y con qué base de datos están en `STACK.md`.

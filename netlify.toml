@@ -1,0 +1,36 @@
+# Cómo se construye y qué se publica.
+# Cloudflare Pages usa los mismos dos valores desde su panel: comando
+# `npm run build`, carpeta `dist`. Este archivo solo lo lee Netlify.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Vite le pone una huella al nombre de cada archivo compilado
+# (index-BggMo5O_.css). Si el contenido cambia, cambia el nombre, así que
+# se pueden guardar para siempre sin miedo a servir una versión vieja.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# index.html no lleva huella: es el que dice qué archivos con huella cargar.
+# Si el navegador lo guardara, seguiría pidiendo los de la versión anterior y
+# el sitio no se actualizaría nunca.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Las fotos y los modelos sí conservan su nombre entre versiones, así que se
+# guardan un día: bastante para una visita, poco para que una foto cambiada
+# tarde en verse.
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/modelo/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
