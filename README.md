@@ -31,6 +31,7 @@ src/
   styles/global.css   todo el diseño
 public/
   img/  modelo/       fotos y modelos 3D que usa la página
+                      (la página usa los .webp; los .jpg son el original)
 legacy/index.html     la versión anterior en un solo archivo, de referencia
 ```
 
@@ -77,8 +78,6 @@ Estas tres cosas hay que tocarlas o el sitio sale mal, y ninguna avisa:
 ## Pendientes conocidos
 
 - Las tipografías van por CDN. Al publicar conviene auto-hospedarlas.
-- Las fotos de la galería pesan 4,8 MB entre todas, en JPEG mal comprimido.
-  Pasarlas a WebP las deja en 0,5 MB sin pérdida visible.
 - Los tres modelos de `public/modelo` (2,4 MB) no los usa ningún componente
   todavía, pero se publican igual.
 - Los precios y textos son de ejemplo (ver el aviso de arriba de la página).

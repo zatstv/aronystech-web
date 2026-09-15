@@ -118,15 +118,15 @@ export const TAMANOS = ["Pequeño", "Mediano", "Grande"];
    Los formatos vienen mezclados (unas apaisadas y otras verticales), así que
    la galería las muestra enteras sobre un fondo en vez de recortarlas. */
 export const GALERIA = [
-  { src: "img/portada.jpg", alt: "Monedero manzana de malla roja con ARONYS TECH en cubos arriba y el teléfono en cubos abajo" },
-  { src: "img/cubos-letras-detalle.jpg", alt: "La palabra ARONYSTECH formada con cubos de colores sobre fondo verde" },
-  { src: "img/hero-manzana-cubos.jpg", alt: "Monedero manzana rojo rodeado de llaveros de cubos con letras y números" },
-  { src: "img/cubos-numeros.jpg", alt: "Llavero de cubos turquesa con números sobre base roja" },
-  { src: "img/soportes-celular.jpg", alt: "Cuatro soportes de celular impresos en 3D: mármol, negro, naranja y turquesa" },
-  { src: "img/surtido.jpg", alt: "Soportes de celular de varios colores junto a llaveros de cubos con letras" },
-  { src: "img/cubos-letras.jpg", alt: "Surtido de soportes de celular amarillo, turquesa, negro, blanco y morado con llaveros de cubos" },
-  { src: "img/manzana-piezas.jpg", alt: "Piezas sueltas del monedero manzana: tapas de malla, bases negras, hoja turquesa y tallo" },
-  { src: "img/cajas-regalo.jpg", alt: "Caja de regalo transparente con dulces y cinta, junto a llaveros de cubos" },
+  { src: "img/portada.webp", alt: "Monedero manzana de malla roja con ARONYS TECH en cubos arriba y el teléfono en cubos abajo" },
+  { src: "img/cubos-letras-detalle.webp", alt: "La palabra ARONYSTECH formada con cubos de colores sobre fondo verde" },
+  { src: "img/hero-manzana-cubos.webp", alt: "Monedero manzana rojo rodeado de llaveros de cubos con letras y números" },
+  { src: "img/cubos-numeros.webp", alt: "Llavero de cubos turquesa con números sobre base roja" },
+  { src: "img/soportes-celular.webp", alt: "Cuatro soportes de celular impresos en 3D: mármol, negro, naranja y turquesa" },
+  { src: "img/surtido.webp", alt: "Soportes de celular de varios colores junto a llaveros de cubos con letras" },
+  { src: "img/cubos-letras.webp", alt: "Surtido de soportes de celular amarillo, turquesa, negro, blanco y morado con llaveros de cubos" },
+  { src: "img/manzana-piezas.webp", alt: "Piezas sueltas del monedero manzana: tapas de malla, bases negras, hoja turquesa y tallo" },
+  { src: "img/cajas-regalo.webp", alt: "Caja de regalo transparente con dulces y cinta, junto a llaveros de cubos" },
 ];
 
 /* El catálogo. El orden de esta lista es el orden en la página y en el índice,
@@ -143,7 +143,7 @@ export const PRODUCTOS = [
     texto: "Cubos con letras que se enganchan entre sí, uno por letra. Cada cubo puede llevar su propio color, así que dos llaveros con el mismo nombre nunca son iguales. El enganche es parte de la pieza, no una argolla pegada.",
     colores: ["#E5402B", "#24B5A6", "#2E6FE8", "#F2A00E"],
     foto: {
-      src: "img/cubos-letras-detalle.jpg",
+      src: "img/cubos-letras-detalle.webp",
       ancho: 1600,
       alto: 1200,
       forma: "foto-h",
@@ -161,7 +161,7 @@ export const PRODUCTOS = [
     texto: "El mismo sistema de cubos pero con dígitos. Sirve para el número de placa, un teléfono o una fecha que importa. Se puede combinar con letras en el mismo llavero.",
     colores: ["#24B5A6", "#E5402B", "#22252A"],
     foto: {
-      src: "img/cubos-numeros.jpg",
+      src: "img/cubos-numeros.webp",
       ancho: 896,
       alto: 1195,
       forma: "foto-v",
@@ -178,7 +178,7 @@ export const PRODUCTOS = [
     texto: "Plegable, aguanta el peso del teléfono sin moverse y cabe en cualquier bolso. Funciona en vertical y en horizontal, y el borde inferior deja pasar el cable del cargador.",
     colores: ["#F2803C", "#24B5A6", "#22252A", "#8B4FD6"],
     foto: {
-      src: "img/soportes-celular.jpg",
+      src: "img/soportes-celular.webp",
       ancho: 1195,
       alto: 896,
       forma: "foto-h",
@@ -195,7 +195,7 @@ export const PRODUCTOS = [
     texto: "La tapa es una malla impresa que deja ver lo que hay adentro. El tallo y la hoja van aparte y se pueden pedir en otro color. Sirve para monedas, dulces o audífonos.",
     colores: ["#E5402B", "#22252A"],
     foto: {
-      src: "img/manzana-piezas.jpg",
+      src: "img/manzana-piezas.webp",
       ancho: 896,
       alto: 1195,
       forma: "foto-v",
@@ -212,7 +212,7 @@ export const PRODUCTOS = [
     texto: "La pieza que elijás, empacada con dulces y cinta en caja transparente, lista para entregar. Es la opción para cuando el regalo es para hoy y no hay tiempo de envolver nada.",
     colores: [],
     foto: {
-      src: "img/cajas-regalo.jpg",
+      src: "img/cajas-regalo.webp",
       ancho: 1195,
       alto: 896,
       forma: "foto-h",
