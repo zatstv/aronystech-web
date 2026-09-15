@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 
+import DetalleProducto from "./components/DetalleProducto.jsx";
+import { PRODUCTOS } from "./data/sitio.js";
+
 import Acceso from "./components/Acceso.jsx";
 import Catalogo from "./components/Catalogo.jsx";
 import FondoCuadricula from "./components/FondoCuadricula.jsx";
@@ -27,6 +30,26 @@ export default function App() {
     return () => window.removeEventListener("hashchange", mirar);
   }, []);
 
+  const [ruta, setRuta] = useState(() => window.location.hash);
+  useEffect(() => {
+    const actualizar = () => setRuta(window.location.hash);
+    window.addEventListener("hashchange", actualizar);
+    return () => window.removeEventListener("hashchange", actualizar);
+  }, []);
+  const esDetalle = ruta.startsWith("#producto/");
+  const producto = PRODUCTOS.find((p) => ruta === `#producto/${p.id}`);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      if (esDetalle) {
+        window.scrollTo({ top: 0, behavior: "instant" });
+        document.getElementById("detalle-titulo")?.focus({ preventScroll: true });
+      } else if (ruta) {
+        document.getElementById(ruta.slice(1))?.scrollIntoView({ behavior: "instant" });
+      }
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [ruta, esDetalle]);
+
   useAnclaInicial();
   useReveal();
 
@@ -44,13 +67,14 @@ export default function App() {
       <div className="contenido">
         <Lateral />
 
-        <main>
+        <main hidden={esDetalle}>
           <Hero />
-          <Catalogo alPedir={setPedido} />
+          <Catalogo />
           <Galeria />
           <Nosotros />
         </main>
 
+        {esDetalle && <DetalleProducto producto={producto} alPedir={setPedido} />}
         <Footer />
       </div>
 

@@ -1,13 +1,13 @@
-import { MessageCircle } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import "./FichaProducto.css";
 
-export default function FichaProducto({ producto, alPedir }) {
+export default function FichaProducto({ producto }) {
   const { nombre, precio, unidad, texto, colores, categoria, foto } = producto;
 
   return (
     <article className="ficha">
-      <div className="ficha__foto">
+      <a className="ficha__foto" href={`#producto/${producto.id}`} aria-label={`Ver detalles de ${nombre}`}>
         <img
           src={`/${foto.src}`}
           width={foto.ancho}
@@ -15,8 +15,8 @@ export default function FichaProducto({ producto, alPedir }) {
           alt={foto.alt}
           loading="lazy"
         />
-        <span className="ficha__sello">Por encargo</span>
-      </div>
+        <span className="ficha__sello">Por encargo</span><span className="ficha__explorar"><ArrowUpRight size={22} /></span>
+      </a>
 
       <div className="ficha__cuerpo">
         <div className="ficha__encabezado">
@@ -38,10 +38,10 @@ export default function FichaProducto({ producto, alPedir }) {
 
         <p className="ficha__unidad">{unidad}</p>
 
-        <button type="button" className="boton ficha__boton" onClick={() => alPedir(producto)}>
-          <MessageCircle size={17} strokeWidth={2.4} />
-          Pedir por WhatsApp
-        </button>
+        <a className="ficha__detalle" href={`#producto/${producto.id}`}>
+          <ArrowUpRight size={17} strokeWidth={2.4} />
+          Conocer la pieza
+        </a>
       </div>
     </article>
   );

@@ -8,7 +8,7 @@ import "./Catalogo.css";
 /* Se quitó el filtro "listo para entregar / a pedido" que traía la referencia:
    acá todo se imprime desde cero, así que no habría nada en el primer grupo. */
 
-export default function Catalogo({ alPedir }) {
+export default function Catalogo() {
   const [busqueda, setBusqueda] = useState("");
   const [categoria, setCategoria] = useState("Todos");
 
@@ -67,7 +67,7 @@ export default function Catalogo({ alPedir }) {
         ) : (
           <div className="catalogo__grilla">
             {visibles.map((p) => (
-              <FichaProducto key={p.id} producto={p} alPedir={alPedir} />
+              <FichaProducto key={p.id} producto={p} />
             ))}
           </div>
         )}

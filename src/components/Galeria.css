@@ -1,158 +1,21 @@
-/* Galería. Ocupa el lugar que tenía "A pedido", así que conserva la misma
-   superficie hundida y los filos arriba y abajo: la página mantiene su ritmo. */
-
-.galeria {
-  padding-block: var(--aire);
-}
-
-.galeria__titulo { margin-block: .4rem .7rem; }
-
-.galeria__intro {
-  max-width: 46ch;
-  margin-bottom: 1.75rem;
-  color: var(--tinta-suave);
-}
-
-/* --- El marco --- */
-
-/* Las fotos más anchas son 4:3, así que pasado cierto ancho el marco solo
-   agrega papel vacío a los lados. Se acota la columna del carrusel. */
-.galeria__carrusel {
-  max-width: 46rem;
-}
-
-.galeria__marco {
-  position: relative;
-  overflow: hidden;
-  background: var(--papel);
-  border: var(--filo);
-  border-radius: 16px;
-  box-shadow: var(--sombra-honda);
-}
-
-.galeria__marco:focus-visible {
-  outline: 3px solid var(--acento);
-  outline-offset: 3px;
-}
-
-.galeria__pista {
-  display: flex;
-  cursor: grab;
-}
-
-.galeria__pista:active { cursor: grabbing; }
-
-.galeria__hueco {
-  flex: 0 0 100%;
-  height: clamp(19rem, 52vh, 31rem);
-}
-
-/* contain y no cover: las fotos vienen en formatos mezclados y recortarlas
-   a una caja común se come medio producto (PROYECTO.md §6f). */
-.galeria__hueco img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-/* --- Flechas: piezas apoyadas, no círculos flotando --- */
-
-.galeria__flecha {
-  position: absolute;
-  top: 50%;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  margin-top: -1.3rem;
-  background: var(--papel);
-  color: var(--tinta);
-  border: var(--filo);
-  border-radius: 999px;
-  box-shadow: var(--sombra);
-  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-}
-
-.galeria__flecha.es-izquierda { left: .9rem; }
-.galeria__flecha.es-derecha { right: .9rem; }
-
-.galeria__flecha:hover:not(:disabled) {
-  transform: translate(-1px, -1px);
-  box-shadow: var(--sombra-honda);
-}
-
-.galeria__flecha:active:not(:disabled) {
-  transform: translate(3px, 3px);
-  box-shadow: var(--sombra-hundida);
-}
-
-.galeria__flecha:disabled {
-  opacity: .3;
-  cursor: not-allowed;
-  box-shadow: var(--sombra-hundida);
-}
-
-/* --- Contador --- */
-
-.galeria__cuenta {
-  position: absolute;
-  top: .9rem;
-  right: .9rem;
-  padding: .3rem .7rem;
-  background: var(--papel);
-  border: var(--filo);
-  border-radius: 999px;
-  box-shadow: 2px 2px 0 var(--tinta);
-  font-family: var(--mono);
-  font-size: .7rem;
-  font-weight: 700;
-  letter-spacing: .06em;
-}
-
-/* --- Tira de miniaturas --- */
-
-.galeria__tira {
-  margin-top: 1rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.galeria__tira::-webkit-scrollbar { display: none; }
-
-.galeria__tira-interior {
-  display: flex;
-  gap: 3px;
-  width: fit-content;
-  height: 5rem;
-  padding: 3px 0 6px;
-}
-
-.galeria__mini {
-  position: relative;
-  flex-shrink: 0;
-  height: 100%;
-  padding: 0;
-  overflow: hidden;
-  background: var(--papel);
-  border: 1.5px solid color-mix(in srgb, var(--tinta) 35%, transparent);
-  border-radius: 7px;
-}
-
-.galeria__mini img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;   /* acá sí recorta: es una miniatura, no la foto */
-  pointer-events: none;
-  user-select: none;
-}
-
-/* La activa no depende solo del ancho: lleva filo de tinta y sombra, para
-   que se distinga también en una captura o sin animación. */
-.galeria__mini.esta-activa {
-  border: var(--filo);
-  box-shadow: 2px 2px 0 var(--acento);
-}
+.galeria{padding-block:var(--aire)}
+.galeria__cabecera{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:2rem;flex-wrap:wrap}
+.galeria__titulo{margin-top:.5rem;max-width:15ch}
+.galeria__intro{max-width:32ch;color:var(--tinta-suave)}
+.galeria__mosaico{columns:3;column-gap:1.15rem}
+.galeria__pieza{position:relative;display:block;width:100%;padding:0;margin:0 0 1.15rem;break-inside:avoid;border:var(--filo);border-radius:18px;overflow:hidden;background:var(--papel-hondo);cursor:zoom-in;transition:box-shadow .2s ease,transform .2s ease}
+.galeria__pieza img{display:block;width:100%;height:auto}
+.galeria__ampliar{display:flex;align-items:center;justify-content:space-between;padding:.65rem .85rem;color:var(--tinta);background:var(--papel);font:700 .7rem var(--mono)}
+.galeria__pieza:hover{transform:translateY(-3px);box-shadow:var(--sombra)}
+.galeria__pieza:focus-visible{outline:3px solid var(--acento);outline-offset:4px}
+.galeria__visor{padding:0;border:var(--filo);border-radius:20px;width:min(900px,94vw);max-height:94dvh;background:var(--papel);color:var(--tinta);margin:auto}
+.galeria__visor::backdrop{background:rgba(0,0,0,.78);backdrop-filter:blur(8px)}
+.galeria__visor-interior{padding:1rem}
+.galeria__barra{display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem;font:700 .8rem var(--mono)}
+.galeria__visor button{display:grid;place-items:center;min-width:44px;min-height:44px;border:var(--filo);border-radius:50%;background:var(--papel);color:var(--tinta)}
+.galeria__visor img{width:100%;height:65dvh;object-fit:contain;display:block}
+.galeria__controles{display:flex;gap:1rem;align-items:center;margin-top:.8rem}.galeria__controles p{flex:1;font-size:.8rem;color:var(--tinta-suave);text-align:center}
+body:has(.galeria__visor[open]){overflow:hidden}
+@media(max-width:70rem){.galeria__mosaico{columns:2}}
+@media(max-width:30rem){.galeria__mosaico{column-gap:.65rem}.galeria__pieza{margin-bottom:.65rem;border-radius:12px}.galeria__visor img{height:55dvh}}
+@media(prefers-reduced-motion:reduce){.galeria__pieza{transition:none}.galeria__pieza:hover{transform:none}}
