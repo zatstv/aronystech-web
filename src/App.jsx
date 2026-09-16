@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
+import PedidoPersonalizado from "./components/PedidoPersonalizado.jsx";
 import DetalleProducto from "./components/DetalleProducto.jsx";
 import { PRODUCTOS } from "./data/sitio.js";
 
@@ -16,6 +17,7 @@ import { useAnclaInicial } from "./hooks/useAnclaInicial.js";
 import { useReveal } from "./hooks/useReveal.js";
 
 export default function App() {
+  const personalizadoRef = useRef(null);
   /* Vista previa de las pantallas de acceso, en #acceso. No hay router
      instalado y para una pantalla suelta no vale la pena traer uno: alcanza
      con mirar el hash. Cuando el acceso sea de verdad, esto se reemplaza por
@@ -68,7 +70,7 @@ export default function App() {
         <Lateral />
 
         <main hidden={esDetalle}>
-          <Hero />
+          <Hero alPersonalizar={() => personalizadoRef.current.showModal()} />
           <Catalogo />
           <Galeria />
           <Nosotros />
@@ -79,6 +81,7 @@ export default function App() {
       </div>
 
       <ModalPedido producto={pedido} alCerrar={cerrar} />
+      <PedidoPersonalizado dialogoRef={personalizadoRef} />
     </>
   );
 }

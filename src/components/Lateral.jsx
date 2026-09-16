@@ -76,6 +76,8 @@ function SelectorTema() {
 
 export default function Lateral() {
   const [abierto, setAbierto] = useState(false);
+  const menuRef = useRef(null);
+  const navRef = useRef(null);
   const [acceso, setAcceso] = useState(false);
   const cerrarAcceso = useCallback(() => setAcceso(false), []);
   const anclaAcceso = useRef(null);
@@ -86,7 +88,7 @@ export default function Lateral() {
      que son combinaciones del navegador y no nuestras. */
   useEffect(() => {
     const alTeclear = (e) => {
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.ctrlKey || e.metaKey || e.altKey || document.querySelector('[aria-modal="true"], dialog[open]')) return;
       const foco = document.activeElement;
       if (foco?.matches("input, textarea, select, [contenteditable]")) return;
 
@@ -99,6 +101,7 @@ export default function Lateral() {
       const enlace = GRUPOS[0].enlaces.find((l) => l.tecla === e.key);
       if (!enlace) return;
       e.preventDefault();
+      window.location.hash = enlace.href;
       document.getElementById(enlace.href.slice(1))?.scrollIntoView();
       setAbierto(false);
     };
@@ -106,6 +109,34 @@ export default function Lateral() {
     document.addEventListener("keydown", alTeclear);
     return () => document.removeEventListener("keydown", alTeclear);
   }, []);
+
+  useEffect(() => {
+    if (!abierto) return;
+    const media = window.matchMedia("(max-width: 63.9375rem)");
+    const anterior = document.activeElement;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focoFrame = requestAnimationFrame(() => {
+      navRef.current?.querySelector(".lateral__cuerpo a[href]")?.focus();
+    });
+    const cerrarPorAncho = () => { if (!media.matches) setAbierto(false); };
+    const teclado = (e) => {
+      if (e.key === "Escape") { setAcceso(false); setAbierto(false); }
+      if (e.key !== "Tab") return;
+      const items = [menuRef.current, ...navRef.current.querySelectorAll('a[href], button, input')].filter((el) => el && !el.disabled && el.getClientRects().length && getComputedStyle(el).visibility !== "hidden");
+      if (e.shiftKey && document.activeElement === items[0]) {e.preventDefault(); items.at(-1)?.focus();}
+      else if (!e.shiftKey && document.activeElement === items.at(-1)) {e.preventDefault(); items[0]?.focus();}
+    };
+    document.addEventListener("keydown", teclado);
+    media.addEventListener("change", cerrarPorAncho);
+    return () => {
+      cancelAnimationFrame(focoFrame);
+      document.body.style.overflow = overflow;
+      document.removeEventListener("keydown", teclado);
+      media.removeEventListener("change", cerrarPorAncho);
+      if (media.matches && anterior?.isConnected) anterior.focus();
+    };
+  }, [abierto]);
 
   return (
     <>
@@ -116,6 +147,7 @@ export default function Lateral() {
         </a>
         <button
           type="button"
+          ref={menuRef}
           className="lateral__menu"
           aria-expanded={abierto}
           aria-controls="nav-lateral"
@@ -137,6 +169,7 @@ export default function Lateral() {
       )}
 
       <nav
+        ref={navRef}
         id="nav-lateral"
         className={`lateral ${abierto ? "esta-abierto" : ""}`}
         aria-label="Navegación principal"

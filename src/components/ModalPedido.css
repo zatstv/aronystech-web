@@ -188,3 +188,11 @@
   .modal { place-items: center; padding: 1.5rem; }
   .modal__caja { border-radius: 16px; }
 }
+
+.modal__ayuda{font-size:.8rem;color:var(--tinta-suave);line-height:1.5;margin-block:.35rem .75rem}
+.modal__error{color:var(--acento);font-size:.85rem}.modal__error:empty{display:none}
+.modal__resumen{margin:0 1.25rem 1.25rem;padding:1rem;background:var(--papel-hondo);border-radius:12px;overflow-wrap:anywhere}
+.modal__resumen h3{font-size:1rem;margin-bottom:.6rem}.modal__resumen p{font-size:.85rem;margin-block:.4rem}
+.modal__contador button:disabled{opacity:.4;cursor:not-allowed}
+.modal__caja{overscroll-behavior:contain;scroll-padding-block:5rem 7rem}
+@media(max-width:30rem){.modal__pie{flex-wrap:wrap}.modal__pie .boton{flex:1;justify-content:center;font-size:.85rem}}

@@ -248,3 +248,45 @@
 @media (prefers-reduced-motion: reduce) {
   .lateral { transition: none; }
 }
+
+/* Propuesta de cabecera horizontal para escritorio. */
+@media (min-width: 64rem) {
+  .contenido { padding-left: 0; }
+  html { scroll-padding-top: 7rem; }
+  .lateral {
+    position: sticky;
+    top: 0;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    min-height: 5.5rem;
+    padding: 1rem clamp(1.25rem, 3vw, 3rem);
+    gap: clamp(.75rem, 2vw, 2rem);
+    border-right: 0;
+    border-bottom: var(--filo);
+    overflow: visible;
+  }
+  .lateral__marca--rail { flex-shrink: 0; padding: 0; }
+  .lateral__cuerpo { flex-direction: row; align-items: center; justify-content: flex-end; gap: .75rem; }
+  .lateral__grupo:first-child { margin-right: auto; margin-left: auto; }
+  .lateral__lista { flex-direction: row; gap: .2rem; }
+  .lateral__grupo-titulo, .lateral__tecla { display: none; }
+  .lateral__enlace { width: auto; padding: .7rem .8rem; white-space: nowrap; font-size: .9rem; }
+  .lateral__grupo:first-child .lateral__enlace svg { display: none; }
+  .lateral__grupo:first-child .lateral__enlace { border-radius: 0; border: 0; border-bottom: 2px solid transparent; background: transparent; }
+  .lateral__grupo:first-child .lateral__enlace.esta-activo { border-bottom-color: var(--acento); color: var(--tinta); }
+  .lateral__grupo:first-child .lateral__enlace:hover { color: var(--acento); }
+  .lateral__grupo:last-child .lateral__enlace { background: var(--acento); color: white; border: var(--filo); box-shadow: 3px 3px 0 var(--tinta); border-radius: 10px; }
+  .lateral__pie { padding: 0; }
+  .lateral__tema { gap: 0; padding: 2px; }
+  .lateral__tema-opcion { padding: .5rem .4rem; font-size: .6rem; }
+  .lateral__ancla-acceso .login { position: absolute; top: calc(100% + 1rem); right: 0; left: auto; }
+  .detalle__imagen { top: 7rem; }
+}
+@media (min-width: 64rem) and (max-width: 75rem) {
+  .lateral { gap: .7rem; padding-inline: 1rem; }
+  .lateral__enlace { padding-inline: .55rem; font-size: .82rem; }
+  .lateral__cuerpo { gap: .4rem; }
+  .lateral__marca--rail img { max-width: 125px; }
+}

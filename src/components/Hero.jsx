@@ -2,12 +2,11 @@ import { Boxes, MessageCircle, Package, Truck } from "lucide-react";
 
 import NombreDibujado from "./NombreDibujado.jsx";
 import { DATOS, PALETA } from "../data/sitio.js";
-import { linkWhatsApp } from "../lib/whatsapp.js";
 import "./Hero.css";
 
 const ICONOS = { package: Package, truck: Truck, layers: Boxes };
 
-export default function Hero() {
+export default function Hero({ alPersonalizar }) {
   return (
     <section className="hero" id="inicio">
       <div className="contenedor hero__grilla">
@@ -37,15 +36,14 @@ export default function Hero() {
               <Package size={17} strokeWidth={2.4} />
               Ver catálogo
             </a>
-            <a
+            <button
+              type="button"
               className="boton boton--hueco"
-              href={linkWhatsApp("Hola, quisiera cotizar un pedido personalizado.")}
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={alPersonalizar}
             >
               <MessageCircle size={17} strokeWidth={2.4} />
               Pedido personalizado
-            </a>
+            </button>
           </div>
 
           <dl className="hero__datos">
