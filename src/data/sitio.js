@@ -169,20 +169,26 @@ export const SECUENCIA = [
   },
 ];
 
-/* Las fotos de la galería. Son las que hay hoy; cuando estén las nuevas de
-   referencias/GUIA-FOTOS.md se cambian acá y nada más.
-   Los formatos vienen mezclados (unas apaisadas y otras verticales), así que
-   la galería las muestra enteras sobre un fondo en vez de recortarlas. */
+/* El mosaico de fotos que va debajo de la secuencia.
+
+   ancho y alto son los del archivo, en píxeles. No son decorativos: con
+   ellos el navegador reserva el hueco exacto antes de bajar la foto, así la
+   página no salta al cargar, y el mosaico reparte el ancho de cada fila
+   según la proporción de cada imagen. Si se cambia una foto hay que cambiar
+   sus medidas.
+
+   El orden de la lista es el orden en que se ven. Las filas se arman solas:
+   no hay que decidir cuántas fotos van en cada una. */
 export const GALERIA = [
-  { src: "img/portada.webp", alt: "Monedero manzana de malla roja con ARONYS TECH en cubos arriba y el teléfono en cubos abajo" },
-  { src: "img/cubos-letras-detalle.webp", alt: "La palabra ARONYSTECH formada con cubos de colores sobre fondo verde" },
-  { src: "img/hero-manzana-cubos.webp", alt: "Monedero manzana rojo rodeado de llaveros de cubos con letras y números" },
-  { src: "img/cubos-numeros.webp", alt: "Llavero de cubos turquesa con números sobre base roja" },
-  { src: "img/soportes-celular.webp", alt: "Cuatro soportes de celular impresos en 3D: mármol, negro, naranja y turquesa" },
-  { src: "img/surtido.webp", alt: "Soportes de celular de varios colores junto a llaveros de cubos con letras" },
-  { src: "img/cubos-letras.webp", alt: "Surtido de soportes de celular amarillo, turquesa, negro, blanco y morado con llaveros de cubos" },
-  { src: "img/manzana-piezas.webp", alt: "Piezas sueltas del monedero manzana: tapas de malla, bases negras, hoja turquesa y tallo" },
-  { src: "img/cajas-regalo.webp", alt: "Caja de regalo transparente con dulces y cinta, junto a llaveros de cubos" },
+  { src: "img/portada.webp", alt: "Monedero manzana de malla roja con ARONYS TECH en cubos arriba y el teléfono en cubos abajo", ancho: 896, alto: 1195 },
+  { src: "img/cubos-letras-detalle.webp", alt: "La palabra ARONYSTECH formada con cubos de colores sobre fondo verde", ancho: 1600, alto: 1200 },
+  { src: "img/hero-manzana-cubos.webp", alt: "Monedero manzana rojo rodeado de llaveros de cubos con letras y números", ancho: 896, alto: 1195 },
+  { src: "img/cubos-numeros.webp", alt: "Llavero de cubos turquesa con números sobre base roja", ancho: 896, alto: 1195 },
+  { src: "img/soportes-celular.webp", alt: "Cuatro soportes de celular impresos en 3D: mármol, negro, naranja y turquesa", ancho: 1195, alto: 896 },
+  { src: "img/surtido.webp", alt: "Soportes de celular de varios colores junto a llaveros de cubos con letras", ancho: 896, alto: 1195 },
+  { src: "img/cubos-letras.webp", alt: "Surtido de soportes de celular amarillo, turquesa, negro, blanco y morado con llaveros de cubos", ancho: 896, alto: 1195 },
+  { src: "img/manzana-piezas.webp", alt: "Piezas sueltas del monedero manzana: tapas de malla, bases negras, hoja turquesa y tallo", ancho: 896, alto: 1195 },
+  { src: "img/cajas-regalo.webp", alt: "Caja de regalo transparente con dulces y cinta, junto a llaveros de cubos", ancho: 1195, alto: 896 },
 ];
 
 /* El catálogo. El orden de esta lista es el orden en la página y en el índice,

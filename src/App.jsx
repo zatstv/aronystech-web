@@ -11,6 +11,7 @@ import Galeria from "./components/Galeria.jsx";
 import Hero from "./components/Hero.jsx";
 import Lateral from "./components/Lateral.jsx";
 import ModalPedido from "./components/ModalPedido.jsx";
+import Mosaico from "./components/Mosaico.jsx";
 import Nosotros from "./components/Nosotros.jsx";
 import { useAnclaInicial } from "./hooks/useAnclaInicial.js";
 import { useReveal } from "./hooks/useReveal.js";
@@ -71,6 +72,7 @@ export default function App() {
         <main hidden={esDetalle}>
           <Hero alPersonalizar={() => personalizadoRef.current.showModal()} />
           <Galeria />
+          <Mosaico />
           <Nosotros />
         </main>
 
