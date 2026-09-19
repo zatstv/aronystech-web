@@ -12,6 +12,11 @@ dist/
 fotos/
 *.zip
 
+# Las fotos que se arrastran a la raíz para convertirlas. La versión que usa
+# la página queda en public/img ya comprimida. Solo la raíz: las de public
+# se suben igual.
+/*.png
+
 # Los videos crudos se quedan en tu disco: el de la portada venía de 5,9 MB
 # y en el repo quedaría para siempre. La versión comprimida que usa la
 # página sí se sube, por eso la excepción.

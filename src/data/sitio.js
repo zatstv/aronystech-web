@@ -123,36 +123,49 @@ export const TAMANOS = ["Pequeño", "Mediano", "Grande"];
    Agregar un paso es agregar un objeto; sacarlo, borrarlo. El orden de acá es
    el orden en que se ven.
 
-   OJO: estas fotos son de relleno, las que ya había en el sitio. Van a ser
-   reemplazadas por las del clicker de pistón pegajoso: armado, las piezas por
-   separado, el armado a mano y el detalle.
+   La secuencia de ahora es la del clicker de pistón: cerrado, todas las
+   piezas, el detalle de la cara suelta y armada, el switch adentro y el clic.
+   Va de lo entero a lo desarmado y vuelve, que es como se entiende qué tiene
+   adentro.
 
    Las rutas van sin la barra del principio, igual que en GALERIA: el
    componente se la agrega. */
 export const SECUENCIA = [
   {
-    src: "img/portada.webp",
-    alt: "Monedero manzana de malla roja con ARONYS TECH en cubos arriba y el teléfono en cubos abajo",
-    titulo: "Armado",
-    texto: "Así llega la pieza terminada: las partes encajan entre sí y el enganche es parte de la impresión, no una argolla pegada después.",
+    src: "img/piston-cerrado.webp",
+    alt: "Bloque de piedra cerrado, sostenido entre dos dedos",
+    titulo: "Cerrado es un bloque",
+    texto: "Entra en la mano y no dice nada: cuatro caras de piedra y listo. Todo lo que hace está adentro.",
   },
   {
-    src: "img/manzana-piezas.webp",
-    alt: "Piezas sueltas del monedero manzana: tapas de malla, bases negras, hoja turquesa y tallo",
-    titulo: "Por separado",
-    texto: "Cada parte se imprime aparte y en su color. Nada se pinta: el color es el del material con el que se imprimió.",
+    src: "img/piston-piezas.webp",
+    alt: "Todas las piezas del clicker sueltas sobre fondo negro: el marco negro, la cara de pistón color madera, el switch azul, cuatro placas de piedra y ocho pernos blancos",
+    titulo: "Quince piezas",
+    texto: "El marco, las cuatro caras de piedra, la cara del pistón, ocho pernos y el switch. Cada una se imprime por separado y en su color: nada va pintado.",
   },
   {
-    src: "img/cubos-letras-detalle.webp",
-    alt: "La palabra ARONYSTECH formada con cubos de colores sobre fondo verde",
-    titulo: "Pieza por pieza",
-    texto: "Los cubos se enganchan de a uno. Cada uno puede llevar su propio color, así que dos piezas con el mismo nombre nunca salen iguales.",
+    src: "img/piston-cara-suelta.webp",
+    alt: "La cara del pistón con sus ocho pernos blancos separados alrededor",
+    titulo: "Los pernos, uno por uno",
+    texto: "Los ocho pernos son piezas aparte. Son los que le dan el relieve a la cara y los que la sujetan al cuerpo.",
   },
   {
-    src: "img/cubos-numeros.webp",
-    alt: "Llavero de cubos turquesa con números sobre base roja",
-    titulo: "De cerca",
-    texto: "Las capas de impresión se ven y se tocan. Es una pieza hecha, no una moldeada en serie.",
+    src: "img/piston-cara-armada.webp",
+    alt: "La misma cara del pistón ya con los ocho pernos puestos",
+    titulo: "Encastra, no se pega",
+    texto: "Cada perno entra a presión en su lugar. Sin pegamento y sin tornillos: si hay que abrirlo, se abre.",
+  },
+  {
+    src: "img/piston-juntando.webp",
+    alt: "Dos manos acercando la cara del pistón al cubo, que tiene el switch azul adentro",
+    titulo: "El switch adentro",
+    texto: "El cubo aloja un switch de teclado mecánico. Es de donde sale el clic: se oye y se siente, no es un botón blando.",
+  },
+  {
+    src: "img/piston-click.webp",
+    alt: "El clicker terminado en la mano, con el pistón extendido",
+    titulo: "Y hace clic",
+    texto: "Armado, el pistón sale y entra con cada pulsada. Es para tener en el escritorio y apretarlo sin pensar.",
   },
 ];
 
