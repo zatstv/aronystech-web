@@ -5,7 +5,6 @@ import DetalleProducto from "./components/DetalleProducto.jsx";
 import { PRODUCTOS } from "./data/sitio.js";
 
 import Acceso from "./components/Acceso.jsx";
-import Catalogo from "./components/Catalogo.jsx";
 import FondoCuadricula from "./components/FondoCuadricula.jsx";
 import Footer from "./components/Footer.jsx";
 import Galeria from "./components/Galeria.jsx";
@@ -71,7 +70,6 @@ export default function App() {
 
         <main hidden={esDetalle}>
           <Hero alPersonalizar={() => personalizadoRef.current.showModal()} />
-          <Catalogo />
           <Galeria />
           <Nosotros />
         </main>

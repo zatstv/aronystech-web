@@ -113,6 +113,49 @@ export const DATOS = [
 /* Opciones del formulario de pedido. */
 export const TAMANOS = ["Pequeño", "Mediano", "Grande"];
 
+/* La secuencia que se va cambiando al bajar por la página.
+
+   Cada paso es una foto con su texto. La foto queda quieta a un costado
+   mientras el texto pasa al lado; cuando el paso siguiente llega al medio de
+   la pantalla, la foto cambia sola.
+
+   Para cambiarla no hace falta tocar ningún componente: se edita esta lista.
+   Agregar un paso es agregar un objeto; sacarlo, borrarlo. El orden de acá es
+   el orden en que se ven.
+
+   OJO: estas fotos son de relleno, las que ya había en el sitio. Van a ser
+   reemplazadas por las del clicker de pistón pegajoso: armado, las piezas por
+   separado, el armado a mano y el detalle.
+
+   Las rutas van sin la barra del principio, igual que en GALERIA: el
+   componente se la agrega. */
+export const SECUENCIA = [
+  {
+    src: "img/portada.webp",
+    alt: "Monedero manzana de malla roja con ARONYS TECH en cubos arriba y el teléfono en cubos abajo",
+    titulo: "Armado",
+    texto: "Así llega la pieza terminada: las partes encajan entre sí y el enganche es parte de la impresión, no una argolla pegada después.",
+  },
+  {
+    src: "img/manzana-piezas.webp",
+    alt: "Piezas sueltas del monedero manzana: tapas de malla, bases negras, hoja turquesa y tallo",
+    titulo: "Por separado",
+    texto: "Cada parte se imprime aparte y en su color. Nada se pinta: el color es el del material con el que se imprimió.",
+  },
+  {
+    src: "img/cubos-letras-detalle.webp",
+    alt: "La palabra ARONYSTECH formada con cubos de colores sobre fondo verde",
+    titulo: "Pieza por pieza",
+    texto: "Los cubos se enganchan de a uno. Cada uno puede llevar su propio color, así que dos piezas con el mismo nombre nunca salen iguales.",
+  },
+  {
+    src: "img/cubos-numeros.webp",
+    alt: "Llavero de cubos turquesa con números sobre base roja",
+    titulo: "De cerca",
+    texto: "Las capas de impresión se ven y se tocan. Es una pieza hecha, no una moldeada en serie.",
+  },
+];
+
 /* Las fotos de la galería. Son las que hay hoy; cuando estén las nuevas de
    referencias/GUIA-FOTOS.md se cambian acá y nada más.
    Los formatos vienen mezclados (unas apaisadas y otras verticales), así que

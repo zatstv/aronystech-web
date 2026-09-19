@@ -1,21 +1,144 @@
-.galeria{padding-block:var(--aire)}
-.galeria__cabecera{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:2rem;flex-wrap:wrap}
-.galeria__titulo{margin-top:.5rem;max-width:15ch}
-.galeria__intro{max-width:32ch;color:var(--tinta-suave)}
-.galeria__mosaico{columns:3;column-gap:1.15rem}
-.galeria__pieza{position:relative;display:block;width:100%;padding:0;margin:0 0 1.15rem;break-inside:avoid;border:var(--filo);border-radius:18px;overflow:hidden;background:var(--papel-hondo);cursor:zoom-in;transition:box-shadow .2s ease,transform .2s ease}
-.galeria__pieza img{display:block;width:100%;height:auto}
-.galeria__ampliar{display:flex;align-items:center;justify-content:space-between;padding:.65rem .85rem;color:var(--tinta);background:var(--papel);font:700 .7rem var(--mono)}
-.galeria__pieza:hover{transform:translateY(-3px);box-shadow:var(--sombra)}
-.galeria__pieza:focus-visible{outline:3px solid var(--acento);outline-offset:4px}
-.galeria__visor{padding:0;border:var(--filo);border-radius:20px;width:min(900px,94vw);max-height:94dvh;background:var(--papel);color:var(--tinta);margin:auto}
-.galeria__visor::backdrop{background:rgba(0,0,0,.78);backdrop-filter:blur(8px)}
-.galeria__visor-interior{padding:1rem}
-.galeria__barra{display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem;font:700 .8rem var(--mono)}
-.galeria__visor button{display:grid;place-items:center;min-width:44px;min-height:44px;border:var(--filo);border-radius:50%;background:var(--papel);color:var(--tinta)}
-.galeria__visor img{width:100%;height:65dvh;object-fit:contain;display:block}
-.galeria__controles{display:flex;gap:1rem;align-items:center;margin-top:.8rem}.galeria__controles p{flex:1;font-size:.8rem;color:var(--tinta-suave);text-align:center}
-body:has(.galeria__visor[open]){overflow:hidden}
-@media(max-width:70rem){.galeria__mosaico{columns:2}}
-@media(max-width:30rem){.galeria__mosaico{column-gap:.65rem}.galeria__pieza{margin-bottom:.65rem;border-radius:12px}.galeria__visor img{height:55dvh}}
-@media(prefers-reduced-motion:reduce){.galeria__pieza{transition:none}.galeria__pieza:hover{transform:none}}
+/* La galería como secuencia: la foto se queda quieta mientras pasan los
+   textos, y cambia sola al llegar cada paso al medio de la pantalla. */
+
+.secuencia { padding-block: var(--aire); }
+
+.secuencia__cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.secuencia__titulo { margin-top: .5rem; max-width: 15ch; }
+
+.secuencia__intro { max-width: 32ch; color: var(--tinta-suave); }
+
+/* --- La foto --- */
+
+.secuencia__marco {
+  position: relative;
+  /* Alto fijo: las fotos están una encima de otra y son absolutas, así que
+     ninguna puede darle el alto al marco. */
+  aspect-ratio: 4 / 3;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.secuencia__foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  /* Un toque de acercamiento al salir, para que el cambio se lea como un
+     corte de cámara y no como un parpadeo. */
+  transform: scale(1.03);
+  transition: opacity .55s ease, transform .55s ease;
+}
+
+.secuencia__foto.esta-activo { opacity: 1; transform: none; }
+
+.secuencia__cuenta {
+  margin-top: .9rem;
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--tinta-suave);
+}
+
+/* --- Los pasos --- */
+
+.secuencia__pasos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.secuencia__numero {
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--acento);
+}
+
+.secuencia__paso-titulo {
+  margin: .4rem 0 .7rem;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+}
+
+.secuencia__paso-texto {
+  max-width: 42ch;
+  color: var(--tinta-suave);
+  line-height: 1.7;
+}
+
+/* --- Angosto: sin costado donde dejar la foto quieta --- */
+
+@media (max-width: 61.9375rem) {
+  .secuencia__vista { display: none; }
+
+  .secuencia__paso + .secuencia__paso { margin-top: 3.5rem; }
+
+  .secuencia__foto-movil {
+    width: 100%;
+    height: auto;
+    margin-top: 1.25rem;
+    background: var(--papel-hondo);
+    border: var(--filo);
+    border-radius: 14px;
+  }
+}
+
+/* --- Ancho: foto quieta a la izquierda, textos pasando a la derecha --- */
+
+@media (min-width: 62rem) {
+  .secuencia__foto-movil { display: none; }
+
+  .secuencia__grilla {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  .secuencia__vista {
+    position: sticky;
+    /* 7rem porque la cabecera mide 5.5 y está pegada arriba: con menos, la
+       foto se le mete debajo. Es el mismo respiro que usa el detalle. */
+    top: 7rem;
+  }
+
+  /* Cada paso ocupa casi una pantalla: ese es el espacio de scroll que hace
+     falta para que la foto se quede quieta y se alcance a ver el cambio. */
+  .secuencia__paso {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 78vh;
+    opacity: .38;
+    transition: opacity .4s ease;
+  }
+
+  /* El paso que manda la foto es el único a pleno: así se ve de un vistazo
+     cuál de los textos corresponde a lo que se está mirando. */
+  .secuencia__paso.esta-activo { opacity: 1; }
+
+  /* El primero y el último arrancan y terminan a media pantalla, para que el
+     primer paso quede enfrentado a su foto desde el principio. */
+  .secuencia__paso:first-child { min-height: 60vh; justify-content: flex-start; }
+  .secuencia__paso:last-child { min-height: 60vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .secuencia__foto { transition: none; transform: none; }
+  .secuencia__foto.esta-activo { transform: none; }
+  .secuencia__paso { transition: none; opacity: 1; }
+}

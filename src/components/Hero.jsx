@@ -115,8 +115,8 @@ export default function Hero({ alPersonalizar }) {
                 Pedido personalizado
               </button>
 
-              <a className="portada__boton" href="#catalogo">
-                Ver catálogo
+              <a className="portada__boton" href="#galeria">
+                Ver las piezas
                 <ArrowRight size={15} strokeWidth={2.4} aria-hidden="true" />
               </a>
             </div>

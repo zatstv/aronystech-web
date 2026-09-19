@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  Boxes,
   House,
   Images,
   LogIn,
@@ -35,9 +34,8 @@ const GRUPOS = [
   {
     enlaces: [
       { href: "#inicio", texto: "Inicio", icono: House, tecla: "1" },
-      { href: "#catalogo", texto: "Catálogo", icono: Boxes, tecla: "2" },
-      { href: "#galeria", texto: "Galería", icono: Images, tecla: "3" },
-      { href: "#nosotros", texto: "Nosotros", icono: Users, tecla: "4" },
+      { href: "#galeria", texto: "Galería", icono: Images, tecla: "2" },
+      { href: "#nosotros", texto: "Nosotros", icono: Users, tecla: "3" },
     ],
   },
 ];

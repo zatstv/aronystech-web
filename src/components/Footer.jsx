@@ -16,7 +16,6 @@ import "./Footer.css";
 
 const SITIO = [
   { href: "#inicio", texto: "Inicio" },
-  { href: "#catalogo", texto: "Catálogo" },
   { href: "#galeria", texto: "Galería" },
   { href: "#nosotros", texto: "Nosotros" },
 ];

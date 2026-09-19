@@ -1,27 +1,110 @@
-import { useRef, useState } from "react";
-import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
-import { GALERIA } from "../data/sitio.js";
+import { useEffect, useRef, useState } from "react";
+
+import { SECUENCIA } from "../data/sitio.js";
 import "./Galeria.css";
 
+/* ============================================================
+   La galería no es un mosaico: es una secuencia que se recorre bajando.
+
+   La foto queda quieta a un costado mientras los textos pasan al lado. El
+   paso que esté más cerca del medio de la pantalla manda, y la foto cambia
+   sola. Sirve para mostrar una pieza armada y después por separado sin que
+   el visitante tenga que tocar nada.
+
+   Para cambiar lo que se ve se edita SECUENCIA en data/sitio.js. Acá no hay
+   nada escrito a mano.
+   ============================================================ */
+
 export default function Galeria() {
-  const [indice, setIndice] = useState(0);
-  const dialogo = useRef(null);
-  const abrir = (i) => { setIndice(i); dialogo.current.showModal(); };
-  const avanzar = (paso) => setIndice((i) => (i + paso + GALERIA.length) % GALERIA.length);
-  return <section className="galeria" id="galeria">
-    <div className="contenedor">
-      <div className="galeria__cabecera"><div><p className="rotulo">Galería</p><h2 className="titulo-seccion galeria__titulo">De la idea a tus manos.</h2></div><p className="galeria__intro">Texturas, colores y detalles de nuestras piezas. Tocá una foto para verla de cerca.</p></div>
-      <div className="galeria__mosaico">{GALERIA.map((foto, i) => <button className="galeria__pieza" key={foto.src} onClick={() => abrir(i)} aria-label={`Ampliar foto: ${foto.alt}`}>
-        <img src={`/${foto.src}`} alt={foto.alt} loading="lazy" />
-        <span className="galeria__ampliar" aria-hidden="true"><span>{String(i + 1).padStart(2, "0")}</span><ArrowUpRight size={20} /></span>
-      </button>)}</div>
-    </div>
-    <dialog className="galeria__visor" ref={dialogo} aria-label="Foto ampliada" onClick={(e) => { if(e.target === e.currentTarget) dialogo.current.close(); }} onKeyDown={(e) => {if(e.key === "ArrowRight") {e.preventDefault(); avanzar(1);} if(e.key === "ArrowLeft") {e.preventDefault(); avanzar(-1);} }}>
-      <div className="galeria__visor-interior">
-        <div className="galeria__barra"><span aria-live="polite">{indice + 1} / {GALERIA.length}</span><button onClick={() => dialogo.current.close()} aria-label="Cerrar foto"><X /></button></div>
-        <img src={`/${GALERIA[indice].src}`} alt={GALERIA[indice].alt} />
-        <div className="galeria__controles"><button onClick={() => avanzar(-1)} aria-label="Foto anterior"><ChevronLeft /></button><p>{GALERIA[indice].alt}</p><button onClick={() => avanzar(1)} aria-label="Foto siguiente"><ChevronRight /></button></div>
+  const [activo, setActivo] = useState(0);
+  const pasosRef = useRef([]);
+
+  useEffect(() => {
+    const pasos = pasosRef.current.filter(Boolean);
+    if (!pasos.length || !("IntersectionObserver" in window)) return;
+
+    /* Recorta 45% arriba y abajo: queda una franja angosta en el medio de la
+       pantalla y manda el paso que la cruza. Sin el recorte, con dos pasos a
+       la vista ganaba siempre el de arriba y la foto cambiaba tarde. */
+    const obs = new IntersectionObserver(
+      (entradas) => {
+        const dentro = entradas
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (!dentro.length) return;
+        const i = pasos.indexOf(dentro[0].target);
+        if (i >= 0) setActivo(i);
+      },
+      { rootMargin: "-45% 0px -45% 0px" }
+    );
+
+    pasos.forEach((p) => obs.observe(p));
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section className="secuencia" id="galeria">
+      <div className="contenedor">
+        <div className="secuencia__cabecera">
+          <div>
+            <p className="rotulo">Galería</p>
+            <h2 className="titulo-seccion secuencia__titulo">De la idea a tus manos.</h2>
+          </div>
+          <p className="secuencia__intro">
+            Bajá para ver la misma pieza armada y por separado.
+          </p>
+        </div>
+
+        <div className="secuencia__grilla">
+          {/* La foto, quieta mientras pasan los textos. */}
+          <div className="secuencia__vista">
+            <div className="secuencia__marco">
+              {SECUENCIA.map((paso, i) => (
+                <img
+                  key={paso.src}
+                  className={`secuencia__foto ${i === activo ? "esta-activo" : ""}`}
+                  src={`/${paso.src}`}
+                  alt={paso.alt}
+                  /* La primera entra con la sección; las demás cuando toque. */
+                  loading={i === 0 ? "eager" : "lazy"}
+                  /* Solo la que se ve cuenta para un lector de pantalla: las
+                     otras cuatro estarían ahí, invisibles, narrando fotos que
+                     nadie está mirando. */
+                  aria-hidden={i !== activo}
+                />
+              ))}
+            </div>
+
+            {/* En qué paso va, para quien no distingue el cambio de foto. */}
+            <p className="secuencia__cuenta" aria-live="polite">
+              {String(activo + 1).padStart(2, "0")} / {String(SECUENCIA.length).padStart(2, "0")}
+            </p>
+          </div>
+
+          <ol className="secuencia__pasos">
+            {SECUENCIA.map((paso, i) => (
+              <li
+                key={paso.src}
+                ref={(el) => (pasosRef.current[i] = el)}
+                className={`secuencia__paso ${i === activo ? "esta-activo" : ""}`}
+              >
+                <p className="secuencia__numero">{String(i + 1).padStart(2, "0")}</p>
+                <h3 className="secuencia__paso-titulo">{paso.titulo}</h3>
+                <p className="secuencia__paso-texto">{paso.texto}</p>
+
+                {/* En celular la foto no se queda quieta al costado: no hay
+                    costado. Cada paso lleva la suya y se bajan de corrido. */}
+                <img
+                  className="secuencia__foto-movil"
+                  src={`/${paso.src}`}
+                  alt={paso.alt}
+                  loading="lazy"
+                />
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
-    </dialog>
-  </section>;
+    </section>
+  );
 }
