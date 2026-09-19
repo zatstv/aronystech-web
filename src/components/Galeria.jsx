@@ -45,15 +45,11 @@ export default function Galeria() {
   return (
     <section className="secuencia" id="galeria">
       <div className="contenedor">
-        <div className="secuencia__cabecera">
-          <div>
-            <p className="rotulo">Galería</p>
-            <h2 className="titulo-seccion secuencia__titulo">De la idea a tus manos.</h2>
-          </div>
-          <p className="secuencia__intro">
-            Bajá para ver la misma pieza armada y por separado.
-          </p>
-        </div>
+        {/* Sin rótulo ni titular: la sección entra directo desde el video y
+            arranca con la pieza. Queda solo la línea que dice qué hacer. */}
+        <p className="secuencia__intro">
+          Bajá para ver la misma pieza armada y por separado.
+        </p>
 
         <div className="secuencia__grilla">
           {/* La foto, quieta mientras pasan los textos. */}
