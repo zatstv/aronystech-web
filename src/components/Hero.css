@@ -37,16 +37,29 @@
   object-position: center 62%;
 }
 
-/* Carga arriba y abajo, donde va el texto, y deja el medio limpio. */
+/* Carga arriba y abajo, donde va el texto, y deja el medio limpio.
+
+   El último tramo no termina en negro sino en el fondo de la página: antes
+   el video cortaba de golpe y quedaba una banda oscura que no era ni del
+   video ni de la página, sobre todo en modo claro, donde chocaba contra el
+   papel. Así se disuelve, y como el color sale de la variable funciona igual
+   en claro y en oscuro.
+
+   El velo llega al 66% donde va el texto porque la franja de abajo del video
+   no siempre es oscura: medida fotograma a fotograma, sus zonas más claras
+   trepan a 210 sobre 255, y ahí el texto blanco sin velo no se leería. */
 .portada__velo {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(to bottom,
-      rgb(0 0 0 / .55) 0%,
-      rgb(0 0 0 / .15) 28%,
-      rgb(0 0 0 / .15) 52%,
-      rgb(0 0 0 / .72) 100%);
+      rgb(0 0 0 / .5) 0%,
+      rgb(0 0 0 / .12) 26%,
+      rgb(0 0 0 / .12) 46%,
+      rgb(0 0 0 / .66) 74%,
+      rgb(0 0 0 / .62) 87%,
+      color-mix(in srgb, var(--papel) 80%, transparent) 95%,
+      var(--papel) 100%);
 }
 
 /* --- Lo que flota encima --- */
@@ -57,7 +70,9 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  padding: clamp(2.5rem, 7vh, 5rem) var(--margen) clamp(1.5rem, 4vh, 2.5rem);
+  /* El espacio de abajo tiene que ser mayor que el tramo donde el velo se
+     funde con la página: si no, la última línea del texto se desvanece. */
+  padding: clamp(2.5rem, 7vh, 5rem) var(--margen) clamp(5.5rem, 11vh, 7.5rem);
   color: #fff;
 }
 
