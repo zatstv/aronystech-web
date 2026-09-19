@@ -8,9 +8,15 @@ dist/
 *.log
 
 # Material de trabajo pesado: las fotos crudas y los videos no van al repo.
-# Lo que la página usa vive en public/img y public/modelo.
+# Lo que la página usa vive en public/img, public/video y public/modelo.
 fotos/
 *.zip
+
+# Los videos crudos se quedan en tu disco: el de la portada venía de 5,9 MB
+# y en el repo quedaría para siempre. La versión comprimida que usa la
+# página sí se sube, por eso la excepción.
+*.mp4
+!public/video/*.mp4
 
 # Copias de la etapa anterior: las fotos y modelos que usa la página ahora viven
 # en public/, y la carpeta que se publica la genera `npm run build` en dist/.

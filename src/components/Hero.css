@@ -1,164 +1,205 @@
-/* Portada. Composición tomada de la referencia: texto a la izquierda con
-   pastilla, titular a dos líneas con la segunda en acento, dos botones y una
-   fila de datos; foto a la derecha con una ficha de colores montada en la
-   esquina cruzando su borde. */
+/* Portada a sangre, tomada de la referencia: el video ocupa toda la pantalla
+   y encima flota lo mínimo, sin recuadros.
 
-/* Abajo lleva la mitad del aire: el catálogo ya aporta su propio espacio
-   arriba, y sumar los dos dejaba un hueco enorme. */
-.hero { padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 4vw, 3.5rem); }
+   Acá el texto va siempre claro aunque la página esté en modo claro: el fondo
+   no es el papel, es el video, y es oscuro en los dos modos. Por eso los
+   colores están escritos y no salen de las variables. */
 
-.hero__grilla {
-  display: grid;
-  gap: clamp(2.5rem, 5vw, 3.5rem);
-  align-items: center;
+.portada {
+  position: relative;
+  /* dvh y no vh: en celular la barra del navegador se recoge al hacer scroll
+     y con vh la portada quedaba más alta que la pantalla.
+
+     Al alto de la pantalla se le descuenta lo que ocupa la cabecera, que lo
+     mide el componente: así entra justa tanto con la barra arriba como si
+     vuelve a ser un riel al costado. */
+  height: calc(100dvh - var(--portada-tope, 0px));
+  min-height: 34rem;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-/* --- Texto --- */
+/* --- El video --- */
 
-.hero__pastilla {
-  display: inline-flex;
+.portada__fondo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.portada__fondo video,
+.portada__fondo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* La pieza está en el tercio de abajo del encuadre: al recortar en
+     pantallas anchas conviene perder cielo y no la impresora. */
+  object-position: center 62%;
+}
+
+/* Carga arriba y abajo, donde va el texto, y deja el medio limpio. */
+.portada__velo {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgb(0 0 0 / .55) 0%,
+      rgb(0 0 0 / .15) 28%,
+      rgb(0 0 0 / .15) 52%,
+      rgb(0 0 0 / .72) 100%);
+}
+
+/* --- Lo que flota encima --- */
+
+.portada__contenido {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: clamp(2.5rem, 7vh, 5rem) var(--margen) clamp(1.5rem, 4vh, 2.5rem);
+  color: #fff;
+}
+
+/* El titular queda en el medio del alto, no pegado arriba. */
+.portada__titular {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: .55rem;
-  padding: .4rem .9rem;
-  border: var(--filo);
-  border-radius: 999px;
-  background: var(--papel);
-  box-shadow: 2px 2px 0 var(--tinta);
+  gap: .1em;
+  /* Más liviano que el resto de los titulares del sitio: acá el peso lo pone
+     el video, y en 900 la tipografía tapaba la pieza en vez de acompañarla. */
+  font-weight: 600;
+  font-size: clamp(2rem, 5.2vw, 4.1rem);
+  line-height: 1.06;
+  letter-spacing: -.03em;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 2px 24px rgb(0 0 0 / .35);
+}
+
+/* La segunda línea a media tinta: es el gesto de la referencia. */
+.portada__titular span { color: rgb(255 255 255 / .58); }
+
+/* --- La franja de abajo --- */
+
+.portada__pie {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem 2.5rem;
+  flex-wrap: wrap;
+}
+
+.portada__bajada {
+  max-width: 34ch;
   font-family: var(--mono);
-  font-size: .7rem;
+  font-size: .78rem;
+  line-height: 1.7;
+  color: rgb(255 255 255 / .8);
+}
+
+.portada__cierre {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  flex-wrap: wrap;
+}
+
+.portada__acciones {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+
+.portada__datos {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  margin: 0;
+}
+
+.portada__datos dt {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  font-family: var(--mono);
+  font-size: .6rem;
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--tinta-suave);
+  color: rgb(255 255 255 / .62);
 }
 
-.hero__punto {
-  width: .5rem;
-  height: .5rem;
+.portada__datos dd {
+  margin: .25rem 0 0;
+  font-size: .95rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+/* Pastilla clara sobre el video, como el botón de la referencia. */
+.portada__boton {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .7rem 1.25rem;
+  background: #fff;
+  color: #17191D;
   border-radius: 999px;
-  background: var(--acento);
+  font-size: .85rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform .15s ease, background .15s ease;
 }
 
-.hero__nombre {
-  margin-block: clamp(.75rem, 2vw, 1.25rem) 0;
-  margin-inline: -2%;
+/* La segunda acción no compite con la principal: solo el filo. */
+.portada__boton--hueco {
+  background: transparent;
+  color: #fff;
+  box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / .45);
 }
 
-.hero__titular {
-  font-size: clamp(2.2rem, 6.5vw, 3.6rem);
-  margin-bottom: 1rem;
+.portada__boton--hueco:hover {
+  background: rgb(255 255 255 / .12);
+  box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / .75);
 }
 
-.hero__titular-acento { color: var(--acento); }
+.portada__boton:hover { transform: translateY(-2px); }
+.portada__boton:active { transform: none; }
 
-.hero__bajada {
-  max-width: 44ch;
-  color: var(--tinta-suave);
-  font-size: clamp(1rem, 2.2vw, 1.1rem);
+.portada__boton svg { transition: transform .15s ease; }
+.portada__boton:hover svg { transform: translateX(3px); }
+
+/* --- Angosto --- */
+
+@media (max-width: 47.9375rem) {
+  /* En vertical el recorte es mucho más cerrado: si se centra igual que en
+     escritorio queda la boquilla sola y no se entiende qué se está viendo. */
+  .portada__fondo video,
+  .portada__fondo img { object-position: center 45%; }
+
+  .portada__titular {
+    align-items: flex-start;
+    text-align: left;
+    font-size: clamp(2.3rem, 9vw, 3rem);
+  }
+  .portada__pie { align-items: flex-start; flex-direction: column; }
+  .portada__cierre { width: 100%; justify-content: space-between; align-items: flex-end; }
+  .portada__bajada { font-size: .72rem; }
 }
 
-.hero__acciones {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .85rem;
-  margin-top: 1.75rem;
+@media (prefers-reduced-motion: reduce) {
+  .portada__boton { transition: none; }
 }
 
-/* Segundo botón: mismo filo y sombra, sin el relleno de acento. */
+/* Segundo botón del sitio: mismo filo y sombra, sin el relleno de acento.
+   Vivía acá desde el hero anterior y lo sigue usando PedidoPersonalizado,
+   así que se queda aunque la portada ya no lo use. */
 .boton--hueco {
   background: var(--papel);
   color: var(--tinta);
-}
-
-/* --- Los tres datos, separados por una línea de capas --- */
-
-.hero__datos {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  max-width: 34rem;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1.5px dashed color-mix(in srgb, var(--tinta) 35%, transparent);
-}
-
-.hero__datos dt {
-  display: flex;
-  align-items: center;
-  gap: .35rem;
-  font-family: var(--mono);
-  font-size: .66rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--tinta-suave);
-}
-
-.hero__datos dd {
-  margin: .3rem 0 0;
-  font-size: clamp(1rem, 2.4vw, 1.2rem);
-  font-weight: 900;
-  letter-spacing: -.02em;
-}
-
-/* --- Foto y ficha de colores --- */
-
-.hero__lado { position: relative; }
-
-.hero__foto {
-  overflow: hidden;
-  border: var(--filo);
-  border-radius: 16px;
-  box-shadow: var(--sombra-honda);
-  background: var(--papel-hondo);
-}
-
-/* La foto entra entera: manda la proporción del archivo. Antes el marco la
-   forzaba a 4/5 y la recortaba con object-fit, que servía cuando la portada
-   era una foto vertical; la de ahora es apaisada y se comía casi todo el
-   ancho del llavero. */
-.hero__foto img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* Montada sobre la esquina de la foto: cruzar el borde es lo que evita que
-   se lea como una grilla de cajas. */
-.hero__colores {
-  position: relative;
-  z-index: 2;
-  margin: -2.25rem 0 0 1rem;
-  width: max-content;
-  max-width: calc(100% - 2rem);
-  padding: .85rem 1rem;
-  background: var(--papel);
-  border: var(--filo);
-  border-radius: 12px;
-  box-shadow: var(--sombra);
-}
-
-.hero__puntos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .4rem;
-  margin-top: .55rem;
-}
-
-.hero__puntos span {
-  width: 1.15rem;
-  height: 1.15rem;
-  border: 1.5px solid var(--tinta);
-  border-radius: 999px;
-}
-
-@media (min-width: 62rem) {
-  .hero__grilla {
-    /* Casi en partes iguales: con la foto apaisada, la columna angosta de
-       antes la dejaba del alto de un botón. */
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2.5rem, 4vw, 4rem);
-  }
-
-  .hero__colores { margin-left: -1.75rem; }
 }
