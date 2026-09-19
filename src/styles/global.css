@@ -41,8 +41,6 @@
   --ancho: 1160px;
   --aire: clamp(4rem, 9vw, 7.5rem);   /* separación entre secciones */
   --margen: clamp(1.15rem, 5vw, 2.5rem);
-  --lateral: 16.5rem;      /* ancho de la barra lateral en escritorio */
-
   color-scheme: light;
 }
 

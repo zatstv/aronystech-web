@@ -16,3 +16,8 @@
 .detalle__nota{display:flex;gap:.8rem;border-top:1px solid var(--tinta-suave);padding-top:1.2rem;margin-bottom:1.5rem;font-size:.9rem;color:var(--tinta-suave)}
 .detalle__nota svg{flex-shrink:0}.detalle__boton{width:100%;justify-content:center}.detalle__ayuda{font-size:.8rem;color:var(--tinta-suave);margin-top:1rem}
 @media(min-width:62rem){.detalle__grilla{grid-template-columns:1.1fr 1fr;gap:3rem}.detalle__imagen{position:sticky;top:2rem}}
+/* Desde 64rem la cabecera pasa a estar arriba y mide 5.5rem: la imagen se
+   despega para no quedar debajo. Vivía en Lateral.css, donde ganaba solo
+   porque esa hoja se importa después; si alguien reordenaba los imports, la
+   foto se metía bajo la cabecera y no había forma de saber por qué. */
+@media(min-width:64rem){.detalle__imagen{top:7rem}}

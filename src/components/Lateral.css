@@ -1,5 +1,9 @@
-/* Barra lateral fija. Antes esto era una franja arriba; ahora la navegación
-   vive de costado y el contenido se corre para dejarle lugar. */
+/* La navegación.
+
+   En escritorio es una cabecera horizontal pegada arriba; abajo de 64rem es
+   un cajón que entra por el costado, con una franja angosta y el botón de
+   menú. Las reglas de acá arriba son la base que comparten los dos: el cajón
+   las usa tal cual y la cabecera reescribe lo que necesita. */
 
 .lateral {
   position: fixed;
@@ -9,7 +13,6 @@
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
-  width: var(--lateral);
   /* dvh y no vh: en celular la barra del navegador se recoge al hacer scroll
      y con vh el pie del panel quedaba debajo del borde. */
   height: 100dvh;
@@ -146,26 +149,9 @@
 /* --- Escritorio: la barra siempre está y el contenido se corre --- */
 
 @media (min-width: 64rem) {
+  /* La franja y el velo son solo del cajón de celular. */
   .lateral__movil { display: none; }
   .lateral__velo { display: none; }
-
-  /* El corrimiento vive acá y no en la hoja de la cuadrícula: lo causa esta
-     barra, así que si algún día se saca, se va con ella. */
-  .contenido { padding-left: var(--lateral); }
-
-  /* Sin franja arriba, el ancla no necesita tanto respiro. */
-  html { scroll-padding-top: 2rem; }
-
-  /* El panel de acceso no cabe debajo del renglón: sale al costado del riel.
-     Fijo a la ventana y no absoluto, porque el riel scrollea por dentro y un
-     hijo absoluto que se pasa del ancho le corre el scroll en vez de asomar.
-     La altura la mide Login.jsx contra su renglón. */
-  .lateral__ancla-acceso .login {
-    position: fixed;
-    top: var(--login-arriba, 6rem);
-    right: auto;
-    left: calc(var(--lateral) + .8rem);
-  }
 }
 
 /* --- Celular y tablet: franja arriba y la lateral entra deslizándose --- */
@@ -249,9 +235,10 @@
   .lateral { transition: none; }
 }
 
-/* Propuesta de cabecera horizontal para escritorio. */
+/* --- Escritorio: cabecera horizontal pegada arriba --- */
 @media (min-width: 64rem) {
-  .contenido { padding-left: 0; }
+  /* 7rem porque la cabecera mide 5.5: sin esto el ancla deja la sección
+     justo debajo y el titular queda tapado. */
   html { scroll-padding-top: 7rem; }
   .lateral {
     position: sticky;
@@ -282,7 +269,6 @@
   .lateral__tema { gap: 0; padding: 2px; }
   .lateral__tema-opcion { padding: .5rem .4rem; font-size: .6rem; }
   .lateral__ancla-acceso .login { position: absolute; top: calc(100% + 1rem); right: 0; left: auto; }
-  .detalle__imagen { top: 7rem; }
 }
 @media (min-width: 64rem) and (max-width: 75rem) {
   .lateral { gap: .7rem; padding-inline: 1rem; }
