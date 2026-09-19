@@ -81,6 +81,18 @@ export default function Lateral() {
   const anclaAcceso = useRef(null);
   const activa = useSeccionActiva(SECCIONES);
 
+  /* Arriba de todo la cabecera se vuelve transparente y el video de la
+     portada pasa por detrás. Apenas se baja recupera su fondo, si no los
+     enlaces quedarían encima del contenido sin nada que los separe. */
+  const [arriba, setArriba] = useState(() => typeof window === "undefined" || window.scrollY < 40);
+
+  useEffect(() => {
+    const mirar = () => setArriba(window.scrollY < 40);
+    mirar();
+    window.addEventListener("scroll", mirar, { passive: true });
+    return () => window.removeEventListener("scroll", mirar);
+  }, []);
+
   /* Los atajos. Se ignoran si hay un campo con el foco (los del panel de
      acceso, sin ir más lejos) o si el visitante viene apretando Ctrl/Alt/Cmd,
      que son combinaciones del navegador y no nuestras. */
@@ -139,7 +151,7 @@ export default function Lateral() {
   return (
     <>
       {/* Solo en celular: la barra angosta de arriba con el botón del menú. */}
-      <div className="lateral__movil">
+      <div className={`lateral__movil ${arriba ? "esta-arriba" : ""}`}>
         <a className="lateral__marca" href="#inicio" aria-label="AronysTech, ir al inicio">
           <Marca alto="2.4rem" />
         </a>
@@ -169,7 +181,7 @@ export default function Lateral() {
       <nav
         ref={navRef}
         id="nav-lateral"
-        className={`lateral ${abierto ? "esta-abierto" : ""}`}
+        className={`lateral ${abierto ? "esta-abierto" : ""} ${arriba ? "esta-arriba" : ""}`}
         aria-label="Navegación principal"
       >
         <a className="lateral__marca lateral__marca--rail" href="#inicio" aria-label="AronysTech, ir al inicio">

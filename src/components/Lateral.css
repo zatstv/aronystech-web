@@ -158,8 +158,11 @@
 
 @media (max-width: 63.9375rem) {
   .lateral__movil {
-    position: sticky;
+    /* Fija por el mismo motivo que la cabecera de escritorio. */
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 50;
     display: flex;
     align-items: center;
@@ -174,6 +177,19 @@
 
   /* Con un modal abierto se apaga el desenfoque, si no la franja queda
      iluminada por encima del velo. */
+  .lateral__movil.esta-arriba {
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom-color: transparent;
+  }
+
+  .lateral__movil.esta-arriba .lateral__menu {
+    background: rgb(255 255 255 / .12);
+    border-color: rgb(255 255 255 / .4);
+    color: #fff;
+    box-shadow: none;
+  }
+
   [data-modal-abierto] .lateral__movil {
     backdrop-filter: none;
     background: transparent;
@@ -241,8 +257,13 @@
      justo debajo y el titular queda tapado. */
   html { scroll-padding-top: 7rem; }
   .lateral {
-    position: sticky;
+    /* Fija y no pegajosa: pegajosa ocupa su lugar en el flujo y empuja la
+       portada 88px hacia abajo, con lo cual transparente dejaría ver el
+       fondo de la página y no el video. Flotando, el video le pasa por
+       detrás. */
+    position: fixed;
     top: 0;
+    right: 0;
     flex-direction: row;
     align-items: center;
     width: 100%;
@@ -269,6 +290,39 @@
   .lateral__tema { gap: 0; padding: 2px; }
   .lateral__tema-opcion { padding: .5rem .4rem; font-size: .6rem; }
   .lateral__ancla-acceso .login { position: absolute; top: calc(100% + 1rem); right: 0; left: auto; }
+
+  /* --- Arriba de todo: sin fondo, para que se vea el video ---
+
+     Va al final del bloque a propósito. Los colores de los enlaces se fijan
+     más arriba con la misma especificidad (.lateral__grupo:first-child
+     .lateral__enlace.esta-activo), así que puesto antes perdía el desempate
+     por orden y el enlace activo quedaba en tinta, ilegible sobre el video.
+
+     Se fuerzan claros y no se usan las variables porque debajo no está el
+     papel sino el video, que es oscuro en los dos modos. */
+  .lateral.esta-arriba {
+    background: transparent;
+    border-bottom-color: transparent;
+    color: #fff;
+  }
+
+  .lateral.esta-arriba .lateral__grupo:first-child .lateral__enlace,
+  .lateral.esta-arriba .lateral__enlace { color: rgb(255 255 255 / .8); }
+
+  .lateral.esta-arriba .lateral__grupo:first-child .lateral__enlace:hover,
+  .lateral.esta-arriba .lateral__grupo:first-child .lateral__enlace.esta-activo,
+  .lateral.esta-arriba .lateral__enlace:hover { color: #fff; }
+
+  .lateral.esta-arriba .lateral__tema {
+    background: rgb(255 255 255 / .12);
+    border-color: rgb(255 255 255 / .38);
+  }
+  .lateral.esta-arriba .lateral__tema-opcion { color: rgb(255 255 255 / .72); }
+  .lateral.esta-arriba .lateral__tema-opcion.esta-activo {
+    background: rgb(255 255 255 / .92);
+    color: #17191D;
+    box-shadow: none;
+  }
 }
 @media (min-width: 64rem) and (max-width: 75rem) {
   .lateral { gap: .7rem; padding-inline: 1rem; }
