@@ -71,9 +71,11 @@ export default function Galeria() {
               ))}
             </div>
 
-            {/* En qué paso va, para quien no distingue el cambio de foto. */}
-            <p className="secuencia__cuenta" aria-live="polite">
-              {String(activo + 1).padStart(2, "0")} / {String(SECUENCIA.length).padStart(2, "0")}
+            {/* La cuenta se saca de la vista pero no del todo: con la foto
+                cambiando sola, quien usa lector de pantalla no tiene otra
+                forma de enterarse de que cambió. Se queda anunciándose. */}
+            <p className="oculto-visual" aria-live="polite">
+              Foto {activo + 1} de {SECUENCIA.length}: {SECUENCIA[activo].titulo}
             </p>
           </div>
 
