@@ -13,7 +13,18 @@
   margin: 0;
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  /* Columnas explícitas en vez de auto-fit: con auto-fit salían 4 a pantalla
+     ancha y los 5 pasos quedaban 4 + 1, con una tarjeta sola colgando en la
+     segunda fila. A tres columnas cierra 3 + 2, que se lee como un bloque. */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 40rem) {
+  .proceso__pasos { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 62rem) {
+  .proceso__pasos { grid-template-columns: repeat(3, 1fr); }
 }
 
 .paso {
@@ -64,7 +75,17 @@
   margin: 0;
   display: grid;
   gap: .8rem;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  /* Mismo motivo que los pasos, y acá cierra justo: 6 en tres columnas son
+     dos filas llenas. */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 40rem) {
+  .ocasiones__lista { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 62rem) {
+  .ocasiones__lista { grid-template-columns: repeat(3, 1fr); }
 }
 
 .ocasion {
