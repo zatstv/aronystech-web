@@ -8,18 +8,18 @@ dist/
 *.log
 
 # Material de trabajo pesado: las fotos crudas y los videos no van al repo.
-# Lo que la página usa vive en public/img, public/video y public/modelo.
+# Lo que la página usa vive en public/img y public/video.
 fotos/
 *.zip
 
-# Las fotos que se arrastran a la raíz para convertirlas. La versión que usa
-# la página queda en public/img ya comprimida. Solo la raíz: las de public
-# se suben igual.
-/*.png
+# El material crudo que se arrastra acá para convertirlo: fotos sin comprimir,
+# capturas, videos de los que sale el de la portada. La versión que usa la
+# página queda en public/ ya liviana; esto se queda en tu disco.
+/crudos/
 
-# Los videos crudos se quedan en tu disco: el de la portada venía de 5,9 MB
-# y en el repo quedaría para siempre. La versión comprimida que usa la
-# página sí se sube, por eso la excepción.
+# Ningún video crudo entra al repo: el de la portada venía de 5,9 MB y ahí
+# quedaría para siempre. La versión comprimida que usa la página sí se sube,
+# por eso la excepción.
 *.mp4
 !public/video/*.mp4
 

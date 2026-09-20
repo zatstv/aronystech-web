@@ -18,7 +18,7 @@ import "./Login.css";
      sin nombre. Cada uno lleva su <label> oculto.
 
    OJO: sigue siendo solo la parte visual. No valida ni envía nada; según
-   STACK.md el acceso lo va a resolver PocketBase.
+   docs/STACK.md el acceso lo va a resolver PocketBase.
    ============================================================ */
 
 function Campos({ registrando, id }) {

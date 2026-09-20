@@ -11,7 +11,7 @@ import "./Acceso.css";
    nada a ningún lado. Está para ver cómo quedan los componentes con los
    colores y las sombras de la marca.
 
-   Cuando toque hacerlo de verdad, según STACK.md el login lo resuelve
+   Cuando toque hacerlo de verdad, según docs/STACK.md el login lo resuelve
    PocketBase, que ya trae usuarios y panel hechos: esta pantalla se
    conectaría a su API, o directamente se usa la suya.
 

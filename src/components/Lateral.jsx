@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
+  HelpCircle,
   House,
   Images,
   LogIn,
   Menu,
   MessageCircle,
   Users,
+  Workflow,
   X,
 } from "lucide-react";
 
@@ -28,14 +30,16 @@ import "./Lateral.css";
    sección, igual que se leen.
    ============================================================ */
 
-const SECCIONES = ["inicio", "catalogo", "galeria", "nosotros"];
+const SECCIONES = ["inicio", "galeria", "proceso", "nosotros", "preguntas"];
 
 const GRUPOS = [
   {
     enlaces: [
       { href: "#inicio", texto: "Inicio", icono: House, tecla: "1" },
       { href: "#galeria", texto: "Galería", icono: Images, tecla: "2" },
-      { href: "#nosotros", texto: "Nosotros", icono: Users, tecla: "3" },
+      { href: "#proceso", texto: "Cómo funciona", icono: Workflow, tecla: "3" },
+      { href: "#nosotros", texto: "Nosotros", icono: Users, tecla: "4" },
+      { href: "#preguntas", texto: "Preguntas", icono: HelpCircle, tecla: "5" },
     ],
   },
 ];

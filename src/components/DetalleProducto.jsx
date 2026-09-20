@@ -15,9 +15,9 @@ export default function DetalleProducto({ producto, alPedir }) {
         <div className="detalle__precio">{producto.precio}<span>{producto.unidad}</span></div>
         <p className="detalle__descripcion">{producto.texto}</p>
         {colores.length > 0 && <div className="detalle__colores"><h2>Colores de esta pieza</h2><ul>{colores.map((c) => <li key={c.hex}><span style={{background:c.hex}} />{c.nombre}</li>)}</ul></div>}
-        <div className="detalle__nota"><Package size={22} /><p>Hecho por encargo. Personalizá tu pedido y consultá el precio final y la fecha de entrega.</p></div>
+        <div className="detalle__nota"><Package size={22} /><p>Hecho por encargo. Personaliza tu pedido y consulta el precio final y la fecha de entrega.</p></div>
         <button className="boton detalle__boton" onClick={() => alPedir(producto)}>Personalizar mi pedido <ArrowRight size={18} /></button>
-        <p className="detalle__ayuda">Elegí las opciones antes de continuar a WhatsApp.</p>
+        <p className="detalle__ayuda">Elige las opciones antes de continuar a WhatsApp.</p>
       </div>
     </div>
   </main>;

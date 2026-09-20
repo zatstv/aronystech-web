@@ -11,6 +11,14 @@
     />
     <link rel="icon" type="image/png" href="/img/logo-3d.png" />
 
+    <!-- El póster de la portada es lo primero que se ve y lo que mide el
+         navegador como "ya cargó" (el LCP). Sin esta línea no se empieza a
+         bajar hasta que React montó el componente; con ella sale a buscarlo
+         mientras todavía se está leyendo este archivo. Son 47 KB.
+         El video que va detrás se baja recién cuando la página terminó,
+         para no pelearle el ancho de banda (ver Hero.jsx). -->
+    <link rel="preload" as="image" href="/video/impresora-poster.webp" fetchpriority="high" />
+
     <!-- Redes sociales.
 
          OJO: las direcciones de acá abajo tienen que ser ABSOLUTAS. WhatsApp,
@@ -45,7 +53,7 @@
     <meta name="theme-color" content="#F5F2EC" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#17191D" media="(prefers-color-scheme: dark)" />
 
-    <!-- Outfit 900 para titulares, JetBrains Mono para etiquetas (PROYECTO.md §6b) -->
+    <!-- Outfit 900 para titulares, JetBrains Mono para etiquetas (docs/PROYECTO.md §6b) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

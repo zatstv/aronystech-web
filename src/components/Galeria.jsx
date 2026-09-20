@@ -48,7 +48,7 @@ export default function Galeria() {
         {/* Sin rótulo ni titular: la sección entra directo desde el video y
             arranca con la pieza. Queda solo la línea que dice qué hacer. */}
         <p className="secuencia__intro">
-          Bajá para ver la misma pieza armada y por separado.
+          Baja para ver la misma pieza armada y por separado.
         </p>
 
         <div className="secuencia__grilla">

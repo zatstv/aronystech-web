@@ -1,6 +1,6 @@
 /* ============================================================
    AronysTech — base del sistema visual
-   Dirección: "física, no digital" (PROYECTO.md §6b).
+   Dirección: "física, no digital" (docs/PROYECTO.md §6b).
    Todo es una pieza apoyada sobre una superficie, no un rectángulo
    flotando en una pantalla.
 
@@ -14,7 +14,14 @@
   --papel-hondo: #EAE5DC;  /* bloques que se hunden un nivel */
   --tinta: #22252A;        /* filos, texto y sombras */
   --tinta-suave: #5C6069;  /* texto secundario */
-  --acento: #E5402B;       /* rojo tomate. UN SOLO acento en toda la interfaz */
+  /* Rojo tomate. UN SOLO acento en toda la interfaz.
+     Es un punto más oscuro que el filamento rojo de abajo, y a propósito:
+     sobre --papel, el #E5402B del filamento da 3.69:1, y el texto chico que
+     usa el acento (.rotulo, el número de cada paso, el error del formulario
+     de pedido) queda por debajo del 4.5:1 que pide WCAG AA. Este llega a
+     4.52:1 con el mismo tono. El modo oscuro ya tenía su propia corrección;
+     esta es la que faltaba. */
+  --acento: #D22F1A;
 
   /* --- Filamentos reales (solo dentro de cubos y fotos, nunca en la interfaz) --- */
   --f-rojo: #E5402B;
@@ -45,7 +52,7 @@
 }
 
 /* Modo oscuro. La cama de impresión sube de tono para que las piezas negras
-   no desaparezcan contra el fondo (PROYECTO.md §6d).
+   no desaparezcan contra el fondo (docs/PROYECTO.md §6d).
 
    Va en dos bloques porque ahora se puede elegir desde la barra lateral: el
    primero es el automático, que cede si alguien pidió claro a mano; el
@@ -157,7 +164,7 @@ p { text-wrap: pretty; }
   padding-inline: var(--margen);
 }
 
-/* Máximo dos por página (PROYECTO.md §6b). */
+/* Máximo dos por página (docs/PROYECTO.md §6b). */
 .rotulo {
   font-family: var(--mono);
   font-size: .72rem;

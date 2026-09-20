@@ -22,15 +22,10 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# Las fotos y los modelos sí conservan su nombre entre versiones, así que se
-# guardan un día: bastante para una visita, poco para que una foto cambiada
-# tarde en verse.
+# Las fotos sí conservan su nombre entre versiones, así que se guardan un
+# día: bastante para una visita, poco para que una foto cambiada tarde en
+# verse.
 [[headers]]
   for = "/img/*"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
-
-[[headers]]
-  for = "/modelo/*"
   [headers.values]
     Cache-Control = "public, max-age=86400"

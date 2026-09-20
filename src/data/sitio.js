@@ -7,7 +7,7 @@ export const TEL_BONITO = "+507 6795 5170";
 /* Redes sociales, para la fila de íconos del pie.
 
    Va vacío a propósito: Instagram, TikTok y Facebook siguen pendientes
-   (PROYECTO.md §2) y un ícono que no lleva a ningún lado es peor que no
+   (docs/PROYECTO.md §2) y un ícono que no lleva a ningún lado es peor que no
    tenerlo. Cuando haya cuenta se agrega acá y la celda aparece sola:
 
      { id: "instagram", nombre: "Instagram", url: "https://instagram.com/..." }
@@ -42,28 +42,34 @@ export const CHIPS = [
 ];
 
 export const PASOS = [
-  { titulo: "Escribís", texto: "Nos mandás por WhatsApp qué querés, en qué color y para cuándo. Si tenés un diseño propio, también sirve." },
-  { titulo: "Se modela", texto: "Tu idea se convierte en un archivo como el de al lado. Podés girarlo y verlo antes de que exista la pieza." },
-  { titulo: "Confirmás", texto: "Te pasamos el precio final y la imagen de cómo va a quedar. Nada entra a la impresora sin tu visto bueno." },
+  { titulo: "Escribes", texto: "Nos mandas por WhatsApp qué quieres, en qué color y para cuándo. Si tienes un diseño propio, también sirve." },
+  { titulo: "Se modela", texto: "Tu idea se convierte en un archivo como el de al lado. Puedes girarlo y verlo antes de que exista la pieza." },
+  { titulo: "Confirmas", texto: "Te pasamos el precio final y la imagen de cómo va a quedar. Nada entra a la impresora sin tu visto bueno." },
   { titulo: "Se imprime", texto: "La pieza crece capa por capa y se limpia a mano. Cada pedido se hace desde cero, no sale de una caja." },
   { titulo: "Te llega", texto: "Enviamos a todo Panamá. Coordinamos la entrega y te avisamos apenas sale, por el mismo chat." },
 ];
 
+/* Cómo se puede pagar. Los nombres de icono son los de lucide, que es la
+   librería que usa la página; antes decían "ph-*", de Phosphor, que no está
+   instalada y por eso no dibujaban nada.
+
+   Yappy va segundo a propósito: en Panamá es el que más se usa y el que la
+   gente busca antes de escribir para preguntar. */
 export const PAGOS = [
-  { icono: "ph-money", texto: "Efectivo" },
-  { icono: "ph-device-mobile", texto: "Yappy" },
-  { icono: "ph-credit-card", texto: "Tarjeta" },
-  { icono: "ph-currency-btc", texto: "Criptomonedas" },
-  { icono: "ph-paypal-logo", texto: "PayPal" },
+  { icono: "efectivo", texto: "Efectivo" },
+  { icono: "yappy", texto: "Yappy" },
+  { icono: "tarjeta", texto: "Tarjeta" },
+  { icono: "cripto", texto: "Criptomonedas" },
+  { icono: "paypal", texto: "PayPal" },
 ];
 
 export const OCASIONES = [
   { titulo: "Cumpleaños", texto: "Un llavero con el nombre cuesta menos que una tarjeta y dura años." },
   { titulo: "Graduaciones", texto: "Con el año, la carrera o las iniciales. Se pueden hacer varios iguales." },
   { titulo: "Recuerdos de fiesta", texto: "Pedidos de 20, 50 o 100 unidades con el mismo diseño y el precio baja." },
-  { titulo: "Regalos de empresa", texto: "Con el logo de la compañía. Mandanos el archivo y lo adaptamos." },
+  { titulo: "Regalos de empresa", texto: "Con el logo de la compañía. Mándanos el archivo y lo adaptamos." },
   { titulo: "Bodas", texto: "Detalle para los invitados con la fecha o los nombres de los novios." },
-  { titulo: "Piezas de repuesto", texto: "Esa perilla o soporte que ya no se consigue. Mandá la foto y la medida." },
+  { titulo: "Piezas de repuesto", texto: "Esa perilla o soporte que ya no se consigue. Manda la foto y la medida." },
 ];
 
 export const PREGUNTAS = [
@@ -77,11 +83,11 @@ export const PREGUNTAS = [
   },
   {
     pregunta: "¿Puedo mandar mi propio diseño?",
-    respuesta: "Sí. Si ya tenés el archivo en STL o 3MF lo imprimimos tal cual. Si solo tenés una foto, un boceto o el logo en PNG, lo modelamos nosotros y te cobramos el diseño aparte una sola vez.",
+    respuesta: "Sí. Si ya tienes el archivo en STL o 3MF lo imprimimos tal cual. Si solo tienes una foto, un boceto o el logo en PNG, lo modelamos nosotros y te cobramos el diseño aparte una sola vez.",
   },
   {
     pregunta: "¿Cuántas letras caben en un llavero?",
-    respuesta: "Recomendamos hasta 10 cubos. Más largo se vuelve incómodo de cargar y pesa. Si necesitás una palabra larga, se puede repartir en dos llaveros.",
+    respuesta: "Recomendamos hasta 10 cubos. Más largo se vuelve incómodo de cargar y pesa. Si necesitas una palabra larga, se puede repartir en dos llaveros.",
   },
   {
     pregunta: "¿Cómo se limpia?",
@@ -89,7 +95,7 @@ export const PREGUNTAS = [
   },
   {
     pregunta: "¿Hacen pedidos grandes?",
-    respuesta: "Sí, y es donde más conviene el precio. A partir de 20 unidades iguales el costo por pieza baja bastante. Escribinos con la cantidad y la fecha que necesitás.",
+    respuesta: "Sí, y es donde más conviene el precio. A partir de 20 unidades iguales el costo por pieza baja bastante. Escríbenos con la cantidad y la fecha que necesitas.",
   },
 ];
 
@@ -101,7 +107,7 @@ export const CATEGORIAS = [
   "Regalos",
 ];
 
-/* Los tres datos del hero. Son hechos verificables de PROYECTO.md, no
+/* Los tres datos del hero. Son hechos verificables de docs/PROYECTO.md, no
    métricas de relleno: el mínimo de 1 es el diferenciador contra la
    competencia, el envío nacional está decidido, y todo se imprime en PLA. */
 export const DATOS = [
@@ -271,7 +277,7 @@ export const PRODUCTOS = [
     precio: "$18",
     unidad: "caja completa",
     pedido: "una caja de regalo armada",
-    texto: "La pieza que elijás, empacada con dulces y cinta en caja transparente, lista para entregar. Es la opción para cuando el regalo es para hoy y no hay tiempo de envolver nada.",
+    texto: "La pieza que elijas, empacada con dulces y cinta en caja transparente, lista para entregar. Es la opción para cuando el regalo es para hoy y no hay tiempo de envolver nada.",
     colores: [],
     foto: {
       src: "img/cajas-regalo.webp",

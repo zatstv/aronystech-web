@@ -27,6 +27,59 @@ export default function Hero({ alPersonalizar }) {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
 
+  /* El video pesa 1,1 MB y no se ve hasta que se reproduce; el póster son
+     47 KB y es lo único que hay en pantalla al entrar. Con autoPlay el
+     navegador baja el video de entrada, peleando ancho de banda justo con la
+     imagen que el visitante sí está esperando.
+
+     Por eso las <source> no se pintan hasta que la página terminó de cargar:
+     el póster gana la carrera, y el video entra después sin que se note.
+     preload="metadata" no alcanza para esto: con autoPlay el navegador lo
+     ignora, porque para arrancar solo necesita el archivo entero igual. */
+  const videoRef = useRef(null);
+  const [cargarVideo, setCargarVideo] = useState(false);
+
+  useEffect(() => {
+    if (quieto) return;
+
+    const soltar = () => {
+      /* Atado a window a propósito: sacar requestIdleCallback del objeto y
+         llamarlo suelto revienta con "Illegal invocation" en Chrome. */
+      const pedir = window.requestIdleCallback
+        ? window.requestIdleCallback.bind(window)
+        : (f) => window.setTimeout(f, 200);
+      pedir(() => setCargarVideo(true));
+    };
+
+    /* Si la página ya cargó (recarga, o vuelta atrás), no hay evento que
+       esperar: el load ya pasó y nunca volvería a dispararse. */
+    if (document.readyState === "complete") {
+      soltar();
+      return;
+    }
+    window.addEventListener("load", soltar, { once: true });
+    return () => window.removeEventListener("load", soltar);
+  }, [quieto]);
+
+  /* Las <source> agregadas después no las mira nadie hasta que se pide de
+     nuevo el archivo, así que hay que pedirlo a mano con load().
+
+     Y después hay que arrancarlo a mano también: el atributo autoPlay ya se
+     gastó al montar, cuando el <video> todavía no tenía ninguna fuente. El
+     navegador lo dio por fallido ahí mismo y no lo reintenta solo, por más
+     que la fuente aparezca después. Sin este play() la portada se queda con
+     el póster quieto. */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!cargarVideo || !video) return;
+
+    video.load();
+    /* Puede rechazar si el navegador bloquea la reproducción automática.
+       Es un fondo decorativo: si no arranca, queda el póster y no pasa nada,
+       pero la promesa sin atrapar ensucia la consola. */
+    video.play().catch(() => {});
+  }, [cargarVideo]);
+
   /* Cuánto se lleva la cabecera antes de la portada. Se mide en vez de
      escribirlo: la barra cambió de riel lateral a cabecera de arriba, y con
      un número fijo la portada se pasa de la pantalla apenas cambie el alto.
@@ -57,6 +110,7 @@ export default function Hero({ alPersonalizar }) {
           <img src={POSTER} alt="" />
         ) : (
           <video
+            ref={videoRef}
             poster={POSTER}
             autoPlay
             muted
@@ -65,8 +119,12 @@ export default function Hero({ alPersonalizar }) {
             /* Sin esto, iOS lo abre a pantalla completa al tocarlo. */
             disablePictureInPicture
           >
-            <source src="/video/impresora.webm" type="video/webm" />
-            <source src="/video/impresora.mp4" type="video/mp4" />
+            {cargarVideo && (
+              <>
+                <source src="/video/impresora.webm" type="video/webm" />
+                <source src="/video/impresora.mp4" type="video/mp4" />
+              </>
+            )}
           </video>
         )}
         {/* El velo no es parejo: carga arriba y abajo, que es donde va el
