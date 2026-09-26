@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   HelpCircle,
   House,
+  LayoutGrid,
   Images,
-  LogIn,
   Menu,
   MessageCircle,
+  PencilRuler,
   Users,
   Workflow,
   X,
 } from "lucide-react";
 
-import Login from "./Login.jsx";
 import Marca from "./Marca.jsx";
 import { useSeccionActiva } from "../hooks/useSeccionActiva.js";
 import { aplicarTema, leerTema } from "../lib/tema.js";
@@ -30,16 +30,17 @@ import "./Lateral.css";
    sección, igual que se leen.
    ============================================================ */
 
-const SECCIONES = ["inicio", "galeria", "proceso", "nosotros", "preguntas"];
+const SECCIONES = ["inicio", "galeria", "catalogo", "proceso", "nosotros", "preguntas"];
 
 const GRUPOS = [
   {
     enlaces: [
       { href: "#inicio", texto: "Inicio", icono: House, tecla: "1" },
       { href: "#galeria", texto: "Galería", icono: Images, tecla: "2" },
-      { href: "#proceso", texto: "Cómo funciona", icono: Workflow, tecla: "3" },
-      { href: "#nosotros", texto: "Nosotros", icono: Users, tecla: "4" },
-      { href: "#preguntas", texto: "Preguntas", icono: HelpCircle, tecla: "5" },
+      { href: "#catalogo", texto: "Catálogo", icono: LayoutGrid, tecla: "3" },
+      { href: "#proceso", texto: "Cómo funciona", icono: Workflow, tecla: "4" },
+      { href: "#nosotros", texto: "Nosotros", icono: Users, tecla: "5" },
+      { href: "#preguntas", texto: "Preguntas", icono: HelpCircle, tecla: "6" },
     ],
   },
 ];
@@ -80,15 +81,23 @@ export default function Lateral() {
   const [abierto, setAbierto] = useState(false);
   const menuRef = useRef(null);
   const navRef = useRef(null);
-  const [acceso, setAcceso] = useState(false);
-  const cerrarAcceso = useCallback(() => setAcceso(false), []);
-  const anclaAcceso = useRef(null);
   const activa = useSeccionActiva(SECCIONES);
 
   /* Arriba de todo la cabecera se vuelve transparente y el video de la
      portada pasa por detrás. Apenas se baja recupera su fondo, si no los
      enlaces quedarían encima del contenido sin nada que los separe. */
   const [arriba, setArriba] = useState(() => typeof window === "undefined" || window.scrollY < 40);
+
+  /* En la ficha de un producto no hay video detrás: la cabecera
+     transparente, con sus letras blancas, quedaría ilegible sobre el papel.
+     Ahí va siempre con su fondo. */
+  const [enFicha, setEnFicha] = useState(() => window.location.hash.startsWith("#producto/"));
+  useEffect(() => {
+    const mirar = () => setEnFicha(window.location.hash.startsWith("#producto/"));
+    window.addEventListener("hashchange", mirar);
+    return () => window.removeEventListener("hashchange", mirar);
+  }, []);
+  const transparente = arriba && !enFicha;
 
   useEffect(() => {
     const mirar = () => setArriba(window.scrollY < 40);
@@ -97,8 +106,7 @@ export default function Lateral() {
     return () => window.removeEventListener("scroll", mirar);
   }, []);
 
-  /* Los atajos. Se ignoran si hay un campo con el foco (los del panel de
-     acceso, sin ir más lejos) o si el visitante viene apretando Ctrl/Alt/Cmd,
+  /* Los atajos. Se ignoran si hay un campo con el foco o si el visitante viene apretando Ctrl/Alt/Cmd,
      que son combinaciones del navegador y no nuestras. */
   useEffect(() => {
     const alTeclear = (e) => {
@@ -106,9 +114,10 @@ export default function Lateral() {
       const foco = document.activeElement;
       if (foco?.matches("input, textarea, select, [contenteditable]")) return;
 
-      if (e.key === "/") {
+      if (e.key === "p" || e.key === "P") {
         e.preventDefault();
-        setAcceso(true);
+        window.location.hash = "#personalizado";
+        setAbierto(false);
         return;
       }
 
@@ -135,7 +144,7 @@ export default function Lateral() {
     });
     const cerrarPorAncho = () => { if (!media.matches) setAbierto(false); };
     const teclado = (e) => {
-      if (e.key === "Escape") { setAcceso(false); setAbierto(false); }
+      if (e.key === "Escape") setAbierto(false);
       if (e.key !== "Tab") return;
       const items = [menuRef.current, ...navRef.current.querySelectorAll('a[href], button, input')].filter((el) => el && !el.disabled && el.getClientRects().length && getComputedStyle(el).visibility !== "hidden");
       if (e.shiftKey && document.activeElement === items[0]) {e.preventDefault(); items.at(-1)?.focus();}
@@ -155,7 +164,7 @@ export default function Lateral() {
   return (
     <>
       {/* Solo en celular: la barra angosta de arriba con el botón del menú. */}
-      <div className={`lateral__movil ${arriba ? "esta-arriba" : ""}`}>
+      <div className={`lateral__movil ${transparente ? "esta-arriba" : ""}`}>
         <a className="lateral__marca" href="#inicio" aria-label="AronysTech, ir al inicio">
           <Marca alto="2.4rem" />
         </a>
@@ -185,7 +194,7 @@ export default function Lateral() {
       <nav
         ref={navRef}
         id="nav-lateral"
-        className={`lateral ${abierto ? "esta-abierto" : ""} ${arriba ? "esta-arriba" : ""}`}
+        className={`lateral ${abierto ? "esta-abierto" : ""} ${transparente ? "esta-arriba" : ""}`}
         aria-label="Navegación principal"
       >
         <a className="lateral__marca lateral__marca--rail" href="#inicio" aria-label="AronysTech, ir al inicio">
@@ -216,21 +225,20 @@ export default function Lateral() {
           ))}
 
           <div className="lateral__grupo">
-            <p className="lateral__grupo-titulo">Tu cuenta</p>
+            <p className="lateral__grupo-titulo">Por encargo</p>
             <ul className="lateral__lista">
-              <li className="lateral__ancla-acceso" ref={anclaAcceso}>
-                <button
-                  type="button"
-                  className={`lateral__enlace ${acceso ? "esta-activo" : ""}`}
-                  aria-expanded={acceso}
-                  onClick={() => setAcceso((v) => !v)}
+              <li>
+                {/* Va por el hash y no por una función: así el mismo enlace
+                    sirve desde el pie y desde cualquier otra parte. */}
+                <a
+                  className="lateral__enlace"
+                  href="#personalizado"
+                  onClick={() => setAbierto(false)}
                 >
-                  <LogIn size={17} strokeWidth={2} />
-                  <span className="lateral__texto">Iniciar sesión</span>
-                  <span className="lateral__tecla" aria-hidden="true">/</span>
-                </button>
-
-                <Login abierto={acceso} alCerrar={cerrarAcceso} anclaRef={anclaAcceso} />
+                  <PencilRuler size={17} strokeWidth={2} />
+                  <span className="lateral__texto">Pedido personalizado</span>
+                  <span className="lateral__tecla" aria-hidden="true">P</span>
+                </a>
               </li>
             </ul>
           </div>

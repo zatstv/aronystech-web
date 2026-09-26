@@ -1,5 +1,10 @@
 [hidden]{display:none!important}
 .detalle{padding-block:3rem 6rem;min-height:70vh}
+/* La cabecera es fija y no ocupa lugar: sin este tope, el "Volver" queda
+   debajo de ella y no se puede tocar. 3.9rem mide la franja de celular y
+   5.5rem la barra de escritorio. */
+.detalle{padding-top:calc(3.9rem + 2rem)}
+@media(min-width:64rem){.detalle{padding-top:calc(5.5rem + 2.5rem)}}
 .detalle__volver{display:inline-flex;gap:.65rem;align-items:center;color:var(--tinta-suave);margin-bottom:2rem;text-decoration:none}
 .detalle__grilla{display:grid;gap:2rem;align-items:start}
 .detalle__imagen{background:var(--papel-hondo);border:var(--filo);border-radius:22px;overflow:hidden}

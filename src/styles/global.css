@@ -8,6 +8,29 @@
    El estilo de cada sección va en su propio componente.
    ============================================================ */
 
+/* Las dos tipografías viven en el propio sitio, no en Google: una conexión
+   menos a otro servidor antes de poder pintar el texto, y ningún dato del
+   visitante que salga hacia afuera.
+
+   Son archivos variables: uno solo por familia cubre todos los grosores
+   (400 a 900 en Outfit, 400 a 700 en la mono). Traen el juego "latin", que
+   alcanza para el español entero: tildes, ñ, ¿ ¡ y la raya. */
+@font-face {
+  font-family: "Outfit";
+  src: url("/fuentes/outfit-latin.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fuentes/jetbrains-mono-latin.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* --- Superficie --- */
   --papel: #F5F2EC;        /* fondo neutro cálido: el color lo ponen los productos */
@@ -205,27 +228,6 @@ p { text-wrap: pretty; }
 .boton:hover { transform: translate(-1px, -1px); box-shadow: var(--sombra-honda); }
 .boton:active { transform: translate(3px, 3px); box-shadow: var(--sombra-hundida); }
 
-/* Divisor: capas de impresión, no una raya recta. */
-.capas {
-  height: 9px;
-  border: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    var(--tinta) 0 1.5px,
-    transparent 1.5px 4.5px
-  );
-  opacity: .32;
-}
-
-/* Aparición al entrar en pantalla. La activa el hook useReveal. */
-.reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity .55s ease, transform .55s ease;
-}
-
-.reveal.visible { opacity: 1; transform: none; }
-
 /* Solo para lectores de pantalla. */
 .oculto-visual {
   position: absolute;
@@ -247,6 +249,4 @@ p { text-wrap: pretty; }
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-
-  .reveal { opacity: 1; transform: none; }
 }

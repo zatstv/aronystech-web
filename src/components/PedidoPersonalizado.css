@@ -1,1 +1,312 @@
-.personalizado{width:min(680px,96vw);max-height:92dvh;margin:auto;padding:0;border:var(--filo);border-radius:18px;background:var(--papel);color:var(--tinta);overscroll-behavior:contain}.personalizado::backdrop{background:rgba(0,0,0,.7)}.personalizado__cabecera{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;gap:1rem;padding:1.25rem;background:var(--papel);border-bottom:var(--filo)}.personalizado h2{font-size:1.6rem;margin-top:.4rem}.personalizado__cerrar{display:grid;place-items:center;flex-shrink:0;width:40px;height:40px;background:var(--papel);color:var(--tinta);border:var(--filo);border-radius:9px}.personalizado__formulario,.personalizado__resumen{padding:1.25rem;display:grid;gap:1.2rem}.personalizado label{display:grid;gap:.5rem;font-weight:600;font-size:.9rem}.personalizado input,.personalizado textarea{width:100%;min-width:0;border:1px solid var(--tinta-suave);border-radius:9px;padding:.75rem;background:var(--papel-hondo);color:var(--tinta);font:inherit}.personalizado small,.personalizado p{font-weight:400;font-size:.82rem;color:var(--tinta-suave);line-height:1.6}.personalizado__fila{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.personalizado pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:.9rem;line-height:1.7;background:var(--papel-hondo);padding:1rem;border-radius:12px}.personalizado__acciones{display:flex;flex-wrap:wrap;gap:1rem}.personalizado .boton{justify-content:center}body:has(.personalizado[open]){overflow:hidden}@media(max-width:30rem){.personalizado__fila{grid-template-columns:1fr}.personalizado__acciones>*{width:100%}}
+/* ============================================================
+   Pedido personalizado. Es un <dialog> nativo: el velo, el Escape y el
+   foco atrapado adentro los pone el navegador.
+   ============================================================ */
+
+.personalizado {
+  width: min(680px, 96vw);
+  max-height: 92dvh;
+  margin: auto;
+  padding: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 18px;
+  box-shadow: var(--sombra-honda);
+  overscroll-behavior: contain;
+}
+
+.personalizado::backdrop { background: rgb(0 0 0 / .7); }
+
+body:has(.personalizado[open]) { overflow: hidden; }
+
+.personalizado__cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--papel);
+  border-bottom: var(--filo);
+}
+
+.personalizado h2 { font-size: 1.6rem; margin-top: .4rem; }
+.personalizado h2:focus { outline: none; }
+
+.personalizado__cerrar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 9px;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.personalizado__cerrar:active { transform: translate(2px, 2px); box-shadow: none; }
+
+.personalizado__formulario,
+.personalizado__resumen {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.25rem;
+}
+
+/* --- Textos de apoyo --- */
+
+.personalizado small,
+.personalizado__intro,
+.personalizado__ayuda {
+  font-size: .82rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--tinta-suave);
+}
+
+.personalizado__ayuda { margin-top: -.25rem; }
+
+.personalizado__nota {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .6rem .8rem;
+  background: var(--papel-hondo);
+  border-radius: 9px;
+  font-size: .85rem;
+}
+
+.personalizado__nota svg { flex-shrink: 0; }
+
+.personalizado__opcional { font-weight: 600; }
+
+/* --- Bloques y campos --- */
+
+.personalizado__bloque {
+  display: grid;
+  gap: .75rem;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.personalizado__bloque legend,
+.personalizado__campo {
+  font-size: .9rem;
+  font-weight: 700;
+}
+
+.personalizado__bloque legend { padding: 0; margin-bottom: .75rem; }
+
+.personalizado__campo {
+  display: grid;
+  gap: .45rem;
+}
+
+.personalizado input:not([type="checkbox"], [type="radio"]),
+.personalizado textarea {
+  width: 100%;
+  min-width: 0;
+  padding: .75rem;
+  background: var(--papel-hondo);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 9px;
+  box-shadow: var(--sombra-hundida);
+  font: inherit;
+  font-size: .95rem;
+  font-weight: 400;
+}
+
+.personalizado textarea { resize: vertical; }
+
+.personalizado input:focus-visible,
+.personalizado textarea:focus-visible {
+  outline: 2.5px solid var(--acento);
+  outline-offset: 2px;
+}
+
+.personalizado__fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* --- Chips: por dentro son radios o casillas de verdad, tapados con
+       opacidad cero para que el navegador pueda señalarlos si falta
+       elegir uno --- */
+
+.personalizado__chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: .5rem .95rem;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 999px;
+  box-shadow: 2px 2px 0 var(--tinta);
+  font: inherit;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+
+.chip input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.chip:has(input:checked),
+.chip.esta-activo {
+  background: var(--acento);
+  color: #fff;
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.chip:has(input:focus-visible),
+.chip:focus-visible {
+  outline: 2.5px solid var(--acento);
+  outline-offset: 3px;
+}
+
+/* --- Cantidad: los atajos y, al lado, el número exacto --- */
+
+.personalizado__cantidad {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem;
+}
+
+.personalizado__cantidad .chip {
+  min-width: 3rem;
+  justify-content: center;
+  font-family: var(--mono);
+  font-weight: 700;
+}
+
+.personalizado__cantidad input { width: 6.5rem !important; }
+
+/* --- Colores: una bolita de filamento por color --- */
+
+.personalizado__colores { display: flex; flex-wrap: wrap; gap: .6rem; }
+
+.personalizado__color {
+  position: relative;
+  cursor: pointer;
+}
+
+.personalizado__color input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.personalizado__color span[aria-hidden] {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  color: #fff;
+  border: var(--filo);
+  border-radius: 999px;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+/* La marca de elegido no depende solo del color: sobre el negro un borde de
+   color no se vería, así que va el tilde adentro y un anillo afuera. */
+.personalizado__color:has(input:checked) span[aria-hidden] {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+  outline: 2.5px solid var(--acento);
+  outline-offset: 2px;
+}
+
+.personalizado__color:has(input:focus-visible) span[aria-hidden] {
+  outline: 2.5px dashed var(--acento);
+  outline-offset: 3px;
+}
+
+/* --- Casilla del sol y tarjetas de referencia --- */
+
+.personalizado__casilla,
+.personalizado__referencia {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  padding: .8rem .95rem;
+  border: var(--filo);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.personalizado__casilla { font-size: .9rem; font-weight: 600; }
+
+.personalizado__casilla input,
+.personalizado__referencia input {
+  flex-shrink: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: .15rem;
+  accent-color: var(--acento);
+}
+
+.personalizado__casilla span,
+.personalizado__referencia span { display: grid; gap: .15rem; }
+
+.personalizado__casilla:has(input:checked),
+.personalizado__referencia:has(input:checked) {
+  background: var(--papel-hondo);
+  box-shadow: 3px 3px 0 var(--tinta);
+}
+
+.personalizado__referencias { display: grid; gap: .5rem; }
+
+.personalizado__referencia strong { font-size: .92rem; }
+
+/* --- Pie del formulario y resumen --- */
+
+.personalizado__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem 1rem;
+}
+
+.personalizado pre {
+  padding: 1rem;
+  background: var(--papel-hondo);
+  border-radius: 12px;
+  font: inherit;
+  font-size: .9rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.personalizado__resumen p { font-size: .95rem; line-height: 1.6; }
+
+.personalizado__acciones { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+.personalizado .boton { justify-content: center; cursor: pointer; font: inherit; font-weight: 800; }
+
+@media (max-width: 30rem) {
+  .personalizado__fila { grid-template-columns: 1fr; }
+  .personalizado__acciones > *,
+  .personalizado__pie .boton { width: 100%; }
+}

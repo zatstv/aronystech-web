@@ -1,0 +1,144 @@
+.catalogo { padding-block: var(--aire) 0; }
+
+.catalogo__titulo { margin-block: .4rem .75rem; }
+
+.catalogo__intro {
+  max-width: 36rem;
+  margin-bottom: 2.5rem;
+  color: var(--tinta-suave);
+}
+
+/* Cinco piezas más la tarjeta del personalizado: seis, que cierran 2 + 2 + 2
+   o 3 + 3 sin ninguna colgando sola. */
+.catalogo__lista {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+@media (min-width: 36rem) {
+  .catalogo__lista { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 62rem) {
+  .catalogo__lista { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* --- Una pieza apoyada: filo y sombra dura, como el resto --- */
+
+.producto {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+
+.producto__foto {
+  display: block;
+  aspect-ratio: 4 / 3;
+  background: var(--papel-hondo);
+  border-bottom: var(--filo);
+  overflow: hidden;
+}
+
+.producto__foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .3s ease;
+}
+
+.producto:hover .producto__foto img { transform: scale(1.04); }
+
+.producto__cuerpo {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "categoria categoria"
+    "nombre    nombre"
+    "precio    pedir";
+  align-items: end;
+  gap: .3rem 1rem;
+  padding: 1rem 1.1rem 1.1rem;
+}
+
+.producto__categoria {
+  grid-area: categoria;
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.producto__nombre {
+  grid-area: nombre;
+  font-size: 1.2rem;
+  line-height: 1.25;
+}
+
+.producto__nombre a { color: inherit; text-decoration: none; }
+.producto__nombre a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.producto__precio {
+  grid-area: precio;
+  margin-top: .4rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.producto__precio span {
+  display: block;
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.producto__pedir {
+  grid-area: pedir;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .6rem 1rem;
+  background: var(--acento);
+  color: #fff;
+  border: var(--filo);
+  border-radius: 999px;
+  box-shadow: 2px 2px 0 var(--tinta);
+  font: inherit;
+  font-size: .88rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.producto__pedir:active { transform: translate(2px, 2px); box-shadow: none; }
+
+/* --- La tarjeta que no es una pieza --- */
+
+.producto--otro {
+  justify-content: center;
+  gap: .75rem;
+  padding: 1.5rem;
+  background: var(--papel-hondo);
+  border-style: dashed;
+  box-shadow: none;
+}
+
+.producto--otro p {
+  color: var(--tinta-suave);
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+.producto--otro .boton { align-self: flex-start; margin-top: .5rem; }

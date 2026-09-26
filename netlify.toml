@@ -29,3 +29,11 @@
   for = "/img/*"
   [headers.values]
     Cache-Control = "public, max-age=86400"
+
+# Las tipografías no cambian nunca, así que se guardan un año. Si algún día
+# se reemplaza un archivo, hay que cambiarle el nombre: con el mismo, quien
+# ya visitó el sitio seguiría viendo la letra vieja.
+[[headers]]
+  for = "/fuentes/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

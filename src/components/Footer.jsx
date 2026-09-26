@@ -17,6 +17,7 @@ import "./Footer.css";
 const SITIO = [
   { href: "#inicio", texto: "Inicio" },
   { href: "#galeria", texto: "Galería" },
+  { href: "#catalogo", texto: "Catálogo" },
   { href: "#nosotros", texto: "Nosotros" },
 ];
 
@@ -90,7 +91,7 @@ export default function Footer() {
                 externo
               />
               <Renglon href={`tel:+${TEL}`} texto={TEL_BONITO} />
-              <Renglon href="#acceso" texto="Tu cuenta" />
+              <Renglon href="#personalizado" texto="Pedido personalizado" />
             </ul>
           </div>
 

@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import PedidoPersonalizado from "./components/PedidoPersonalizado.jsx";
+import Catalogo from "./components/Catalogo.jsx";
 import DetalleProducto from "./components/DetalleProducto.jsx";
 import { PRODUCTOS } from "./data/sitio.js";
 
-import Acceso from "./components/Acceso.jsx";
 import FondoCuadricula from "./components/FondoCuadricula.jsx";
 import Footer from "./components/Footer.jsx";
 import Galeria from "./components/Galeria.jsx";
@@ -16,24 +16,11 @@ import Nosotros from "./components/Nosotros.jsx";
 import Proceso from "./components/Proceso.jsx";
 import Preguntas from "./components/Preguntas.jsx";
 import { useAnclaInicial } from "./hooks/useAnclaInicial.js";
-import { useReveal } from "./hooks/useReveal.js";
 
 export default function App() {
-  const personalizadoRef = useRef(null);
-  /* Vista previa de las pantallas de acceso, en #acceso. No hay router
-     instalado y para una pantalla suelta no vale la pena traer uno: alcanza
-     con mirar el hash. Cuando el acceso sea de verdad, esto se reemplaza por
-     una ruta como corresponde. */
-  const [enAcceso, setEnAcceso] = useState(
-    () => typeof window !== "undefined" && window.location.hash === "#acceso"
-  );
-
-  useEffect(() => {
-    const mirar = () => setEnAcceso(window.location.hash === "#acceso");
-    window.addEventListener("hashchange", mirar);
-    return () => window.removeEventListener("hashchange", mirar);
-  }, []);
-
+  /* No hay router instalado: la ficha de producto se mira desde el hash
+     (#producto/<id>), y el pedido personalizado escucha el suyo por su
+     cuenta (#personalizado). */
   const [ruta, setRuta] = useState(() => window.location.hash);
   useEffect(() => {
     const actualizar = () => setRuta(window.location.hash);
@@ -55,13 +42,10 @@ export default function App() {
   }, [ruta, esDetalle]);
 
   useAnclaInicial();
-  useReveal();
 
   /* Qué producto está abierto en el modal de pedido. null = cerrado. */
   const [pedido, setPedido] = useState(null);
   const cerrar = useCallback(() => setPedido(null), []);
-
-  if (enAcceso) return <Acceso />;
 
   return (
     <>
@@ -72,9 +56,10 @@ export default function App() {
         <Lateral />
 
         <main hidden={esDetalle}>
-          <Hero alPersonalizar={() => personalizadoRef.current.showModal()} />
+          <Hero />
           <Galeria />
           <Mosaico />
+          <Catalogo alPedir={setPedido} />
           <Proceso />
           <Nosotros />
           <Preguntas />
@@ -85,7 +70,7 @@ export default function App() {
       </div>
 
       <ModalPedido producto={pedido} alCerrar={cerrar} />
-      <PedidoPersonalizado dialogoRef={personalizadoRef} />
+      <PedidoPersonalizado />
     </>
   );
 }

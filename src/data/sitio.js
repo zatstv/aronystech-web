@@ -16,8 +16,9 @@ export const TEL_BONITO = "+507 6795 5170";
    en lucide 1.x: hoy todas entran con un eslabón genérico. */
 export const REDES = [];
 
-/* Los ocho colores del armador. El orden importa: así se reparten
-   los cubos cuando el cliente elige "colores surtidos". */
+/* Los colores de filamento que hay. De acá salen los que se ofrecen en el
+   pedido de cada pieza (filtrados por `colores` de PRODUCTOS) y las
+   bolitas del pedido personalizado. */
 export const PALETA = [
   { hex: "#E5402B", nombre: "rojo" },
   { hex: "#24B5A6", nombre: "turquesa" },
@@ -27,18 +28,6 @@ export const PALETA = [
   { hex: "#8B4FD6", nombre: "morado" },
   { hex: "#22252A", nombre: "negro" },
   { hex: "#F2803C", nombre: "naranja" },
-];
-
-/* El armador muestra siete colores fijos más la opción surtida.
-   El naranja queda fuera de los chips a propósito: la fila ya está llena. */
-export const CHIPS = [
-  { hex: "#E5402B", etiqueta: "Rojo" },
-  { hex: "#24B5A6", etiqueta: "Turquesa" },
-  { hex: "#2E6FE8", etiqueta: "Azul" },
-  { hex: "#F2A00E", etiqueta: "Amarillo" },
-  { hex: "#7AC943", etiqueta: "Verde" },
-  { hex: "#8B4FD6", etiqueta: "Morado" },
-  { hex: "#22252A", etiqueta: "Negro" },
 ];
 
 export const PASOS = [
@@ -54,13 +43,17 @@ export const PASOS = [
    instalada y por eso no dibujaban nada.
 
    Yappy va segundo a propósito: en Panamá es el que más se usa y el que la
-   gente busca antes de escribir para preguntar. */
+   gente busca antes de escribir para preguntar.
+
+   `detalle` es lo que se lee debajo de cada método en el último paso del
+   pedido. Ninguno cobra desde la página: el pago siempre se coordina por el
+   chat, una vez confirmado el total. */
 export const PAGOS = [
-  { icono: "efectivo", texto: "Efectivo" },
-  { icono: "yappy", texto: "Yappy" },
-  { icono: "tarjeta", texto: "Tarjeta" },
-  { icono: "cripto", texto: "Criptomonedas" },
-  { icono: "paypal", texto: "PayPal" },
+  { icono: "efectivo", texto: "Efectivo", detalle: "Al recibir o al retirar el pedido" },
+  { icono: "yappy", texto: "Yappy", detalle: "Te pasamos el número por el chat" },
+  { icono: "tarjeta", texto: "Tarjeta", detalle: "Te pasamos los datos por el chat" },
+  { icono: "cripto", texto: "Criptomonedas", detalle: "Te pasamos la dirección por el chat" },
+  { icono: "paypal", texto: "PayPal", detalle: "Te pasamos los datos por el chat" },
 ];
 
 export const OCASIONES = [
@@ -99,14 +92,6 @@ export const PREGUNTAS = [
   },
 ];
 
-/* Categorías del catálogo. El orden es el de los botones del filtro. */
-export const CATEGORIAS = [
-  "Llaveros",
-  "Soportes y utilidades",
-  "Decoración y hogar",
-  "Regalos",
-];
-
 /* Los tres datos del hero. Son hechos verificables de docs/PROYECTO.md, no
    métricas de relleno: el mínimo de 1 es el diferenciador contra la
    competencia, el envío nacional está decidido, y todo se imprime en PLA. */
@@ -118,6 +103,34 @@ export const DATOS = [
 
 /* Opciones del formulario de pedido. */
 export const TAMANOS = ["Pequeño", "Mediano", "Grande"];
+
+/* El pedido personalizado arranca eligiendo qué clase de pieza es. Cada tipo
+   trae su propio ejemplo en la caja de descripción: a quien no sabe cómo
+   pedir algo, ver cómo lo pidió otro le resuelve la mitad.
+
+   El `id` es también el ancla: #personalizado/repuesto abre el formulario con
+   ese tipo ya elegido. */
+export const TIPOS_ENCARGO = [
+  { id: "llavero", nombre: "Llavero", ejemplo: "Un llavero de cubos que diga MAMÁ, con un corazón al final" },
+  { id: "logo", nombre: "Con mi logo", ejemplo: "30 llaveros con el logo de mi negocio para regalar a clientes" },
+  { id: "regalo", nombre: "Regalo o recuerdo", ejemplo: "Recuerdos para una boda con los nombres y la fecha" },
+  { id: "repuesto", nombre: "Pieza de repuesto", ejemplo: "La perilla de la estufa se partió; tengo la pieza rota para medirla" },
+  { id: "utilidad", nombre: "Soporte o utilidad", ejemplo: "Un soporte para colgar los audífonos debajo del escritorio" },
+  { id: "otro", nombre: "Otra idea", ejemplo: "Cuéntanos qué tienes en mente, aunque no sepas si se puede imprimir" },
+];
+
+/* Qué tiene el cliente para mostrarnos. Cambia lo que le pedimos después:
+   con un STL imprimimos tal cual, con una foto hay que modelar. */
+export const REFERENCIAS = [
+  { id: "archivo", nombre: "Un archivo 3D", detalle: "STL, 3MF u OBJ: se imprime tal cual" },
+  { id: "imagen", nombre: "Una foto, logo o boceto", detalle: "Lo modelamos nosotros; el diseño se cobra una vez" },
+  { id: "nada", nombre: "Solo la idea", detalle: "Te ayudamos a definirla desde cero" },
+];
+
+/* Los botones rápidos de cantidad. A partir de MAYOREO el formulario avisa
+   que el precio por pieza baja (ver PREGUNTAS, "¿Hacen pedidos grandes?"). */
+export const CANTIDADES = [1, 5, 20, 50, 100];
+export const MAYOREO = 20;
 
 /* La secuencia que se va cambiando al bajar por la página.
 
@@ -197,8 +210,11 @@ export const GALERIA = [
   { src: "img/cajas-regalo.webp", alt: "Caja de regalo transparente con dulces y cinta, junto a llaveros de cubos", ancho: 1195, alto: 896 },
 ];
 
-/* El catálogo. El orden de esta lista es el orden en la página y en el índice,
-   y el `id` es el ancla del enlace (#p1, #p2...). */
+/* El catálogo. El orden de esta lista es el orden en la página, y el `id`
+   es el ancla de la ficha (#producto/p1, #producto/p2...).
+
+   `foto.encuadre` es opcional: qué parte de la foto se ve en la tarjeta del
+   catálogo, que la recorta apaisada. Sin él se ve el centro. */
 export const PRODUCTOS = [
   {
     id: "p1",
@@ -207,14 +223,12 @@ export const PRODUCTOS = [
     nombre: "Llavero de nombre",
     precio: "$9",
     unidad: "hasta 10 letras",
-    pedido: "un llavero de nombre",
     texto: "Cubos con letras que se enganchan entre sí, uno por letra. Cada cubo puede llevar su propio color, así que dos llaveros con el mismo nombre nunca son iguales. El enganche es parte de la pieza, no una argolla pegada.",
     colores: ["#E5402B", "#24B5A6", "#2E6FE8", "#F2A00E"],
     foto: {
       src: "img/cubos-letras-detalle.webp",
       ancho: 1600,
       alto: 1200,
-      forma: "foto-h",
       alt: "Primer plano de los cubos con letras que forman la palabra AronysTech",
     },
   },
@@ -225,14 +239,15 @@ export const PRODUCTOS = [
     nombre: "Llavero de números",
     precio: "$9",
     unidad: "hasta 10 dígitos",
-    pedido: "un llavero de números",
     texto: "El mismo sistema de cubos pero con dígitos. Sirve para el número de placa, un teléfono o una fecha que importa. Se puede combinar con letras en el mismo llavero.",
     colores: ["#24B5A6", "#E5402B", "#22252A"],
     foto: {
       src: "img/cubos-numeros.webp",
       ancho: 896,
       alto: 1195,
-      forma: "foto-v",
+      /* En la tarjeta del catálogo la foto se recorta apaisada, y al medio
+         está la manzana: los números quedan abajo de todo. */
+      encuadre: "center bottom",
       alt: "Llavero de cubos con números turquesa sobre base roja formando un número de teléfono",
     },
   },
@@ -242,14 +257,12 @@ export const PRODUCTOS = [
     nombre: "Soporte de celular",
     precio: "$7",
     unidad: "por unidad",
-    pedido: "un soporte de celular",
     texto: "Plegable, aguanta el peso del teléfono sin moverse y cabe en cualquier bolso. Funciona en vertical y en horizontal, y el borde inferior deja pasar el cable del cargador.",
     colores: ["#F2803C", "#24B5A6", "#22252A", "#8B4FD6"],
     foto: {
       src: "img/soportes-celular.webp",
       ancho: 1195,
       alto: 896,
-      forma: "foto-h",
       alt: "Cuatro soportes de celular impresos en 3D: mármol, negro, naranja y turquesa",
     },
   },
@@ -259,14 +272,12 @@ export const PRODUCTOS = [
     nombre: "Monedero manzana",
     precio: "$14",
     unidad: "por unidad",
-    pedido: "un monedero manzana",
     texto: "La tapa es una malla impresa que deja ver lo que hay adentro. El tallo y la hoja van aparte y se pueden pedir en otro color. Sirve para monedas, dulces o audífonos.",
     colores: ["#E5402B", "#22252A"],
     foto: {
       src: "img/manzana-piezas.webp",
       ancho: 896,
       alto: 1195,
-      forma: "foto-v",
       alt: "Piezas sueltas del monedero manzana: tapas rojas de malla, bases negras, hoja turquesa y tallo café",
     },
   },
@@ -276,24 +287,13 @@ export const PRODUCTOS = [
     nombre: "Caja de regalo armada",
     precio: "$18",
     unidad: "caja completa",
-    pedido: "una caja de regalo armada",
     texto: "La pieza que elijas, empacada con dulces y cinta en caja transparente, lista para entregar. Es la opción para cuando el regalo es para hoy y no hay tiempo de envolver nada.",
     colores: [],
     foto: {
       src: "img/cajas-regalo.webp",
       ancho: 1195,
       alto: 896,
-      forma: "foto-h",
       alt: "Caja de regalo transparente con dulces y cinta, junto a llaveros de cubos",
     },
   },
-];
-
-/* Los cubitos de colores que flotan detrás del hero. */
-export const SUELTOS = [
-  { giro: "-12deg", lado: 46, top: "7%", left: "4%", color: "#F2A00E", retraso: "0s" },
-  { giro: "9deg", lado: 34, top: "34%", left: "1.5%", color: "#24B5A6", retraso: "1.1s" },
-  { giro: "-6deg", lado: 28, bottom: "14%", left: "6%", color: "#2E6FE8", retraso: "2.3s" },
-  { giro: "14deg", lado: 40, top: "11%", right: "3%", color: "#7AC943", retraso: ".6s" },
-  { giro: "-9deg", lado: 30, bottom: "9%", right: "6%", color: "#8B4FD6", retraso: "1.8s" },
 ];

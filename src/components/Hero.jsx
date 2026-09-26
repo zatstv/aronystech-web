@@ -17,7 +17,7 @@ const ICONOS = { package: Package, truck: Truck, layers: Boxes };
 
 const POSTER = "/video/hero-poster.webp";
 
-export default function Hero({ alPersonalizar }) {
+export default function Hero() {
   const seccionRef = useRef(null);
   /* Se lee una sola vez, al montar: si el video ya empezó, cambiar la
      preferencia a mitad de camino no debería hacerlo desaparecer de golpe. */
@@ -164,14 +164,10 @@ export default function Hero({ alPersonalizar }) {
               {/* Abre el formulario de pedido personalizado, no WhatsApp:
                   primero se juntan las respuestas y recién al final se arma
                   el mensaje. */}
-              <button
-                type="button"
-                className="portada__boton portada__boton--hueco"
-                onClick={alPersonalizar}
-              >
+              <a className="portada__boton portada__boton--hueco" href="#personalizado">
                 <MessageCircle size={15} strokeWidth={2.4} aria-hidden="true" />
                 Pedido personalizado
-              </button>
+              </a>
 
               <a className="portada__boton" href="#galeria">
                 Ver las piezas
