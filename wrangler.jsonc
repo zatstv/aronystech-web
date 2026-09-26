@@ -1,0 +1,17 @@
+// Cómo publica Cloudflare el sitio.
+//
+// En main, `wrangler deploy` adivinaba solo que esto es un proyecto de Vite y
+// lo compilaba. En las ramas Cloudflare corre `wrangler versions upload`, que
+// no adivina nada: sin este archivo fallaba con "Missing entry-point". Acá se
+// le dice lo mismo a los dos: compilar con Vite y subir dist como archivos
+// estáticos, sin código de servidor.
+{
+  "name": "aronystech-web",
+  "compatibility_date": "2026-09-25",
+  "build": {
+    "command": "npm run build"
+  },
+  "assets": {
+    "directory": "./dist"
+  }
+}
