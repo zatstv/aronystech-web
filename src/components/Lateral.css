@@ -108,9 +108,6 @@
 .lateral__enlace:hover .lateral__tecla,
 .lateral__enlace.esta-activo .lateral__tecla { opacity: 1; }
 
-/* El panel de acceso cuelga de su renglón. */
-.lateral__ancla-acceso { position: relative; }
-
 /* --- Claro / Oscuro / Auto --- */
 
 .lateral__pie { padding-top: .6rem; }
@@ -227,15 +224,6 @@
 
   .lateral__marca--rail { display: none; }
 
-  /* Dentro del cajón no hay lugar al costado ni abajo: el panel de acceso se
-     abre en el propio renglón y empuja lo que sigue. */
-  .lateral__ancla-acceso .login {
-    position: static;
-    width: 100%;
-    margin-top: .5rem;
-    box-shadow: var(--sombra);
-  }
-
   .lateral__velo {
     position: fixed;
     inset: 0;
@@ -289,7 +277,6 @@
   .lateral__pie { padding: 0; }
   .lateral__tema { gap: 0; padding: 2px; }
   .lateral__tema-opcion { padding: .5rem .4rem; font-size: .6rem; }
-  .lateral__ancla-acceso .login { position: absolute; top: calc(100% + 1rem); right: 0; left: auto; }
 
   /* --- Arriba de todo: sin fondo, para que se vea el video ---
 

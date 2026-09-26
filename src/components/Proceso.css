@@ -1,0 +1,107 @@
+.proceso { padding-block: var(--aire); }
+
+.proceso__titulo { margin-block: .4rem 2.5rem; }
+
+/* --- Los cinco pasos --- */
+
+.proceso__pasos {
+  /* El contador reemplaza escribir "1." a mano en cada paso: si mañana se
+     agrega uno en el medio, se renumeran solos. */
+  counter-reset: paso;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+  /* Columnas explícitas en vez de auto-fit: con auto-fit salían 4 a pantalla
+     ancha y los 5 pasos quedaban 4 + 1, con una tarjeta sola colgando en la
+     segunda fila. A tres columnas cierra 3 + 2, que se lee como un bloque. */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 40rem) {
+  .proceso__pasos { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 62rem) {
+  .proceso__pasos { grid-template-columns: repeat(3, 1fr); }
+}
+
+.paso {
+  counter-increment: paso;
+  position: relative;
+  padding: 2.6rem 1.1rem 1.1rem;
+  border: var(--filo);
+  border-radius: var(--radio);
+  background: var(--papel);
+  box-shadow: var(--sombra-hundida);
+}
+
+.paso::before {
+  content: counter(paso);
+  position: absolute;
+  top: .9rem;
+  left: 1.1rem;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  color: var(--acento);
+}
+
+.paso__titulo {
+  font-size: 1.15rem;
+  margin-bottom: .4rem;
+}
+
+.paso__texto {
+  color: var(--tinta-suave);
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+/* --- Para qué lo piden --- */
+
+.ocasiones { margin-top: 3rem; }
+
+.ocasiones__titulo {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.ocasiones__lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: .8rem;
+  /* Mismo motivo que los pasos, y acá cierra justo: 6 en tres columnas son
+     dos filas llenas. */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 40rem) {
+  .ocasiones__lista { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 62rem) {
+  .ocasiones__lista { grid-template-columns: repeat(3, 1fr); }
+}
+
+.ocasion {
+  padding: 1.1rem;
+  border: var(--filo);
+  border-radius: var(--radio);
+  background: var(--papel-hondo);
+}
+
+.ocasion__titulo {
+  font-size: 1rem;
+  margin-bottom: .35rem;
+}
+
+.ocasion__texto {
+  color: var(--tinta-suave);
+  font-size: .88rem;
+  line-height: 1.55;
+}

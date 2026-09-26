@@ -1,0 +1,114 @@
+.preguntas { padding-block: var(--aire); }
+
+.preguntas__titulo { margin-block: .4rem 2.5rem; }
+
+.preguntas__lista {
+  max-width: 48rem;
+  display: grid;
+  gap: .8rem;
+}
+
+/* Cada pregunta es una pieza apoyada, como el resto de la página: filo
+   marcado, sombra dura sin desenfoque. */
+.pregunta {
+  border: var(--filo);
+  border-radius: var(--radio);
+  background: var(--papel);
+  box-shadow: var(--sombra-hundida);
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+
+.pregunta[open] {
+  box-shadow: var(--sombra);
+  transform: translate(-1px, -1px);
+}
+
+.pregunta__titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  /* 1rem arriba y abajo sobre una línea de texto deja el área por encima de
+     los 44px que necesita un dedo. */
+  padding: 1rem 1.1rem;
+  font-weight: 600;
+  font-size: clamp(1rem, 2.3vw, 1.1rem);
+  cursor: pointer;
+  list-style: none;
+}
+
+/* La flechita que Safari y Chrome ponen solos: sobra, ya está la cruz. */
+.pregunta__titulo::-webkit-details-marker { display: none; }
+
+.pregunta__titulo:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+  border-radius: var(--radio);
+}
+
+.pregunta__signo {
+  flex: 0 0 auto;
+  color: var(--acento);
+  transition: transform .2s ease;
+}
+
+.pregunta[open] .pregunta__signo { transform: rotate(45deg); }
+
+.pregunta__respuesta {
+  padding: 0 1.1rem 1.1rem;
+  color: var(--tinta-suave);
+  line-height: 1.6;
+  max-width: 42rem;
+}
+
+/* --- Cómo se paga --- */
+
+.pagos {
+  max-width: 48rem;
+  margin-top: 2.5rem;
+  padding: 1.4rem;
+  border: var(--filo);
+  border-radius: var(--radio);
+  background: var(--papel-hondo);
+}
+
+.pagos__titulo {
+  font-size: 1.1rem;
+  margin-bottom: .9rem;
+}
+
+.pagos__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagos__medio {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .5rem .8rem;
+  border: var(--filo);
+  border-radius: 999px;
+  background: var(--papel);
+  font-size: .9rem;
+  font-weight: 600;
+  /* Sin esto "Criptomonedas" se parte en dos renglones en pantallas angostas
+     y la fila queda despareja. */
+  white-space: nowrap;
+}
+
+.pagos__nota {
+  margin-top: .9rem;
+  font-size: .85rem;
+  color: var(--tinta-suave);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pregunta,
+  .pregunta__signo { transition: none; }
+  .pregunta[open] { transform: none; }
+}

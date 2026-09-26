@@ -22,15 +22,18 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# Las fotos y los modelos sí conservan su nombre entre versiones, así que se
-# guardan un día: bastante para una visita, poco para que una foto cambiada
-# tarde en verse.
+# Las fotos sí conservan su nombre entre versiones, así que se guardan un
+# día: bastante para una visita, poco para que una foto cambiada tarde en
+# verse.
 [[headers]]
   for = "/img/*"
   [headers.values]
     Cache-Control = "public, max-age=86400"
 
+# Las tipografías no cambian nunca, así que se guardan un año. Si algún día
+# se reemplaza un archivo, hay que cambiarle el nombre: con el mismo, quien
+# ya visitó el sitio seguiría viendo la letra vieja.
 [[headers]]
-  for = "/modelo/*"
+  for = "/fuentes/*"
   [headers.values]
-    Cache-Control = "public, max-age=86400"
+    Cache-Control = "public, max-age=31536000, immutable"

@@ -1,34 +1,73 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowLeft, MessageCircle } from "lucide-react";
+
+import { PAGOS } from "../data/sitio.js";
 import { linkWhatsApp } from "../lib/whatsapp.js";
 import "./PasoPago.css";
 
-const METODOS = [
-  { nombre: "Tarjeta", detalle: "Pago en línea · vista previa" },
-  { nombre: "Transferencia bancaria", detalle: "Datos bancarios y comprobante · vista previa" },
-  { nombre: "PayPal", detalle: "Pago en línea · vista previa" },
-  { nombre: "Efectivo", detalle: "Coordinamos el pago por WhatsApp" },
-  { nombre: "Yappy", detalle: "Coordinamos el pago por WhatsApp" },
-];
+/* ============================================================
+   Último paso del pedido de una pieza del catálogo: cómo prefiere pagar.
+
+   La página no cobra nada. El método elegido viaja en el mensaje de
+   WhatsApp, y el pago se hace recién cuando el total está confirmado. Por
+   eso los métodos salen de PAGOS, la misma lista que se muestra en
+   Preguntas: lo que se ofrece acá es exactamente lo que se acepta.
+   ============================================================ */
+
+/* Yappy de entrada: en Panamá es el que más se usa (ver PAGOS). */
+const POR_DEFECTO = PAGOS.find((p) => p.icono === "yappy")?.texto ?? PAGOS[0]?.texto;
 
 export default function PasoPago({ mensaje, producto, cantidad, alVolver }) {
-  const [metodo, setMetodo] = useState("Tarjeta");
-  const [revisado, setRevisado] = useState(false);
-  const directo = metodo === "Efectivo" || metodo === "Yappy";
-  const estado = directo ? "Por coordinar" : "Pendiente de verificación. Vista previa: no se realizó ningún cobro.";
-  const enlace = linkWhatsApp(`${mensaje}\n\nMétodo de pago: ${metodo}\nEstado del pago: ${estado}`);
-  return <div className="pago">
-    <button type="button" className="pago__volver" onClick={alVolver}><ArrowLeft size={16} /> Editar pedido</button>
-    <p className="rotulo">Paso 2 de 2</p>
-    <h3>¿Cómo preferís pagar?</h3>
-    <p className="pago__intro">{producto.nombre} · {cantidad} {cantidad === 1 ? "unidad" : "unidades"}</p>
-    <p className="pago__aviso">Vista previa. Todavía no se procesan pagos. El importe final y las medidas deben confirmarse.</p>
-    <fieldset className="pago__metodos"><legend className="oculto-visual">Método de pago</legend>{METODOS.map((m) => <label key={m.nombre} className={`pago__metodo ${metodo === m.nombre ? "seleccionado" : ""}`}><input type="radio" name="metodo-pago" value={m.nombre} checked={metodo === m.nombre} onChange={() => {setMetodo(m.nombre); setRevisado(false);}} /><span><strong>{m.nombre}</strong><small>{m.detalle}</small></span></label>)}</fieldset>
-    <div className="pago__explicacion" aria-live="polite">
-      {directo ? <p>Continuá a WhatsApp con el pedido completo. Allí coordinamos {metodo === "Yappy" ? "los datos para Yappy" : "la entrega y el pago en efectivo"}.</p> : <><h4>{metodo === "Transferencia bancaria" ? "Transferencia y comprobante" : `Pago con ${metodo}`}</h4><p>{metodo === "Transferencia bancaria" ? "Aquí se mostrarán la cuenta, el importe y la referencia para transferir. Todavía no hay datos bancarios configurados." : "Aquí se abrirá el proveedor de pago cuando esté conectado. Esta vista no solicita datos de tarjeta ni realiza cobros."}</p><p>Después de verificar el pago, el pedido continuará a WhatsApp con su referencia para coordinar la entrega.</p></>}
+  const [metodo, setMetodo] = useState(POR_DEFECTO);
+  const enlace = linkWhatsApp(`${mensaje}\n\nQuisiera pagar con: ${metodo}`);
+
+  return (
+    <div className="pago">
+      <button type="button" className="pago__volver" onClick={alVolver}>
+        <ArrowLeft size={16} /> Editar pedido
+      </button>
+
+      <p className="rotulo">Paso 2 de 2</p>
+      <h3>¿Cómo prefieres pagar?</h3>
+      <p className="pago__intro">
+        {producto.nombre} · {cantidad} {cantidad === 1 ? "unidad" : "unidades"}
+      </p>
+      <p className="pago__aviso">
+        Todavía no se cobra nada. Primero te confirmamos el total y la fecha por
+        WhatsApp; el pago se hace después, con el método que elijas.
+      </p>
+
+      <fieldset className="pago__metodos">
+        <legend className="oculto-visual">Método de pago</legend>
+        {PAGOS.map((m) => (
+          <label
+            key={m.texto}
+            className={`pago__metodo ${metodo === m.texto ? "seleccionado" : ""}`}
+          >
+            <input
+              type="radio"
+              name="metodo-pago"
+              value={m.texto}
+              checked={metodo === m.texto}
+              onChange={() => setMetodo(m.texto)}
+            />
+            <span>
+              <strong>{m.texto}</strong>
+              <small>{m.detalle}</small>
+            </span>
+          </label>
+        ))}
+      </fieldset>
+
+      <a className="boton pago__continuar" href={enlace} target="_blank" rel="noopener noreferrer">
+        <MessageCircle size={18} /> Continuar a WhatsApp
+      </a>
+      <p className="pago__intro">Se prepara el mensaje; tú decides cuándo enviarlo.</p>
+
+      <details className="pago__resumen">
+        <summary>Ver el mensaje completo</summary>
+        <p>{`${mensaje}\n\nQuisiera pagar con: ${metodo}`}</p>
+      </details>
     </div>
-    {!directo && !revisado && <button type="button" className="boton pago__continuar" onClick={() => setRevisado(true)}>Ver cierre de ejemplo <ArrowRight size={18} /></button>}
-    {(directo || revisado) && <div className="pago__cierre" aria-live="polite">{!directo && <p><strong>Pedido preparado · pago pendiente.</strong><br />Esta demostración no confirma ningún pago.</p>}<a className="boton pago__continuar" href={enlace} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> Continuar a WhatsApp</a><p className="pago__intro">Se prepara el mensaje; vos decidís cuándo enviarlo.</p></div>}
-    <details className="pago__resumen"><summary>Ver el pedido completo</summary><p>{mensaje}</p></details>
-  </div>;
+  );
 }

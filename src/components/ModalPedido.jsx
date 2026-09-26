@@ -133,7 +133,7 @@ export default function ModalPedido({ producto, alCerrar }) {
 
           <fieldset className="modal__campo">
             <legend className="rotulo">Tamaño orientativo</legend>
-            <p className="modal__ayuda">Confirmamos las medidas y el precio final por WhatsApp. Si necesitás una medida exacta, escribila en las notas.</p>
+            <p className="modal__ayuda">Confirmamos las medidas y el precio final por WhatsApp. Si necesitas una medida exacta, escríbela en las notas.</p>
             <div className="modal__opciones">
               {TAMANOS.map((t) => (
                 <button
@@ -164,7 +164,7 @@ export default function ModalPedido({ producto, alCerrar }) {
                 placeholder="Hasta 10 cubos"
                 onChange={(e) => { setTextoLibre(e.target.value); setError(""); }}
               />
-              <span id="pedido-texto-ayuda" className="modal__ayuda">Escribí de 1 a 10 caracteres.</span>
+              <span id="pedido-texto-ayuda" className="modal__ayuda">Escribe de 1 a 10 caracteres.</span>
               <span id="pedido-texto-error" className="modal__error" role="alert">{error}</span>
             </label>
           )}
@@ -187,14 +187,14 @@ export default function ModalPedido({ producto, alCerrar }) {
             <textarea
               rows={2}
               value={notas}
-              placeholder="Para cuándo lo necesitás, alguna referencia..."
+              placeholder="Para cuándo lo necesitas, alguna referencia..."
               onChange={(e) => setNotas(e.target.value)}
             />
           </label>
         </div>
 
         <section className="modal__resumen" aria-label="Resumen del pedido">
-          <h3>Revisá tu pedido</h3>
+          <h3>Revisa tu pedido</h3>
           <p>{producto.nombre} · {cantidad} {cantidad === 1 ? "unidad" : "unidades"}</p>
           <p>Color: {color} · Tamaño orientativo: {tamano}</p>
           {producto.textoLibre && <p>Texto: {textoLibre.trim() || "Pendiente de completar"}</p>}
@@ -210,7 +210,7 @@ export default function ModalPedido({ producto, alCerrar }) {
           <button type="button" className="boton" onClick={(e) => {
             if (producto.textoLibre && !textoLibre.trim()) {
               e.preventDefault();
-              setError("Escribí el nombre o texto que querés en los cubos.");
+              setError("Escribe el nombre o texto que quieres en los cubos.");
               textoRef.current?.focus();
               return;
             }

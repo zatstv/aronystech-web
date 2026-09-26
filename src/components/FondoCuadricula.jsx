@@ -42,7 +42,7 @@ function leerColores() {
     const n = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
     return [0, 2, 4].map((i) => parseInt(n.slice(i, i + 2), 16));
   };
-  return { tinta: rgb("--tinta", "#22252A"), acento: rgb("--acento", "#E5402B") };
+  return { tinta: rgb("--tinta", "#22252A"), acento: rgb("--acento", "#D22F1A") };
 }
 
 function rgba([r, g, b], a) {
