@@ -12,10 +12,10 @@ const ICONOS = { package: Package, truck: Truck, layers: Boxes };
 
    El video es decorativo y va en aria-hidden: lo que hay que entender está
    escrito al lado. Si alguien pidió menos movimiento ni siquiera se baja,
-   se muestra el póster y listo: son 1,2 MB que se ahorra.
+   se muestra el póster y listo: son 2,3 MB que se ahorra.
    ============================================================ */
 
-const POSTER = "/video/impresora-poster.webp";
+const POSTER = "/video/hero-poster.webp";
 
 export default function Hero({ alPersonalizar }) {
   const seccionRef = useRef(null);
@@ -27,8 +27,8 @@ export default function Hero({ alPersonalizar }) {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
 
-  /* El video pesa 1,1 MB y no se ve hasta que se reproduce; el póster son
-     47 KB y es lo único que hay en pantalla al entrar. Con autoPlay el
+  /* El video pesa 2,2 MB y no se ve hasta que se reproduce; el póster son
+     35 KB y es lo único que hay en pantalla al entrar. Con autoPlay el
      navegador baja el video de entrada, peleando ancho de banda justo con la
      imagen que el visitante sí está esperando.
 
@@ -121,8 +121,8 @@ export default function Hero({ alPersonalizar }) {
           >
             {cargarVideo && (
               <>
-                <source src="/video/impresora.webm" type="video/webm" />
-                <source src="/video/impresora.mp4" type="video/mp4" />
+                <source src="/video/hero.webm" type="video/webm" />
+                <source src="/video/hero.mp4" type="video/mp4" />
               </>
             )}
           </video>

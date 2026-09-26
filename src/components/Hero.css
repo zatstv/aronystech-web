@@ -32,9 +32,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* La pieza está en el tercio de abajo del encuadre: al recortar en
-     pantallas anchas conviene perder cielo y no la impresora. */
-  object-position: center 62%;
+  /* El cabezal, la cama y el llavero van al medio del encuadre: al
+     recortar conviene perder lo mismo arriba que abajo. */
+  object-position: center;
 }
 
 /* Carga arriba y abajo, donde va el texto, y deja el medio limpio.

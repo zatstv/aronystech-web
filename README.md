@@ -34,7 +34,7 @@ src/
 public/
   img/                las fotos que usa la página
                       (la página usa los .webp; portada.jpg es para WhatsApp)
-  video/              el video de la impresora, con su poster
+  video/              el video de la portada (hero), con su poster
   fuentes/            Outfit 900 suelta, sin usar todavía (ver "Pendientes")
   robots.txt
 
