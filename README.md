@@ -1,7 +1,65 @@
-# AronysTech · sitio web
+<p align="center">
+  <img src="public/img/logo-aronystech.webp" alt="AronysTech" width="360" />
+</p>
 
-Catálogo de impresiones 3D personalizadas. React con Vite, sin backend:
-el pedido sale por WhatsApp con el mensaje ya escrito.
+<p align="center">
+  <strong>Diseñamos tu idea, y lo imprimimos en 3D.</strong><br />
+  Llaveros, soportes y piezas a medida en Panamá. Todo en PLA, pieza por pieza, desde una sola unidad.
+</p>
+
+<p align="center">
+  <img src="docs/readme/video-portada.webp" alt="La impresora 3D sacando un llavero de AronysTech, capa por capa" width="720" />
+</p>
+
+---
+
+## Qué es
+
+AronysTech es un taller chico de impresión 3D en Panamá. Este repositorio es su
+sitio web: una sola página donde se ven las piezas, sus precios y cómo se pide.
+No hay carrito ni cuentas: cada pedido termina en WhatsApp con el mensaje ya
+escrito, y el precio final se confirma por el chat antes de imprimir nada.
+
+## Qué tiene la página
+
+| Sección | Qué muestra |
+|---|---|
+| **Portada** | El video de la impresora sacando el llavero, el titular y los datos clave: pedido mínimo de 1 unidad, envíos a todo Panamá y material PLA. |
+| **Galería** | Una pieza, el pistón de clic, que se arma y se desarma a medida que bajas. |
+| **Catálogo** | Las piezas con precio de lista: llaveros de nombre y de números, soportes de celular, monederos y cajas de regalo. Cada una tiene su ficha con fotos, colores y el botón para pedirla. |
+| **Cómo funciona** | Los cinco pasos, de "escribes" a "te llega", y las ocasiones para las que más se piden: cumpleaños, graduaciones, bodas, regalos de empresa, repuestos. |
+| **Nosotros** | Cómo trabaja el taller: por encargo, a mano y sin stock; cada pieza se hace desde cero. |
+| **Preguntas** | Las dudas de siempre (si se derrite al sol, cuánto tarda, si puedo mandar mi diseño) y los medios de pago: efectivo, Yappy, tarjeta, PayPal y cripto. |
+| **Pedido personalizado** | Un formulario en dos pasos para lo que no está en el catálogo: qué quieres, para qué ocasión, cuántas y en qué colores. Al final arma el mensaje de WhatsApp solo. |
+
+También tiene modo claro y oscuro, se adapta al celular y respeta a quien pidió
+menos movimiento en su sistema: en ese caso ni siquiera se baja el video.
+
+<p align="center">
+  <img src="docs/readme/escritorio-portada.webp" alt="Portada del sitio en escritorio" width="820" />
+</p>
+
+<p align="center">
+  <img src="docs/readme/escritorio-catalogo.webp" alt="Catálogo con precios" width="405" />
+  <img src="docs/readme/escritorio-proceso.webp" alt="Sección Cómo funciona" width="405" />
+</p>
+
+<p align="center">
+  <img src="docs/readme/celular-portada.webp" alt="Portada en el celular" width="260" />
+  &nbsp;&nbsp;
+  <img src="docs/readme/celular-pedido.webp" alt="Pedido personalizado en el celular" width="260" />
+</p>
+
+## Contacto
+
+Los pedidos se hacen por WhatsApp al **+507 6795 5170**.
+
+---
+
+## Para trabajar en el sitio
+
+React 19 con Vite, sin backend ni base de datos. Tipografías propias (Outfit y
+JetBrains Mono) e iconos de `lucide-react`; no hay más dependencias.
 
 ## Correr el sitio
 
@@ -44,6 +102,8 @@ docs/
   INVESTIGACION.md    competencia, referentes y dirección de diseño
   GUIA-FOTOS.md       cómo sacar las fotos de los productos
   wireframes.html     los bocetos de los que salió la página, con su brief
+  readme/             las capturas y el video corto de este README
+wrangler.jsonc        cómo compila y publica Cloudflare
 crudos/               fotos y videos sin comprimir, solo en tu disco (no va al repo)
 ```
 
@@ -81,10 +141,13 @@ cualquiera de ellos son siempre los mismos:
 |---|---|
 | `npm run build` | `dist` |
 
-**Netlify** (recomendado para empezar) ya los lee solos de `netlify.toml`:
-entrás a netlify.com, "Add new site" → "Import an existing project", elegís
-este repositorio de GitHub y listo. Cada `git push` vuelve a publicar.
-En **Cloudflare Pages** es lo mismo, cargando esos dos valores a mano.
+Hoy el sitio se publica en **Cloudflare**, que lee esos valores de
+`wrangler.jsonc`. Cada `git push` a `main` vuelve a publicar solo; las otras
+ramas suben una versión de prueba sin tocar la que está al aire.
+
+**Netlify** también sirve: los lee de `netlify.toml`. Entras a netlify.com,
+"Add new site" → "Import an existing project", eliges este repositorio de
+GitHub y listo.
 
 ### Antes de publicar de verdad
 
