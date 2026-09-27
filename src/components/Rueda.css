@@ -1,0 +1,112 @@
+/* La rueda de fotos. Las tarjetas se reparten en un círculo enorme cuyo
+   borde de arriba cae en el medio de la pantalla; girar la rueda trae la
+   siguiente desde la derecha. */
+
+.rueda {
+  /* Tarjeta 4:5, más ancha en pantallas grandes pero nunca enorme. */
+  --ancho-t: clamp(200px, 14vw + 110px, 300px);
+  --alto-t: calc(var(--ancho-t) * 5 / 4);
+  /* El radio que hace falta para que las tarjetas queden en fila sin
+     pisarse: la circunferencia es una tarjeta por foto, más un poco de aire. */
+  --radio: calc(var(--ancho-t) * 1.15 * var(--total) / (2 * 3.1416));
+
+  /* Fondo opaco: la cuadrícula no asoma. El video de la portada se funde
+     en este mismo color, así que la rueda entra sin costura. */
+  background: var(--papel);
+  position: relative;
+  /* Un tramo de scroll por foto, más la pantalla que ocupa el marco. */
+  height: calc(var(--total) * 30svh + 100svh);
+}
+
+.rueda__marco {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* El centro de la rueda. No ocupa lugar: es el punto alrededor del cual
+   giran las tarjetas, bajado un radio para que la de arriba quede un poco
+   por encima del medio de la pantalla. */
+.rueda__giro {
+  position: absolute;
+  left: 50%;
+  top: calc(46% + var(--radio));
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* Girar hacia atrás trae a la de arriba la que estaba a la derecha. */
+  transform: rotate(calc(var(--actual) / var(--total) * -360deg));
+  transition: transform .6s cubic-bezier(.3, .7, .2, 1);
+}
+
+.rueda__tarjeta {
+  position: absolute;
+  left: calc(var(--ancho-t) / -2);
+  top: calc(var(--alto-t) / -2);
+  width: var(--ancho-t);
+  height: var(--alto-t);
+  /* Cada una en su ángulo, y empujada del centro hasta el borde. */
+  transform: rotate(calc(var(--i) / var(--total) * 360deg)) translateY(calc(var(--radio) * -1));
+
+  /* Cuanto más lejos de la de arriba, más apagada: gris, borrosa y
+     transparente. A cuatro fotos de distancia ya no se ve. */
+  opacity: max(0, calc(1 - var(--lejos) / 4));
+  filter: grayscale(min(var(--lejos), 1)) blur(calc(min(var(--lejos), 3) * 2px));
+  cursor: pointer;
+  transition: opacity .5s ease, filter .5s ease;
+}
+
+.rueda__tarjeta.esta-activo { cursor: default; }
+
+.rueda__tarjeta img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-radius: 14px;
+  user-select: none;
+}
+
+.rueda__tarjeta.esta-activo img { box-shadow: var(--sombra); }
+
+/* El título cuelga debajo de la tarjeta y solo lo lleva la de arriba: baja
+   desde atrás de la foto cuando le toca. */
+.rueda__titulo {
+  position: absolute;
+  top: calc(100% + .9rem);
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  font-weight: 600;
+  opacity: 0;
+  translate: 0 -1.5rem;
+  transition: opacity .35s ease, translate .35s ease;
+}
+
+.rueda__tarjeta.esta-activo .rueda__titulo { opacity: 1; translate: 0 0; }
+
+.rueda__cuenta {
+  position: absolute;
+  bottom: clamp(1.25rem, 4vh, 2.5rem);
+  left: 50%;
+  translate: -50% 0;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: .78rem;
+  letter-spacing: .14em;
+  color: var(--tinta-suave);
+}
+
+.rueda__cuenta > span:first-child { color: var(--acento); font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rueda__giro,
+  .rueda__tarjeta,
+  .rueda__titulo { transition: none; }
+}

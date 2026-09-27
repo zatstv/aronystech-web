@@ -29,3 +29,7 @@ fotos/
 /img/
 /modelo/
 /publicar/
+
+# Las fotos que llegan para la rueda. Las que usa la página, ya livianas y
+# con nombre, están en public/img/rueda.
+/fotos pagina aronys tech/

@@ -7,13 +7,12 @@ import { PRODUCTOS } from "./data/sitio.js";
 
 import FondoCuadricula from "./components/FondoCuadricula.jsx";
 import Footer from "./components/Footer.jsx";
-import Galeria from "./components/Galeria.jsx";
 import Hero from "./components/Hero.jsx";
 import Lateral from "./components/Lateral.jsx";
 import ModalPedido from "./components/ModalPedido.jsx";
-import Mosaico from "./components/Mosaico.jsx";
 import Nosotros from "./components/Nosotros.jsx";
 import Proceso from "./components/Proceso.jsx";
+import Rueda from "./components/Rueda.jsx";
 import Preguntas from "./components/Preguntas.jsx";
 import { useAnclaInicial } from "./hooks/useAnclaInicial.js";
 
@@ -57,8 +56,7 @@ export default function App() {
 
         <main hidden={esDetalle}>
           <Hero />
-          <Galeria />
-          <Mosaico />
+          <Rueda />
           <Catalogo alPedir={setPedido} />
           <Proceso />
           <Nosotros />
