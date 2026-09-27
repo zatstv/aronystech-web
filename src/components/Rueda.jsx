@@ -94,7 +94,6 @@ export default function Rueda() {
                   decoding="async"
                   draggable="false"
                 />
-                <p className="rueda__titulo">{foto.titulo}</p>
               </li>
             );
           })}
@@ -102,7 +101,6 @@ export default function Rueda() {
 
         <p className="rueda__cuenta" aria-live="polite">
           <span>{String(actual + 1).padStart(2, "0")}</span> / {String(TOTAL).padStart(2, "0")}
-          <span className="oculto-visual">: {RUEDA[actual].titulo}</span>
         </p>
       </div>
     </section>

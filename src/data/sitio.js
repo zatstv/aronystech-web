@@ -134,36 +134,35 @@ export const MAYOREO = 20;
 
 /* La galería: una rueda de fotos justo después de la portada. Una tarjeta
    por foto, puestas en círculo, y al bajar la rueda gira. La que queda
-   arriba se ve a pleno, con su título debajo; las vecinas asoman a los
-   costados.
+   arriba se ve a pleno; las vecinas asoman a los costados.
 
    El orden de la lista es el orden de la rueda. Conviene no poner seguidas
    dos fotos de la misma pieza: se ve mejor si cada giro cambia de tema.
    Las fotos viven en public/img/rueda, recortadas a 700px de ancho. */
 export const RUEDA = [
-  { src: "img/rueda/barco-pirata.webp", titulo: "Barco pirata", alt: "Galeón negro con velas rotas, visto de costado sobre una mesa de madera" },
-  { src: "img/rueda/llavero-panda.webp", titulo: "Llavero de Panda", alt: "Llavero negro brillante con la silueta de un panda y argolla metálica" },
-  { src: "img/rueda/organizador-plumas.webp", titulo: "Organizador de escritorio", alt: "Organizador negro en forma de prisma con plumas y lápices en sus huecos" },
-  { src: "img/rueda/ocarina.webp", titulo: "Ocarina", alt: "Ocarina azul sobre una base blanca con forma de columna" },
-  { src: "img/rueda/hogwarts-libreria.webp", titulo: "Hogwarts entre libros", alt: "Rincón iluminado con la escalera de Hogwarts, encajado entre los libros de una repisa" },
-  { src: "img/rueda/llavero-yuji.webp", titulo: "Llavero de Yuji", alt: "Llavero negro brillante con el dibujo de Yuji Itadori" },
-  { src: "img/rueda/dino-programador.webp", titulo: "Dino programador", alt: "Dinosaurio gris con lentes sentado al borde de una repisa, escribiendo en un teclado" },
-  { src: "img/rueda/tablero-pared.webp", titulo: "Tablero de pared", alt: "Tablero blanco de pared con repisas hexagonales, un control de consola y figuras pequeñas" },
-  { src: "img/rueda/sombrero-libros.webp", titulo: "Sujetalibros del sombrero", alt: "Sujetalibros gris con un sombrero de mago sobre una pila de libros, entre libros antiguos" },
-  { src: "img/rueda/llavero-gojo.webp", titulo: "Llavero de Gojo", alt: "Llavero negro brillante con el dibujo de Satoru Gojo con la venda en los ojos" },
-  { src: "img/rueda/mascota-escritorio.webp", titulo: "Mascota de escritorio", alt: "Figura naranja de bloques sentada detrás de una laptop, sobre una base roja" },
-  { src: "img/rueda/hogwarts-escalera.webp", titulo: "La escalera, de cerca", alt: "Detalle de una escalera blanca con barandal y cuadros pequeños colgados en la pared" },
-  { src: "img/rueda/barco-velas.webp", titulo: "Todo el velamen", alt: "Barco pirata negro visto de tres cuartos, con todas sus velas y cuerdas" },
-  { src: "img/rueda/llaveros-jujutsu.webp", titulo: "Los cuatro juntos", alt: "Cuatro llaveros de Jujutsu Kaisen sobre fondo blanco: Panda, Nobara, Yuji y Gojo" },
-  { src: "img/rueda/organizador-vacio.webp", titulo: "Organizador, vacío", alt: "Organizador de escritorio negro y gris, vacío, mostrando sus compartimentos" },
-  { src: "img/rueda/figura-gojo.webp", titulo: "Figura de Gojo", alt: "Figura de Satoru Gojo de pie junto a una lámpara de mesa" },
-  { src: "img/rueda/sombrero-perfil.webp", titulo: "El sombrero, de perfil", alt: "Sujetalibros del sombrero de mago visto de lado, apoyado contra un libro" },
-  { src: "img/rueda/llavero-nobara.webp", titulo: "Llavero de Nobara", alt: "Llavero negro brillante con el dibujo de Nobara Kugisaki" },
-  { src: "img/rueda/dino-impresora.webp", titulo: "Dino sobre la impresora", alt: "Dinosaurio gris con lentes y teclado sentado encima de una impresora 3D" },
-  { src: "img/rueda/tablero-vacio.webp", titulo: "El tablero, montado", alt: "Paneles blancos perforados montados en la pared, sin accesorios" },
-  { src: "img/rueda/barco-proa.webp", titulo: "Proa del galeón", alt: "Barco pirata negro visto desde la proa sobre una mesa" },
-  { src: "img/rueda/organizador-modulos.webp", titulo: "Módulos que se combinan", alt: "Tres módulos del organizador de escritorio encajados entre sí" },
-  { src: "img/rueda/mascota-codigo.webp", titulo: "Compañero de código", alt: "La mascota naranja de bloques junto a una pantalla con código" },
+  { src: "img/rueda/barco-pirata.webp", alt: "Galeón negro con velas rotas, visto de costado sobre una mesa de madera" },
+  { src: "img/rueda/llavero-panda.webp", alt: "Llavero negro brillante con la silueta de un panda y argolla metálica" },
+  { src: "img/rueda/organizador-plumas.webp", alt: "Organizador negro en forma de prisma con plumas y lápices en sus huecos" },
+  { src: "img/rueda/ocarina.webp", alt: "Ocarina azul sobre una base blanca con forma de columna" },
+  { src: "img/rueda/hogwarts-libreria.webp", alt: "Rincón iluminado con la escalera de Hogwarts, encajado entre los libros de una repisa" },
+  { src: "img/rueda/llavero-yuji.webp", alt: "Llavero negro brillante con el dibujo de Yuji Itadori" },
+  { src: "img/rueda/dino-programador.webp", alt: "Dinosaurio gris con lentes sentado al borde de una repisa, escribiendo en un teclado" },
+  { src: "img/rueda/tablero-pared.webp", alt: "Tablero blanco de pared con repisas hexagonales, un control de consola y figuras pequeñas" },
+  { src: "img/rueda/sombrero-libros.webp", alt: "Sujetalibros gris con un sombrero de mago sobre una pila de libros, entre libros antiguos" },
+  { src: "img/rueda/llavero-gojo.webp", alt: "Llavero negro brillante con el dibujo de Satoru Gojo con la venda en los ojos" },
+  { src: "img/rueda/mascota-escritorio.webp", alt: "Figura naranja de bloques sentada detrás de una laptop, sobre una base roja" },
+  { src: "img/rueda/hogwarts-escalera.webp", alt: "Detalle de una escalera blanca con barandal y cuadros pequeños colgados en la pared" },
+  { src: "img/rueda/barco-velas.webp", alt: "Barco pirata negro visto de tres cuartos, con todas sus velas y cuerdas" },
+  { src: "img/rueda/llaveros-jujutsu.webp", alt: "Cuatro llaveros de Jujutsu Kaisen sobre fondo blanco: Panda, Nobara, Yuji y Gojo" },
+  { src: "img/rueda/organizador-vacio.webp", alt: "Organizador de escritorio negro y gris, vacío, mostrando sus compartimentos" },
+  { src: "img/rueda/figura-gojo.webp", alt: "Figura de Satoru Gojo de pie junto a una lámpara de mesa" },
+  { src: "img/rueda/sombrero-perfil.webp", alt: "Sujetalibros del sombrero de mago visto de lado, apoyado contra un libro" },
+  { src: "img/rueda/llavero-nobara.webp", alt: "Llavero negro brillante con el dibujo de Nobara Kugisaki" },
+  { src: "img/rueda/dino-impresora.webp", alt: "Dinosaurio gris con lentes y teclado sentado encima de una impresora 3D" },
+  { src: "img/rueda/tablero-vacio.webp", alt: "Paneles blancos perforados montados en la pared, sin accesorios" },
+  { src: "img/rueda/barco-proa.webp", alt: "Barco pirata negro visto desde la proa sobre una mesa" },
+  { src: "img/rueda/organizador-modulos.webp", alt: "Tres módulos del organizador de escritorio encajados entre sí" },
+  { src: "img/rueda/mascota-codigo.webp", alt: "La mascota naranja de bloques junto a una pantalla con código" },
 ];
 
 /* El catálogo. El orden de esta lista es el orden en la página, y el `id`
