@@ -155,10 +155,12 @@ Estas dos cosas hay que tocarlas o el sitio sale mal, y ninguna avisa:
 
 1. **`public/robots.txt`** bloquea a todos los buscadores (`Disallow: /`).
    Está bien para una prueba; si sale así, Google no lo indexa nunca.
-2. **Las tres direcciones `CAMBIAR-POR-EL-DOMINIO` de `index.html`.** Son las
-   que usan WhatsApp y Facebook para armar la vista previa del enlace. Tienen
-   que ser absolutas: con una ruta relativa el enlace se comparte sin imagen,
-   y el negocio se mueve por WhatsApp.
+2. **Las tres direcciones absolutas de `index.html`** (`og:url`, `og:image` y
+   `canonical`). Hoy apuntan a `https://aronystech-web.aronys160604.workers.dev`,
+   la dirección que da Cloudflare; si el sitio pasa a un dominio propio, hay
+   que cambiarlas. Son las que usan WhatsApp y Facebook para armar la vista
+   previa del enlace, y tienen que ser absolutas: con una ruta relativa el
+   enlace se comparte sin imagen, y el negocio se mueve por WhatsApp.
 
 ## Pendientes conocidos
 
