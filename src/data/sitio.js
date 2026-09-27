@@ -132,82 +132,38 @@ export const REFERENCIAS = [
 export const CANTIDADES = [1, 5, 20, 50, 100];
 export const MAYOREO = 20;
 
-/* La secuencia que se va cambiando al bajar por la página.
+/* La galería: una rueda de fotos justo después de la portada. Una tarjeta
+   por foto, puestas en círculo, y al bajar la rueda gira. La que queda
+   arriba se ve a pleno, con su título debajo; las vecinas asoman a los
+   costados.
 
-   Cada paso es una foto con su texto. La foto queda quieta a un costado
-   mientras el texto pasa al lado; cuando el paso siguiente llega al medio de
-   la pantalla, la foto cambia sola.
-
-   Para cambiarla no hace falta tocar ningún componente: se edita esta lista.
-   Agregar un paso es agregar un objeto; sacarlo, borrarlo. El orden de acá es
-   el orden en que se ven.
-
-   La secuencia de ahora es la del clicker de pistón: cerrado, todas las
-   piezas, el detalle de la cara suelta y armada, el switch adentro y el clic.
-   Va de lo entero a lo desarmado y vuelve, que es como se entiende qué tiene
-   adentro.
-
-   Las rutas van sin la barra del principio, igual que en GALERIA: el
-   componente se la agrega. */
-export const SECUENCIA = [
-  {
-    src: "img/piston-cerrado.webp",
-    alt: "Bloque de piedra cerrado, sostenido entre dos dedos",
-    titulo: "Cerrado es un bloque",
-    texto: "Entra en la mano y no dice nada: cuatro caras de piedra y listo. Todo lo que hace está adentro.",
-  },
-  {
-    src: "img/piston-piezas.webp",
-    alt: "Todas las piezas del clicker sueltas sobre fondo negro: el marco negro, la cara de pistón color madera, el switch azul, cuatro placas de piedra y ocho pernos blancos",
-    titulo: "Quince piezas",
-    texto: "El marco, las cuatro caras de piedra, la cara del pistón, ocho pernos y el switch. Cada una se imprime por separado y en su color: nada va pintado.",
-  },
-  {
-    src: "img/piston-cara-suelta.webp",
-    alt: "La cara del pistón con sus ocho pernos blancos separados alrededor",
-    titulo: "Los pernos, uno por uno",
-    texto: "Los ocho pernos son piezas aparte. Son los que le dan el relieve a la cara y los que la sujetan al cuerpo.",
-  },
-  {
-    src: "img/piston-cara-armada.webp",
-    alt: "La misma cara del pistón ya con los ocho pernos puestos",
-    titulo: "Encastra, no se pega",
-    texto: "Cada perno entra a presión en su lugar. Sin pegamento y sin tornillos: si hay que abrirlo, se abre.",
-  },
-  {
-    src: "img/piston-juntando.webp",
-    alt: "Dos manos acercando la cara del pistón al cubo, que tiene el switch azul adentro",
-    titulo: "El switch adentro",
-    texto: "El cubo aloja un switch de teclado mecánico. Es de donde sale el clic: se oye y se siente, no es un botón blando.",
-  },
-  {
-    src: "img/piston-click.webp",
-    alt: "El clicker terminado en la mano, con el pistón extendido",
-    titulo: "Y hace clic",
-    texto: "Armado, el pistón sale y entra con cada pulsada. Es para tener en el escritorio y apretarlo sin pensar.",
-  },
-];
-
-/* El mosaico de fotos que va debajo de la secuencia.
-
-   ancho y alto son los del archivo, en píxeles. No son decorativos: con
-   ellos el navegador reserva el hueco exacto antes de bajar la foto, así la
-   página no salta al cargar, y el mosaico reparte el ancho de cada fila
-   según la proporción de cada imagen. Si se cambia una foto hay que cambiar
-   sus medidas.
-
-   El orden de la lista es el orden en que se ven. Las filas se arman solas:
-   no hay que decidir cuántas fotos van en cada una. */
-export const GALERIA = [
-  { src: "img/portada.webp", alt: "Monedero manzana de malla roja con ARONYS TECH en cubos arriba y el teléfono en cubos abajo", ancho: 896, alto: 1195 },
-  { src: "img/cubos-letras-detalle.webp", alt: "La palabra ARONYSTECH formada con cubos de colores sobre fondo verde", ancho: 1600, alto: 1200 },
-  { src: "img/hero-manzana-cubos.webp", alt: "Monedero manzana rojo rodeado de llaveros de cubos con letras y números", ancho: 896, alto: 1195 },
-  { src: "img/cubos-numeros.webp", alt: "Llavero de cubos turquesa con números sobre base roja", ancho: 896, alto: 1195 },
-  { src: "img/soportes-celular.webp", alt: "Cuatro soportes de celular impresos en 3D: mármol, negro, naranja y turquesa", ancho: 1195, alto: 896 },
-  { src: "img/surtido.webp", alt: "Soportes de celular de varios colores junto a llaveros de cubos con letras", ancho: 896, alto: 1195 },
-  { src: "img/cubos-letras.webp", alt: "Surtido de soportes de celular amarillo, turquesa, negro, blanco y morado con llaveros de cubos", ancho: 896, alto: 1195 },
-  { src: "img/manzana-piezas.webp", alt: "Piezas sueltas del monedero manzana: tapas de malla, bases negras, hoja turquesa y tallo", ancho: 896, alto: 1195 },
-  { src: "img/cajas-regalo.webp", alt: "Caja de regalo transparente con dulces y cinta, junto a llaveros de cubos", ancho: 1195, alto: 896 },
+   El orden de la lista es el orden de la rueda. Conviene no poner seguidas
+   dos fotos de la misma pieza: se ve mejor si cada giro cambia de tema.
+   Las fotos viven en public/img/rueda, recortadas a 700px de ancho. */
+export const RUEDA = [
+  { src: "img/rueda/barco-pirata.webp", titulo: "Barco pirata", alt: "Galeón negro con velas rotas, visto de costado sobre una mesa de madera" },
+  { src: "img/rueda/llavero-panda.webp", titulo: "Llavero de Panda", alt: "Llavero negro brillante con la silueta de un panda y argolla metálica" },
+  { src: "img/rueda/organizador-plumas.webp", titulo: "Organizador de escritorio", alt: "Organizador negro en forma de prisma con plumas y lápices en sus huecos" },
+  { src: "img/rueda/ocarina.webp", titulo: "Ocarina", alt: "Ocarina azul sobre una base blanca con forma de columna" },
+  { src: "img/rueda/hogwarts-libreria.webp", titulo: "Hogwarts entre libros", alt: "Rincón iluminado con la escalera de Hogwarts, encajado entre los libros de una repisa" },
+  { src: "img/rueda/llavero-yuji.webp", titulo: "Llavero de Yuji", alt: "Llavero negro brillante con el dibujo de Yuji Itadori" },
+  { src: "img/rueda/dino-programador.webp", titulo: "Dino programador", alt: "Dinosaurio gris con lentes sentado al borde de una repisa, escribiendo en un teclado" },
+  { src: "img/rueda/tablero-pared.webp", titulo: "Tablero de pared", alt: "Tablero blanco de pared con repisas hexagonales, un control de consola y figuras pequeñas" },
+  { src: "img/rueda/sombrero-libros.webp", titulo: "Sujetalibros del sombrero", alt: "Sujetalibros gris con un sombrero de mago sobre una pila de libros, entre libros antiguos" },
+  { src: "img/rueda/llavero-gojo.webp", titulo: "Llavero de Gojo", alt: "Llavero negro brillante con el dibujo de Satoru Gojo con la venda en los ojos" },
+  { src: "img/rueda/mascota-escritorio.webp", titulo: "Mascota de escritorio", alt: "Figura naranja de bloques sentada detrás de una laptop, sobre una base roja" },
+  { src: "img/rueda/hogwarts-escalera.webp", titulo: "La escalera, de cerca", alt: "Detalle de una escalera blanca con barandal y cuadros pequeños colgados en la pared" },
+  { src: "img/rueda/barco-velas.webp", titulo: "Todo el velamen", alt: "Barco pirata negro visto de tres cuartos, con todas sus velas y cuerdas" },
+  { src: "img/rueda/llaveros-jujutsu.webp", titulo: "Los cuatro juntos", alt: "Cuatro llaveros de Jujutsu Kaisen sobre fondo blanco: Panda, Nobara, Yuji y Gojo" },
+  { src: "img/rueda/organizador-vacio.webp", titulo: "Organizador, vacío", alt: "Organizador de escritorio negro y gris, vacío, mostrando sus compartimentos" },
+  { src: "img/rueda/figura-gojo.webp", titulo: "Figura de Gojo", alt: "Figura de Satoru Gojo de pie junto a una lámpara de mesa" },
+  { src: "img/rueda/sombrero-perfil.webp", titulo: "El sombrero, de perfil", alt: "Sujetalibros del sombrero de mago visto de lado, apoyado contra un libro" },
+  { src: "img/rueda/llavero-nobara.webp", titulo: "Llavero de Nobara", alt: "Llavero negro brillante con el dibujo de Nobara Kugisaki" },
+  { src: "img/rueda/dino-impresora.webp", titulo: "Dino sobre la impresora", alt: "Dinosaurio gris con lentes y teclado sentado encima de una impresora 3D" },
+  { src: "img/rueda/tablero-vacio.webp", titulo: "El tablero, montado", alt: "Paneles blancos perforados montados en la pared, sin accesorios" },
+  { src: "img/rueda/barco-proa.webp", titulo: "Proa del galeón", alt: "Barco pirata negro visto desde la proa sobre una mesa" },
+  { src: "img/rueda/organizador-modulos.webp", titulo: "Módulos que se combinan", alt: "Tres módulos del organizador de escritorio encajados entre sí" },
+  { src: "img/rueda/mascota-codigo.webp", titulo: "Compañero de código", alt: "La mascota naranja de bloques junto a una pantalla con código" },
 ];
 
 /* El catálogo. El orden de esta lista es el orden en la página, y el `id`
