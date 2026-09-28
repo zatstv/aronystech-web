@@ -1,0 +1,243 @@
+/* La galería en cuadrícula. Cada celda mide lo mismo que el marco (por
+   eso las unidades cqw/cqh), y la cuadrícula entera se ve achicada a
+   --zoom. Abierta, el achique pasa a 1 y la elegida llena el marco. */
+
+.galeria {
+  --zoom: .375;
+  --hueco: 2.5rem;
+  --curva: cubic-bezier(.65, 0, .35, 1);
+  /* Lo que tapa el menú fijo de arriba. */
+  --arriba: 4rem;
+
+  /* Fondo opaco: la cuadrícula del sitio no asoma. El video de la portada
+     se funde en este mismo color, así que la galería entra sin costura. */
+  background: var(--papel);
+  position: relative;
+  height: 100svh;
+  /* El ancla #galeria deja la sección pegada al borde de arriba, sin el
+     margen de scroll-padding que usan las demás: el espacio del menú ya lo
+     guarda el marco. */
+  scroll-margin-top: -5.5rem;
+}
+
+@media (min-width: 64rem) {
+  .galeria { --arriba: 5.5rem; scroll-margin-top: -7rem; }
+}
+
+/* La parte de la sección que queda a la vista, debajo del menú. */
+.galeria__marco {
+  position: absolute;
+  inset: var(--arriba) 0 0;
+  overflow: hidden;
+  container-type: size;
+}
+
+/* En celular la pantalla es angosta: de más cerca, o la foto sería una
+   estampilla. */
+@media (max-width: 40rem) {
+  .galeria { --zoom: .6; --hueco: 1.5rem; }
+}
+
+.galeria__vista {
+  position: absolute;
+  inset: 0;
+  transform: scale(var(--zoom));
+  transform-origin: center;
+  transition: transform 1s var(--curva);
+}
+
+.galeria__lienzo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--columnas), 100cqw);
+  grid-auto-rows: 100cqh;
+  gap: var(--hueco);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* Corre la cuadrícula hasta que la celda (x, y) quede en el marco. */
+  transform: translate(
+    calc((100cqw + var(--hueco)) * var(--x) * -1),
+    calc((100cqh + var(--hueco)) * var(--y) * -1)
+  );
+  transition: transform .9s var(--curva);
+}
+
+.galeria__celda {
+  opacity: .3;
+  filter: grayscale(1);
+  transition: opacity .6s var(--curva), filter .6s var(--curva);
+}
+
+.galeria__celda.esta-activo { opacity: 1; filter: none; }
+
+.galeria__celda button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  /* El radio se divide por el zoom para que de lejos se vea como el de
+     las demás tarjetas del sitio. */
+  border-radius: calc(14px / var(--zoom));
+  overflow: hidden;
+  background: var(--papel-hondo);
+  cursor: pointer;
+}
+
+.galeria__celda.esta-activo button { cursor: zoom-in; }
+.esta-abierta .galeria__celda.esta-activo button { cursor: zoom-out; }
+
+/* El anillo de foco lo pone el recuadro de encima; el del botón quedaría
+   achicado y apenas se vería. */
+.galeria__celda button:focus-visible { outline: none; }
+.galeria:has(.galeria__celda button:focus-visible) .galeria__foco {
+  outline: 3px solid var(--acento);
+  outline-offset: 4px;
+}
+
+.galeria__celda img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* De lejos la foto se ve ampliada dentro de su celda; al abrirla se
+     acomoda. Da la sensación de acercarse. */
+  transform: scale(1.4);
+  transition: transform 1s var(--curva);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* El recuadro que marca la elegida. Está fuera de la cuadrícula, así que
+   no se achica: el filo y la sombra salen con el grosor de siempre. */
+.galeria__foco {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: calc(100% * var(--zoom));
+  height: calc(100% * var(--zoom));
+  border: var(--filo);
+  border-radius: 14px;
+  box-shadow: var(--sombra);
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+
+/* La cruz del centro. Gira una vez al entrar. */
+.galeria__mira {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  animation: galeria-mira 1s var(--curva) both;
+  transition: opacity .4s ease;
+}
+
+.galeria__mira span { grid-area: 1 / 1; background: #fff; }
+.galeria__mira span:nth-child(1) { width: 1px; height: 100%; }
+.galeria__mira span:nth-child(2) { width: 100%; height: 1px; }
+.galeria__mira span:nth-child(3) { width: 5px; height: 5px; }
+
+@keyframes galeria-mira {
+  from { transform: rotate(270deg); }
+  to { transform: rotate(0deg); }
+}
+
+.galeria__mapa {
+  --lado: 8rem;
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(var(--columnas), 1fr);
+  gap: 4px;
+  width: var(--lado);
+  padding: .5rem;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 8px;
+  box-shadow: var(--sombra);
+  transition: opacity .6s ease;
+}
+
+.galeria__mapa button {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: var(--tinta);
+  opacity: .15;
+  cursor: pointer;
+  transition: opacity .3s ease;
+}
+
+.galeria__mapa button:hover { opacity: .5; }
+.galeria__mapa button.esta-activo { background: var(--acento); opacity: 1; pointer-events: none; }
+
+.galeria__cuenta {
+  position: absolute;
+  bottom: clamp(1.25rem, 4vh, 2.5rem);
+  left: 50%;
+  translate: -50% 0;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: .78rem;
+  letter-spacing: .14em;
+  color: var(--tinta-suave);
+  transition: opacity .4s ease;
+}
+
+.galeria__cuenta > span:first-child { color: var(--acento); font-weight: 700; }
+
+.galeria__cerrar {
+  position: absolute;
+  bottom: clamp(1.25rem, 4vh, 2.5rem);
+  left: 50%;
+  translate: -50% 0;
+  padding: .55rem 1.5rem;
+  font-family: var(--mono);
+  font-size: .75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--tinta);
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: 999px;
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s ease;
+}
+
+/* ---------- Abierta ---------- */
+
+.esta-abierta .galeria__vista { transform: scale(1); }
+.esta-abierta .galeria__celda.esta-activo img { transform: scale(1); }
+
+.esta-abierta .galeria__foco,
+.esta-abierta .galeria__mira,
+.esta-abierta .galeria__mapa,
+.esta-abierta .galeria__cuenta { opacity: 0; pointer-events: none; }
+
+.esta-abierta .galeria__cerrar { opacity: 1; pointer-events: auto; }
+
+/* Como en la original: el mapa solo en pantallas grandes. */
+@media (max-width: 75rem) {
+  .galeria__mapa { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galeria__vista,
+  .galeria__lienzo,
+  .galeria__celda,
+  .galeria__celda img { transition: none; }
+  .galeria__mira { animation: none; }
+}
