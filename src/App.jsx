@@ -57,7 +57,7 @@ export default function App() {
         <main hidden={esDetalle}>
           <Hero />
           <Galeria />
-          <Catalogo alPedir={setPedido} />
+          <Catalogo />
           <Proceso />
           <Nosotros />
           <Preguntas />

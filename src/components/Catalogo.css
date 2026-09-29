@@ -30,20 +30,37 @@
 /* --- Una pieza apoyada: filo y sombra dura, como el resto --- */
 
 .producto {
+  position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   background: var(--papel);
   border: var(--filo);
   border-radius: var(--radio);
   box-shadow: var(--sombra);
+  transition: transform .15s ease, box-shadow .15s ease;
 }
 
+/* Toda la tarjeta es tocable, así que al pasar por encima se levanta
+   entera, como los botones: se despega de la mesa y la sombra crece. */
+.producto:not(.producto--otro):hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--sombra-honda);
+}
+
+.producto:not(.producto--otro):active {
+  transform: translate(3px, 3px);
+  box-shadow: var(--sombra-hundida);
+}
+
+/* La foto y lo que va pegado encima. El marco no recorta, para que la
+   etiqueta de precio pueda asomar por debajo del borde de la foto. */
+.producto__marco { position: relative; }
+
 .producto__foto {
-  display: block;
   aspect-ratio: 4 / 3;
   background: var(--papel-hondo);
   border-bottom: var(--filo);
+  border-radius: calc(var(--radio) - 1.5px) calc(var(--radio) - 1.5px) 0 0;
   overflow: hidden;
 }
 
@@ -51,93 +68,145 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .3s ease;
+  transition: transform .4s ease;
 }
 
-.producto:hover .producto__foto img { transform: scale(1.04); }
+.producto:hover .producto__foto img { transform: scale(1.06); }
 
-.producto__cuerpo {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "categoria categoria"
-    "nombre    nombre"
-    "precio    pedir";
-  align-items: end;
-  gap: .3rem 1rem;
-  padding: 1rem 1.1rem 1.1rem;
-}
-
+/* La categoría, como una etiqueta de cinta arriba a la izquierda. */
 .producto__categoria {
-  grid-area: categoria;
-  font-family: var(--mono);
-  font-size: .66rem;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--tinta-suave);
-}
-
-.producto__nombre {
-  grid-area: nombre;
-  font-size: 1.2rem;
-  line-height: 1.25;
-}
-
-.producto__nombre a { color: inherit; text-decoration: none; }
-.producto__nombre a:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-/* La etiqueta de precio, girada 2.5 grados como una calcomanía pegada a
-   mano (docs/PROYECTO.md §6b). */
-.producto__precio {
-  grid-area: precio;
-  justify-self: start;
-  margin-top: .5rem;
-  padding: .3rem .6rem .35rem;
-  background: var(--papel-hondo);
+  position: absolute;
+  top: .8rem;
+  left: .8rem;
+  padding: .3rem .55rem;
+  background: var(--papel);
   border: var(--filo);
   border-radius: 6px;
-  box-shadow: 2px 2px 0 var(--tinta);
-  transform: rotate(-2.5deg);
-  font-size: 1.4rem;
-  font-weight: 900;
-  line-height: 1.05;
-}
-
-.producto__precio span {
-  display: block;
-  margin-top: .2rem;
   font-family: var(--mono);
   font-size: .62rem;
   font-weight: 700;
-  letter-spacing: .08em;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--tinta-suave);
 }
 
-.producto__pedir {
-  grid-area: pedir;
-  display: inline-flex;
-  align-items: center;
-  gap: .4rem;
-  padding: .6rem 1rem;
+/* El precio, una calcomanía girada que se sale del borde de la foto
+   (docs/PROYECTO.md §6b). Es lo primero que se busca en una tarjeta, así
+   que es lo único en acento. */
+.producto__precio {
+  position: absolute;
+  right: .9rem;
+  bottom: -1.1rem;
+  padding: .35rem .75rem .4rem;
   background: var(--acento);
   color: #fff;
   border: var(--filo);
-  border-radius: 999px;
-  box-shadow: 2px 2px 0 var(--tinta);
-  font: inherit;
-  font-size: .88rem;
-  font-weight: 800;
-  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--tinta);
+  transform: rotate(-4deg);
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.02em;
+  transition: transform .2s ease;
 }
 
-.producto__pedir:active { transform: translate(2px, 2px); box-shadow: none; }
+.producto:hover .producto__precio { transform: rotate(2deg) scale(1.06); }
+
+.producto__cuerpo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.35rem 1.15rem 1.1rem;
+}
+
+.producto__nombre {
+  font-size: 1.3rem;
+  line-height: 1.2;
+  /* Deja libre la esquina donde asoma la etiqueta de precio. */
+  padding-right: 4.5rem;
+}
+
+.producto__nombre a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* El enlace estirado: cubre toda la tarjeta. */
+.producto__nombre a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radio);
+}
+
+.producto__nombre a:focus-visible { outline: none; }
+.producto__nombre a:focus-visible::after {
+  outline: 3px solid var(--acento);
+  outline-offset: 4px;
+}
+
+.producto__unidad {
+  margin-top: .3rem;
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+/* Un adelanto de la descripción: dos renglones y el resto en la ficha. */
+.producto__texto {
+  margin-top: .7rem;
+  color: var(--tinta-suave);
+  font-size: .9rem;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.producto__pie {
+  margin-top: auto;
+  padding-top: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.producto__colores {
+  display: flex;
+  gap: .3rem;
+}
+
+.producto__cubo {
+  width: 1rem;
+  height: 1rem;
+  border: 1.5px solid var(--tinta);
+  border-radius: 4px;
+}
+
+.producto__ver {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font-size: .88rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.producto__ver svg { transition: transform .15s ease; }
+.producto:hover .producto__ver { color: var(--acento); }
+.producto:hover .producto__ver svg { transform: translateX(4px); }
 
 /* --- La tarjeta que no es una pieza --- */
 
 .producto--otro {
   justify-content: center;
+  align-items: flex-start;
   gap: .75rem;
   padding: 1.5rem;
   background: var(--papel-hondo);
@@ -151,4 +220,6 @@
   line-height: 1.6;
 }
 
-.producto--otro .boton { align-self: flex-start; margin-top: .5rem; }
+.producto--otro .producto__nombre { padding-right: 0; }
+
+.producto--otro .boton { margin-top: .5rem; }
