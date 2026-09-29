@@ -17,6 +17,7 @@
 }
 
 .preguntas__lista {
+  counter-reset: pregunta;
   display: grid;
   gap: .8rem;
 }
@@ -29,6 +30,7 @@
 /* Cada pregunta es una pieza apoyada, como el resto de la página: filo
    marcado, sombra dura sin desenfoque. */
 .pregunta {
+  counter-increment: pregunta;
   border: var(--filo);
   border-radius: var(--radio);
   background: var(--papel);
@@ -36,7 +38,14 @@
   transition: box-shadow .15s ease, transform .15s ease;
 }
 
+/* Abierta se levanta y le aparece una franja de acento a la izquierda,
+   para saber cuál se está leyendo aunque haya varias abiertas. */
 .pregunta[open] {
+  box-shadow: inset 4px 0 0 var(--acento), var(--sombra);
+  transform: translate(-1px, -1px);
+}
+
+.pregunta:not([open]):hover {
   box-shadow: var(--sombra);
   transform: translate(-1px, -1px);
 }
@@ -55,6 +64,22 @@
   list-style: none;
 }
 
+/* El número en mono, "01", como los pasos de Cómo funciona. */
+.pregunta__titulo::before {
+  content: counter(pregunta, decimal-leading-zero);
+  flex: none;
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--tinta-suave);
+  transition: color .2s ease;
+}
+
+.pregunta[open] .pregunta__titulo::before { color: var(--acento); }
+
+.pregunta__texto { flex: 1; }
+
 /* La flechita que Safari y Chrome ponen solos: sobra, ya está la cruz. */
 .pregunta__titulo::-webkit-details-marker { display: none; }
 
@@ -72,11 +97,20 @@
 
 .pregunta[open] .pregunta__signo { transform: rotate(45deg); }
 
+.pregunta__cuerpo { overflow: hidden; }
+
+/* Alineada con el texto de la pregunta, no con el número. */
 .pregunta__respuesta {
-  padding: 0 1.1rem 1.1rem;
+  padding: 0 1.1rem 1.2rem 3.3rem;
   color: var(--tinta-suave);
   line-height: 1.6;
   max-width: 42rem;
+}
+
+/* Angosto: a todo el ancho. Alineada con la pregunta queda una columna
+   de cuatro palabras por renglón. */
+@media (max-width: 30rem) {
+  .pregunta__respuesta { padding-left: 1.1rem; }
 }
 
 /* --- Cómo se paga --- */
@@ -115,6 +149,12 @@
   /* Sin esto "Criptomonedas" se parte en dos renglones en pantallas angostas
      y la fila queda despareja. */
   white-space: nowrap;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.pagos__medio:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 var(--tinta);
 }
 
 .pagos__nota {
@@ -133,9 +173,42 @@
   box-shadow: var(--sombra);
 }
 
-.duda__titulo {
-  font-size: 1.3rem;
+.duda__cabeza {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: .5rem;
+}
+
+.duda__titulo { font-size: 1.3rem; }
+
+/* La burbuja de chat con los tres puntitos. La esquina de abajo a la
+   izquierda casi recta hace de colita, como en las burbujas de WhatsApp. */
+.duda__burbuja {
+  position: relative;
+  display: flex;
+  gap: .25rem;
+  padding: .55rem .7rem;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-radius: 999px 999px 999px 4px;
+}
+
+.duda__burbuja span {
+  width: .4rem;
+  height: .4rem;
+  border-radius: 50%;
+  background: var(--acento);
+  animation: escribiendo 1.2s ease-in-out infinite;
+}
+
+.duda__burbuja span:nth-child(2) { animation-delay: .15s; }
+.duda__burbuja span:nth-child(3) { animation-delay: .3s; }
+
+@keyframes escribiendo {
+  0%, 60%, 100% { transform: translateY(0); opacity: .45; }
+  30% { transform: translateY(-4px); opacity: 1; }
 }
 
 .duda__texto {
@@ -153,5 +226,7 @@
 @media (prefers-reduced-motion: reduce) {
   .pregunta,
   .pregunta__signo { transition: none; }
-  .pregunta[open] { transform: none; }
+  .pregunta[open],
+  .pregunta:not([open]):hover { transform: none; }
+  .duda__burbuja span { animation: none; opacity: .7; }
 }
