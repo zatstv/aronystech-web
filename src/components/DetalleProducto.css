@@ -1,28 +1,292 @@
-[hidden]{display:none!important}
-.detalle{padding-block:3rem 6rem;min-height:70vh}
+/* La ficha se muestra en lugar del <main> de la portada, que queda con
+   hidden. El !important es para que ninguna regla de display de una
+   sección le gane al atributo. */
+[hidden] { display: none !important; }
+
 /* La cabecera es fija y no ocupa lugar: sin este tope, el "Volver" queda
    debajo de ella y no se puede tocar. 3.9rem mide la franja de celular y
    5.5rem la barra de escritorio. */
-.detalle{padding-top:calc(3.9rem + 2rem)}
-@media(min-width:64rem){.detalle{padding-top:calc(5.5rem + 2.5rem)}}
-.detalle__volver{display:inline-flex;gap:.65rem;align-items:center;color:var(--tinta-suave);margin-bottom:2rem;text-decoration:none}
-.detalle__grilla{display:grid;gap:2rem;align-items:start}
-.detalle__imagen{background:var(--papel-hondo);border:var(--filo);border-radius:22px;overflow:hidden}
-.detalle__imagen img{width:100%;height:auto;max-height:72vh;object-fit:contain;display:block}
-.detalle__info{padding-block:.6rem}
-.detalle h1{font-size:clamp(2.2rem,4vw,3.7rem);line-height:1.05;margin:1rem 0}
-.detalle__precio{font-weight:800;font-size:2rem;display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}
-.detalle__precio span{font-size:.85rem;font-weight:400;color:var(--tinta-suave)}
-.detalle__descripcion{font-size:1.05rem;line-height:1.7;color:var(--tinta-suave);margin-block:1.5rem}
-.detalle__colores h2{font-size:.9rem}
-.detalle__colores ul{display:flex;flex-wrap:wrap;gap:.6rem;list-style:none;padding:0;margin-block:1rem 1.6rem}
-.detalle__colores li{display:flex;align-items:center;gap:.5rem;border:1px solid var(--tinta-suave);border-radius:999px;padding:.35rem .65rem;font-size:.8rem}
-.detalle__colores li span{width:16px;height:16px;border-radius:50%;border:1px solid var(--tinta)}
-.detalle__nota{display:flex;gap:.8rem;border-top:1px solid var(--tinta-suave);padding-top:1.2rem;margin-bottom:1.5rem;font-size:.9rem;color:var(--tinta-suave)}
-.detalle__nota svg{flex-shrink:0}.detalle__boton{width:100%;justify-content:center}.detalle__ayuda{font-size:.8rem;color:var(--tinta-suave);margin-top:1rem}
-@media(min-width:62rem){.detalle__grilla{grid-template-columns:1.1fr 1fr;gap:3rem}.detalle__imagen{position:sticky;top:2rem}}
-/* Desde 64rem la cabecera pasa a estar arriba y mide 5.5rem: la imagen se
-   despega para no quedar debajo. Vivía en Lateral.css, donde ganaba solo
-   porque esa hoja se importa después; si alguien reordenaba los imports, la
-   foto se metía bajo la cabecera y no había forma de saber por qué. */
-@media(min-width:64rem){.detalle__imagen{top:7rem}}
+.detalle {
+  min-height: 70vh;
+  padding-top: calc(3.9rem + 2rem);
+  padding-bottom: var(--aire);
+}
+
+@media (min-width: 64rem) {
+  .detalle { padding-top: calc(5.5rem + 2.5rem); }
+}
+
+.detalle__volver {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: .95rem;
+  color: var(--tinta-suave);
+  text-decoration: none;
+}
+
+.detalle__volver:hover { color: var(--tinta); }
+.detalle__volver svg { transition: transform .15s ease; }
+.detalle__volver:hover svg { transform: translateX(-3px); }
+
+.detalle__grilla {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (min-width: 62rem) {
+  .detalle__grilla { grid-template-columns: 1.1fr 1fr; gap: 3.5rem; }
+}
+
+/* --- La foto: una copia apoyada en la mesa, como la de Nosotros --- */
+
+.detalle__imagen {
+  margin: 0;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  will-change: transform;
+}
+
+.detalle__imagen img {
+  width: 100%;
+  height: auto;
+  max-height: 72vh;
+  object-fit: contain;
+}
+
+/* En ancho la foto acompaña mientras se lee la columna de al lado. Desde
+   64rem la cabecera pasa a estar arriba y mide 5.5rem: el tope la despega
+   para que no quede debajo. */
+@media (min-width: 62rem) {
+  .detalle__imagen { position: sticky; top: 2rem; }
+}
+
+@media (min-width: 64rem) {
+  .detalle__imagen { top: 7rem; }
+}
+
+/* --- La columna de texto --- */
+
+.detalle h1 {
+  font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+  margin-block: .6rem 1.4rem;
+}
+
+/* App.jsx le pasa el foco al título al abrir la ficha, para que un lector
+   de pantalla empiece a leer por ahí. No es un control que se pueda tocar
+   ni alcanzar con Tab (tabindex -1): el recuadro de foco solo confundía. */
+#detalle-titulo:focus { outline: none; }
+
+/* El precio, la misma calcomanía roja de las tarjetas del catálogo. */
+.detalle__precio {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .6rem 1rem;
+}
+
+.detalle__etiqueta {
+  padding: .35rem .85rem .45rem;
+  background: var(--acento);
+  color: #fff;
+  border: var(--filo);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--tinta);
+  transform: rotate(-3deg);
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+.detalle__unidad {
+  font-family: var(--mono);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.detalle__descripcion {
+  margin-block: 1.75rem;
+  max-width: 34rem;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: var(--tinta-suave);
+}
+
+/* Punteada y fina: las capas de impresión de docs/PROYECTO.md §6b, sin
+   ponerse a competir con el texto. */
+.detalle__linea {
+  border: 0;
+  border-top: 1.5px dashed color-mix(in srgb, var(--tinta) 30%, transparent);
+  margin: 0 0 1.5rem;
+}
+
+/* Colores y datos, sin cajas: rótulo chico en mono y el valor al lado. */
+.detalle__detalles {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.detalle__clave {
+  margin-bottom: .45rem;
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.detalle__colores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.detalle__colores li {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .92rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Un cubito por color, como los de los llaveros. */
+.detalle__colores li span {
+  width: 1rem;
+  height: 1rem;
+  border: 1.5px solid var(--tinta);
+  border-radius: 4px;
+}
+
+.detalle__datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2.25rem;
+  margin: 0;
+}
+
+.detalle__datos dd {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin: 0;
+  font-weight: 700;
+  font-size: .95rem;
+}
+
+.detalle__datos dd svg { color: var(--acento); }
+
+.detalle__boton {
+  width: 100%;
+  justify-content: center;
+  font-size: 1.05rem;
+}
+
+.detalle__ayuda {
+  margin-top: .9rem;
+  font-size: .85rem;
+  line-height: 1.55;
+  color: var(--tinta-suave);
+}
+
+/* --- Otras piezas --- */
+
+.detalle__otras { margin-top: var(--aire); }
+
+.detalle__otras-titulo {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin-bottom: 1.5rem;
+}
+
+.otras {
+  display: grid;
+  gap: 1.25rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+@media (min-width: 36rem) {
+  .otras { grid-template-columns: repeat(3, 1fr); }
+}
+
+.otra {
+  position: relative;
+  background: var(--papel);
+  border: var(--filo);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.otra:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--sombra-honda);
+}
+
+.otra__foto {
+  aspect-ratio: 4 / 3;
+  background: var(--papel-hondo);
+  border-bottom: var(--filo);
+  overflow: hidden;
+}
+
+.otra__foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+
+.otra:hover .otra__foto img { transform: scale(1.06); }
+
+.otra__cuerpo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 1rem;
+}
+
+.otra__nombre { font-size: 1.05rem; }
+
+.otra__nombre a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Como en el catálogo: el enlace del nombre cubre toda la tarjeta. */
+.otra__nombre a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.otra__nombre a:focus-visible { outline: none; }
+.otra__nombre a:focus-visible::after {
+  outline: 3px solid var(--acento);
+  outline-offset: -4px;
+  border-radius: var(--radio);
+}
+
+.otra__precio {
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: var(--acento);
+}
