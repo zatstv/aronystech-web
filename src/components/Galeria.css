@@ -30,6 +30,25 @@
   margin: .2em;
 }
 
+/* Cada foto es un botón que abre el visor. Ocupa todo el lugar de la
+   foto y recorta el acercamiento del :hover. */
+.galeria__abrir {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.galeria__abrir:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: -3px;
+  border-radius: 0;
+}
+
 .galeria__mosaico img {
   display: block;
   min-width: 100%;
@@ -37,10 +56,24 @@
   object-fit: cover;
   background: var(--papel-hondo);
   opacity: 0;
-  transition: opacity .5s ease;
+  transition:
+    opacity .5s ease,
+    transform .7s cubic-bezier(.2, .7, .2, 1),
+    filter .4s ease;
 }
 
 .galeria__mosaico img.esta-cargada { opacity: 1; }
+
+/* Con mouse: la foto de abajo del cursor se acerca un poco y las demás se
+   apagan, para que se note cuál se va a abrir. Solo con mouse: en táctil
+   el :hover se queda pegado después de tocar. */
+@media (hover: hover) and (pointer: fine) {
+  .galeria__abrir:hover img { transform: scale(1.06); }
+
+  .galeria__mosaico:has(.galeria__abrir:hover) .galeria__abrir:not(:hover) img {
+    filter: saturate(.55) brightness(.94);
+  }
+}
 
 /* Pantalla vertical: filas más bajas para que entren más. */
 @media (max-aspect-ratio: 1/1) {
@@ -64,6 +97,119 @@
     height: auto;
     max-height: 75vh;
   }
+}
+
+/* ============================================================
+   El visor
+   ============================================================ */
+
+/* Ocupa toda la pantalla. El velo del navegador (::backdrop) no se puede
+   animar desde JS, así que va transparente y el fondo es un div propio. */
+.visor {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--tinta);
+  overflow: hidden;
+}
+
+/* Solo abierto: un display propio en .visor le ganaría al display:none que
+   el navegador le pone al <dialog> cerrado. */
+.visor[open] {
+  display: grid;
+  place-items: center;
+}
+
+.visor::backdrop { background: transparent; }
+
+body:has(.visor[open]) { overflow: hidden; }
+
+/* La foto apoyada sobre el papel del sitio, no sobre negro: sigue siendo
+   una pieza sobre la mesa. */
+.visor__fondo {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--papel) 94%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.visor__marco {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 4.5rem 5.5rem;
+  pointer-events: none;
+}
+
+/* Nunca más grande que el archivo: las fotos miden 700 px de ancho y
+   estiradas se verían borrosas. */
+.visor__marco img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  border: var(--filo);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-honda);
+  background: var(--papel-hondo);
+  pointer-events: auto;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.visor__controles { position: static; }
+
+.visor__cuenta {
+  position: absolute;
+  top: 1.4rem;
+  left: 1.5rem;
+  font-family: var(--mono);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.visor__boton {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 50%;
+  box-shadow: var(--sombra);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+
+.visor__boton:hover { transform: translate(-1px, -1px); box-shadow: var(--sombra-honda); }
+.visor__boton:active { transform: translate(3px, 3px); box-shadow: var(--sombra-hundida); }
+
+.visor__cerrar { top: 1rem; right: 1rem; }
+
+.visor__flecha { top: 50%; margin-top: -1.5rem; }
+.visor__flecha--atras { left: 1.25rem; }
+.visor__flecha--adelante { right: 1.25rem; }
+
+/* Angosto: la foto usa todo el ancho y las flechas bajan al pie, donde
+   llega el pulgar. */
+@media (max-width: 40rem) {
+  .visor__marco { padding: 4.5rem 1rem 6rem; }
+  .visor__flecha { top: auto; bottom: 1.5rem; margin-top: 0; }
+  .visor__flecha--atras { left: calc(50% - 3.75rem); }
+  .visor__flecha--adelante { right: calc(50% - 3.75rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
