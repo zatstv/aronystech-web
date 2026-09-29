@@ -1,7 +1,8 @@
-import { Banknote, Bitcoin, CreditCard, Plus, Smartphone, Wallet } from "lucide-react";
+import { Banknote, Bitcoin, CreditCard, MessageCircle, Plus, Smartphone, Wallet } from "lucide-react";
 
 import { PAGOS, PREGUNTAS } from "../data/sitio.js";
-import { useEntradaEscalonada } from "../hooks/useEntradaEscalonada.js";
+import { ENCABEZADO, useEntradaEscalonada } from "../hooks/useEntradaEscalonada.js";
+import { linkWhatsApp } from "../lib/whatsapp.js";
 import "./Preguntas.css";
 
 /* ============================================================
@@ -24,45 +25,69 @@ const ICONOS = {
 };
 
 export default function Preguntas() {
+  const encabezadoRef = useEntradaEscalonada({ selector: ENCABEZADO });
   const listaRef = useEntradaEscalonada({ y: 16 });
 
   return (
     <section className="preguntas" id="preguntas">
-      <div className="contenedor">
+      <div className="contenedor" ref={encabezadoRef}>
         <p className="rotulo">Preguntas</p>
         <h2 className="titulo-seccion preguntas__titulo">Lo que todos preguntan</h2>
 
-        <div className="preguntas__lista" ref={listaRef}>
-          {PREGUNTAS.map((p) => (
-            <details className="pregunta" key={p.pregunta}>
-              <summary className="pregunta__titulo">
-                {p.pregunta}
-                {/* Decorativo: la cruz gira a "cerrar" desde el CSS. Quien no
-                    ve la pantalla ya escucha si está abierto o cerrado. */}
-                <Plus className="pregunta__signo" size={20} aria-hidden="true" />
-              </summary>
-              <p className="pregunta__respuesta">{p.respuesta}</p>
-            </details>
-          ))}
-        </div>
+        {/* Dos columnas en pantalla ancha: las preguntas a la izquierda y, al
+            lado, lo que se busca después de leerlas —cómo pagar y a quién
+            preguntar lo que no está—. Antes esa columna quedaba vacía. */}
+        <div className="preguntas__cuerpo">
+          <div className="preguntas__lista" ref={listaRef}>
+            {PREGUNTAS.map((p) => (
+              <details className="pregunta" key={p.pregunta}>
+                <summary className="pregunta__titulo">
+                  {p.pregunta}
+                  {/* Decorativo: la cruz gira a "cerrar" desde el CSS. Quien no
+                      ve la pantalla ya escucha si está abierto o cerrado. */}
+                  <Plus className="pregunta__signo" size={20} aria-hidden="true" />
+                </summary>
+                <p className="pregunta__respuesta">{p.respuesta}</p>
+              </details>
+            ))}
+          </div>
 
-        <div className="pagos">
-          <h3 className="pagos__titulo">Cómo puedes pagar</h3>
-          <ul className="pagos__lista">
-            {PAGOS.map((f) => {
-              const Icono = ICONOS[f.icono];
-              return (
-                <li className="pagos__medio" key={f.texto}>
-                  {Icono && <Icono size={18} strokeWidth={2.2} aria-hidden="true" />}
-                  {f.texto}
-                </li>
-              );
-            })}
-          </ul>
-          <p className="pagos__nota">
-            El pago se coordina por WhatsApp al confirmar el pedido. No se cobra nada por la
-            página.
-          </p>
+          <aside className="preguntas__lado">
+            <div className="pagos">
+              <h3 className="pagos__titulo">Cómo puedes pagar</h3>
+              <ul className="pagos__lista">
+                {PAGOS.map((f) => {
+                  const Icono = ICONOS[f.icono];
+                  return (
+                    <li className="pagos__medio" key={f.texto}>
+                      {Icono && <Icono size={18} strokeWidth={2.2} aria-hidden="true" />}
+                      {f.texto}
+                    </li>
+                  );
+                })}
+              </ul>
+              <p className="pagos__nota">
+                El pago se coordina por WhatsApp al confirmar el pedido. No se cobra nada por la
+                página.
+              </p>
+            </div>
+
+            <div className="duda">
+              <h3 className="duda__titulo">¿Otra duda?</h3>
+              <p className="duda__texto">
+                Escríbenos por WhatsApp y te contestamos ahí mismo, sin compromiso.
+              </p>
+              <a
+                className="boton duda__boton"
+                href={linkWhatsApp("Hola, tengo una pregunta.")}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle size={17} strokeWidth={2.4} aria-hidden="true" />
+                Preguntar por WhatsApp
+              </a>
+            </div>
+          </aside>
         </div>
       </div>
     </section>

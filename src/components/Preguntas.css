@@ -2,10 +2,28 @@
 
 .preguntas__titulo { margin-block: .4rem 2.5rem; }
 
+.preguntas__cuerpo {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (min-width: 62rem) {
+  .preguntas__cuerpo { grid-template-columns: minmax(0, 1fr) 21rem; gap: 2rem 3rem; }
+
+  /* La columna de al lado acompaña mientras se leen las respuestas. El
+     tope deja lugar para la cabecera fija. */
+  .preguntas__lado { position: sticky; top: 6rem; }
+}
+
 .preguntas__lista {
-  max-width: 48rem;
   display: grid;
   gap: .8rem;
+}
+
+.preguntas__lado {
+  display: grid;
+  gap: 1rem;
 }
 
 /* Cada pregunta es una pieza apoyada, como el resto de la página: filo
@@ -64,8 +82,6 @@
 /* --- Cómo se paga --- */
 
 .pagos {
-  max-width: 48rem;
-  margin-top: 2.5rem;
   padding: 1.4rem;
   border: var(--filo);
   border-radius: var(--radio);
@@ -105,6 +121,33 @@
   margin-top: .9rem;
   font-size: .85rem;
   color: var(--tinta-suave);
+}
+
+/* --- ¿Otra duda? --- */
+
+.duda {
+  padding: 1.4rem;
+  border: var(--filo);
+  border-radius: var(--radio);
+  background: var(--papel);
+  box-shadow: var(--sombra);
+}
+
+.duda__titulo {
+  font-size: 1.3rem;
+  margin-bottom: .5rem;
+}
+
+.duda__texto {
+  color: var(--tinta-suave);
+  font-size: .92rem;
+  margin-bottom: 1.1rem;
+}
+
+.duda__boton {
+  width: 100%;
+  justify-content: center;
+  padding-inline: 1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

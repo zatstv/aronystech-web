@@ -163,7 +163,20 @@ h1, h2, h3, h4 {
   font-weight: 900;
   line-height: 1.02;
   letter-spacing: -.025em;
+  /* Devuelve entre palabras lo que el tracking negativo le quita a las
+     letras: si no, "chico que" se lee como una sola palabra. */
+  word-spacing: .06em;
   text-wrap: balance;
+}
+
+/* Los titulares chicos no se aprietan como los grandes. El espacio de
+   Outfit es angosto, y en 900 con el tracking de arriba las palabras se
+   pegaban: "Llavero de nombre" se leía "Llaverodenombre". El apretado
+   queda bien de 2rem para arriba, no a tamaño de tarjeta. */
+h3, h4 {
+  letter-spacing: -.005em;
+  word-spacing: .08em;
+  line-height: 1.2;
 }
 
 p { text-wrap: pretty; }
@@ -195,6 +208,20 @@ p { text-wrap: pretty; }
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--acento);
+  display: flex;
+  align-items: center;
+  gap: .55em;
+}
+
+/* Un cubito delante de cada rótulo: la misma pieza con la que se arman los
+   llaveros, en chico. Hereda el centrado cuando el bloque va centrado. */
+.rotulo::before {
+  content: "";
+  width: .7em;
+  height: .7em;
+  flex: none;
+  background: currentColor;
+  border-radius: 2px;
 }
 
 .titulo-seccion {

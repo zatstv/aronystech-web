@@ -1,0 +1,71 @@
+/* La galería en mosaico. Cada fila tiene el mismo alto y las fotos crecen
+   a lo ancho hasta llenarla. */
+
+.galeria {
+  /* Fondo opaco: la cuadrícula del sitio no asoma. El video de la portada
+     se funde en este mismo color, así que la galería entra sin costura. */
+  background: var(--papel);
+  position: relative;
+  padding: .2em;
+}
+
+.galeria__mosaico {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Un relleno invisible al final que se come el espacio sobrante: sin él,
+   las fotos de la última fila se estirarían hasta quedar enormes. */
+.galeria__mosaico::after {
+  content: "";
+  flex-grow: 10;
+}
+
+.galeria__mosaico li {
+  flex-grow: 1;
+  height: 40vh;
+  margin: .2em;
+}
+
+.galeria__mosaico img {
+  display: block;
+  min-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--papel-hondo);
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+.galeria__mosaico img.esta-cargada { opacity: 1; }
+
+/* Pantalla vertical: filas más bajas para que entren más. */
+@media (max-aspect-ratio: 1/1) {
+  .galeria__mosaico li { height: 30vh; }
+}
+
+/* Pantalla muy baja (celular acostado): una foto casi a toda altura. */
+@media (max-height: 480px) {
+  .galeria__mosaico li { height: 80vh; }
+}
+
+/* Celular parado: una foto por fila, a todo el ancho y entera. */
+@media (max-aspect-ratio: 1/1) and (max-width: 480px) {
+  .galeria__mosaico li {
+    width: 100%;
+    height: auto;
+  }
+  .galeria__mosaico img {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    max-height: 75vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galeria__mosaico img { transition: none; }
+}

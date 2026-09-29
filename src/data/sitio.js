@@ -132,14 +132,13 @@ export const REFERENCIAS = [
 export const CANTIDADES = [1, 5, 20, 50, 100];
 export const MAYOREO = 20;
 
-/* La galería: una rueda de fotos justo después de la portada. Una tarjeta
-   por foto, puestas en círculo, y al bajar la rueda gira. La que queda
-   arriba se ve a pleno; las vecinas asoman a los costados.
+/* La galería: un mosaico de fotos justo después de la portada, en filas
+   del mismo alto que se llenan a lo ancho.
 
-   El orden de la lista es el orden de la rueda. Conviene no poner seguidas
-   dos fotos de la misma pieza: se ve mejor si cada giro cambia de tema.
+   El orden de la lista es el orden del mosaico, de izquierda a derecha y
+   de arriba abajo. Conviene no poner juntas dos fotos de la misma pieza.
    Las fotos viven en public/img/rueda, recortadas a 700px de ancho. */
-export const RUEDA = [
+export const GALERIA = [
   { src: "img/rueda/barco-pirata.webp", alt: "Galeón negro con velas rotas, visto de costado sobre una mesa de madera" },
   { src: "img/rueda/llavero-panda.webp", alt: "Llavero negro brillante con la silueta de un panda y argolla metálica" },
   { src: "img/rueda/organizador-plumas.webp", alt: "Organizador negro en forma de prisma con plumas y lápices en sus huecos" },

@@ -92,11 +92,14 @@
   letter-spacing: -.03em;
   text-align: center;
   text-wrap: balance;
-  text-shadow: 0 2px 24px rgb(0 0 0 / .35);
+  /* Dos sombras: la ancha oscurece el fondo detrás de las letras y la
+     corta les marca el borde. Con una sola, la segunda línea se perdía
+     contra las partes claras de la impresora. */
+  text-shadow: 0 2px 24px rgb(0 0 0 / .45), 0 1px 3px rgb(0 0 0 / .35);
 }
 
 /* La segunda línea a media tinta: es el gesto de la referencia. */
-.portada__titular span { color: rgb(255 255 255 / .58); }
+.portada__titular-eco { color: rgb(255 255 255 / .72); }
 
 /* --- La franja de abajo --- */
 

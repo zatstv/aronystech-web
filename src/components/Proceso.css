@@ -30,22 +30,25 @@
 .paso {
   counter-increment: paso;
   position: relative;
-  padding: 2.6rem 1.1rem 1.1rem;
+  padding: 3.1rem 1.1rem 1.2rem;
   border: var(--filo);
   border-radius: var(--radio);
   background: var(--papel);
   box-shadow: var(--sombra-hundida);
 }
 
+/* El número grande y en mono, "01" en vez de "1": marca el orden de un
+   vistazo, y la mono lo emparenta con los rótulos. */
 .paso::before {
-  content: counter(paso);
+  content: counter(paso, decimal-leading-zero);
   position: absolute;
-  top: .9rem;
+  top: .85rem;
   left: 1.1rem;
   font-family: var(--mono);
   font-weight: 700;
-  font-size: .72rem;
-  letter-spacing: .14em;
+  font-size: 1.35rem;
+  line-height: 1;
+  letter-spacing: -.02em;
   color: var(--acento);
 }
 

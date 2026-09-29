@@ -12,7 +12,7 @@ import Lateral from "./components/Lateral.jsx";
 import ModalPedido from "./components/ModalPedido.jsx";
 import Nosotros from "./components/Nosotros.jsx";
 import Proceso from "./components/Proceso.jsx";
-import Rueda from "./components/Rueda.jsx";
+import Galeria from "./components/Galeria.jsx";
 import Preguntas from "./components/Preguntas.jsx";
 import { useAnclaInicial } from "./hooks/useAnclaInicial.js";
 
@@ -56,7 +56,7 @@ export default function App() {
 
         <main hidden={esDetalle}>
           <Hero />
-          <Rueda />
+          <Galeria />
           <Catalogo alPedir={setPedido} />
           <Proceso />
           <Nosotros />
