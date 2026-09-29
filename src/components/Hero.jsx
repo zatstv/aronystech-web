@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowRight, Boxes, MessageCircle, Package, Truck } from "lucide-react";
 
 import { DATOS } from "../data/sitio.js";
+import { gsap, pideQuietud } from "../lib/movimiento.js";
 import "./Hero.css";
 
 const ICONOS = { package: Package, truck: Truck, layers: Boxes };
@@ -103,6 +104,72 @@ export default function Hero() {
     };
   }, []);
 
+  /* La entrada: el titular sube línea por línea y después aparece la
+     franja de abajo. Va en useLayoutEffect para esconder el texto antes del
+     primer cuadro; con useEffect se vería entero un instante y después
+     desaparecería para volver a entrar.
+
+     Corta a propósito (poco más de un segundo en total): es lo primero que
+     ve alguien que llegó desde WhatsApp, y no tiene que esperar para leer. */
+  const contenidoRef = useRef(null);
+  useLayoutEffect(() => {
+    const caja = contenidoRef.current;
+    if (!caja || pideQuietud()) return;
+
+    const ctx = gsap.context(() => {
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .from(".portada__titular > span", {
+          autoAlpha: 0,
+          y: 36,
+          duration: 0.8,
+          stagger: 0.14,
+        })
+        .from(
+          ".portada__bajada, .portada__datos > div, .portada__boton",
+          { autoAlpha: 0, y: 14, duration: 0.5, stagger: 0.06, clearProps: "transform" },
+          "-=0.4"
+        );
+    }, caja);
+    return () => ctx.revert();
+  }, []);
+
+  /* Al bajar, el texto se queda un poco atrás y se apaga, y la galería
+     entra por encima. Solo el texto: si se moviera el video, su borde de
+     abajo —el que se funde con el papel— dejaría ver el corte.
+
+     Con quickSetter y un solo requestAnimationFrame por cuadro: el scroll
+     dispara el evento muchas más veces de las que la pantalla se redibuja. */
+  useEffect(() => {
+    const seccion = seccionRef.current;
+    const caja = contenidoRef.current;
+    if (!seccion || !caja || pideQuietud()) return;
+
+    const ponerY = gsap.quickSetter(caja, "y", "px");
+    const ponerAlfa = gsap.quickSetter(caja, "opacity");
+    let pedido = 0;
+
+    const pintar = () => {
+      pedido = 0;
+      const alto = seccion.offsetHeight;
+      /* 0 con la portada entera a la vista, 1 cuando ya se fue. */
+      const p = Math.min(1, Math.max(0, window.scrollY / alto));
+      ponerY(p * alto * 0.3);
+      ponerAlfa(1 - Math.min(1, p * 1.6));
+    };
+    const alMover = () => {
+      if (!pedido) pedido = requestAnimationFrame(pintar);
+    };
+
+    pintar();
+    window.addEventListener("scroll", alMover, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", alMover);
+      cancelAnimationFrame(pedido);
+      gsap.set(caja, { clearProps: "transform,opacity" });
+    };
+  }, []);
+
   return (
     <section className="portada" id="inicio" ref={seccionRef}>
       <div className="portada__fondo" aria-hidden="true">
@@ -132,10 +199,10 @@ export default function Hero() {
         <div className="portada__velo" />
       </div>
 
-      <div className="portada__contenido">
+      <div className="portada__contenido" ref={contenidoRef}>
         <h1 className="portada__titular">
-          Diseñamos tu idea,
-          <span>y lo imprimimos en 3D.</span>
+          <span>Diseñamos tu idea,</span>
+          <span className="portada__titular-eco">y lo imprimimos en 3D.</span>
         </h1>
 
         <div className="portada__pie">

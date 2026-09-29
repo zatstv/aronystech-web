@@ -1,5 +1,5 @@
 import { OCASIONES, PASOS } from "../data/sitio.js";
-import { useEntradaEscalonada } from "../hooks/useEntradaEscalonada.js";
+import { ENCABEZADO, useEntradaEscalonada } from "../hooks/useEntradaEscalonada.js";
 import "./Proceso.css";
 
 /* ============================================================
@@ -12,12 +12,13 @@ import "./Proceso.css";
    ============================================================ */
 
 export default function Proceso() {
+  const encabezadoRef = useEntradaEscalonada({ selector: ENCABEZADO });
   const pasosRef = useEntradaEscalonada();
   const ocasionesRef = useEntradaEscalonada();
 
   return (
     <section className="proceso" id="proceso">
-      <div className="contenedor">
+      <div className="contenedor" ref={encabezadoRef}>
         <p className="rotulo">Cómo funciona</p>
         <h2 className="titulo-seccion proceso__titulo">De la idea a tu mano</h2>
 

@@ -132,12 +132,11 @@ export const REFERENCIAS = [
 export const CANTIDADES = [1, 5, 20, 50, 100];
 export const MAYOREO = 20;
 
-/* La galería: una cuadrícula de fotos justo después de la portada, vista
-   de lejos. La elegida queda al centro y las vecinas asoman alrededor;
-   al abrirla se acerca hasta llenar la pantalla.
+/* La galería: un mosaico de fotos justo después de la portada, en filas
+   del mismo alto que se llenan a lo ancho.
 
-   El orden de la lista es el orden de la cuadrícula, de izquierda a derecha
-   y de arriba abajo. Conviene no poner juntas dos fotos de la misma pieza.
+   El orden de la lista es el orden del mosaico, de izquierda a derecha y
+   de arriba abajo. Conviene no poner juntas dos fotos de la misma pieza.
    Las fotos viven en public/img/rueda, recortadas a 700px de ancho. */
 export const GALERIA = [
   { src: "img/rueda/barco-pirata.webp", alt: "Galeón negro con velas rotas, visto de costado sobre una mesa de madera" },

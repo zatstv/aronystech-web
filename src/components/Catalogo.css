@@ -87,16 +87,26 @@
 .producto__nombre a { color: inherit; text-decoration: none; }
 .producto__nombre a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
+/* La etiqueta de precio, girada 2.5 grados como una calcomanía pegada a
+   mano (docs/PROYECTO.md §6b). */
 .producto__precio {
   grid-area: precio;
-  margin-top: .4rem;
-  font-size: 1.5rem;
+  justify-self: start;
+  margin-top: .5rem;
+  padding: .3rem .6rem .35rem;
+  background: var(--papel-hondo);
+  border: var(--filo);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 var(--tinta);
+  transform: rotate(-2.5deg);
+  font-size: 1.4rem;
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 .producto__precio span {
   display: block;
+  margin-top: .2rem;
   font-family: var(--mono);
   font-size: .62rem;
   font-weight: 700;

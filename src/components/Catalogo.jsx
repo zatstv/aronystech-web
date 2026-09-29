@@ -1,7 +1,7 @@
 import { ArrowRight, PencilRuler } from "lucide-react";
 
 import { PRODUCTOS } from "../data/sitio.js";
-import { useEntradaEscalonada } from "../hooks/useEntradaEscalonada.js";
+import { ENCABEZADO, useEntradaEscalonada } from "../hooks/useEntradaEscalonada.js";
 import "./Catalogo.css";
 
 /* ============================================================
@@ -18,11 +18,12 @@ import "./Catalogo.css";
    ============================================================ */
 
 export default function Catalogo({ alPedir }) {
+  const encabezadoRef = useEntradaEscalonada({ selector: ENCABEZADO });
   const listaRef = useEntradaEscalonada();
 
   return (
     <section className="catalogo" id="catalogo">
-      <div className="contenedor">
+      <div className="contenedor" ref={encabezadoRef}>
         <p className="rotulo">Catálogo</p>
         <h2 className="titulo-seccion catalogo__titulo">Piezas con precio</h2>
         <p className="catalogo__intro">

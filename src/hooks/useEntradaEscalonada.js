@@ -1,12 +1,19 @@
 import { useEffect, useRef } from "react";
 
+import { gsap, pideQuietud } from "../lib/movimiento.js";
+
+/* Para los encabezados de sección: el rótulo, el título y la bajada, sin
+   tocar la lista que va debajo, que tiene su propia entrada. */
+export const ENCABEZADO = ":scope > .rotulo, :scope > h2, :scope > .catalogo__intro";
+
 /* Hace entrar los hijos de un contenedor de a uno, escalonados, cuando la
    sección llega a la pantalla.
 
-   Antes lo hacía GSAP, que sumaba 47 kB comprimidos solo para esto. El
-   navegador ya trae las dos piezas: IntersectionObserver avisa cuándo
-   aparece el contenedor, y element.animate() hace la animación con su
-   retraso para cada hijo.
+   Cada hijo cae un poco, pasa de largo y se asienta, como una pieza que se
+   apoya en la mesa (docs/PROYECTO.md §6: "los cubos caen y se apilan"). Ese
+   rebote es lo que pone GSAP; cuándo arrancar lo sigue decidiendo el
+   IntersectionObserver del navegador, que ya resolvía bien los saltos del
+   menú (ver el rootMargin de abajo).
 
    El estado normal del CSS sigue siendo "visible". Los hijos se esconden
    desde acá, con JS, y recién cuando se sabe que el JS va a poder volver a
@@ -20,41 +27,33 @@ export function useEntradaEscalonada({ selector = ":scope > *", y = 24 } = {}) {
 
   useEffect(() => {
     const caja = ref.current;
-    const quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!caja || quieto || !("IntersectionObserver" in window) || !caja.animate) return;
+    if (!caja || pideQuietud() || !("IntersectionObserver" in window)) return;
 
     const hijos = [...caja.querySelectorAll(selector)];
-    const esconder = (h) => {
-      h.style.opacity = "0";
-      h.style.transform = `translateY(${y}px)`;
-    };
-    const soltar = (h) => {
-      h.style.opacity = "";
-      h.style.transform = "";
-    };
-    hijos.forEach(esconder);
+    if (!hijos.length) return;
+
+    const ctx = gsap.context(() => {
+      gsap.set(hijos, { autoAlpha: 0, y, rotation: -1.2 });
+    }, caja);
 
     const obs = new IntersectionObserver(
       ([entrada]) => {
         if (!entrada.isIntersecting) return;
         obs.disconnect();
-        hijos.forEach((h, i) => {
-          soltar(h);
-          /* fill: "backwards" mantiene al hijo en el primer cuadro mientras
-             espera su turno; si no, se vería entero y después desaparecería. */
-          h.animate(
-            [
-              { opacity: 0, transform: `translateY(${y}px)` },
-              { opacity: 1, transform: "none" },
-            ],
-            {
-              duration: 500,
-              /* Más de ~8 y los últimos llegan tarde: se siente lento, no prolijo. */
-              delay: i * 80,
-              easing: "cubic-bezier(.25, .46, .45, .94)",
-              fill: "backwards",
-            }
-          );
+        ctx.add(() => {
+          gsap.to(hijos, {
+            autoAlpha: 1,
+            y: 0,
+            rotation: 0,
+            duration: 0.6,
+            ease: "back.out(1.5)",
+            /* Más de ~8 y los últimos llegan tarde: se siente lento, no prolijo. */
+            stagger: 0.08,
+            /* Al terminar se borra todo lo que dejó escrito: si quedara un
+               transform en línea, le ganaría a los :hover del CSS que
+               levantan las tarjetas. */
+            clearProps: "opacity,visibility,transform",
+          });
         });
       },
       /* Arranca cuando el borde de arriba pasa el 85% de la pantalla.
@@ -70,7 +69,10 @@ export function useEntradaEscalonada({ selector = ":scope > *", y = 24 } = {}) {
     obs.observe(caja);
     return () => {
       obs.disconnect();
-      hijos.forEach(soltar);
+      /* Deshace el set y cualquier animación a medias: en modo estricto
+         React monta dos veces y el segundo montaje tiene que encontrar los
+         hijos limpios. */
+      ctx.revert();
     };
   }, [selector, y]);
 
