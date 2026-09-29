@@ -63,7 +63,9 @@ export default function App() {
           <Preguntas />
         </main>
 
-        {esDetalle && <DetalleProducto producto={producto} alPedir={setPedido} />}
+        {/* La key la monta de nuevo al pasar de una ficha a otra desde "Otras
+            piezas", así la entrada se repite con la pieza nueva. */}
+        {esDetalle && <DetalleProducto key={ruta} producto={producto} alPedir={setPedido} />}
         <Footer />
       </div>
 
