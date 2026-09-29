@@ -30,12 +30,15 @@ export const PALETA = [
   { hex: "#F2803C", nombre: "naranja" },
 ];
 
+/* `icono` elige el dibujo de cada paso en la línea de tiempo, y de cada
+   ocasión en su tarjeta. Qué dibujo corresponde a cada nombre está en
+   ICONOS, en Proceso.jsx. */
 export const PASOS = [
-  { titulo: "Escribes", texto: "Nos mandas por WhatsApp qué quieres, en qué color y para cuándo. Si tienes un diseño propio, también sirve." },
-  { titulo: "Se modela", texto: "Tu idea se convierte en un archivo como el de al lado. Puedes girarlo y verlo antes de que exista la pieza." },
-  { titulo: "Confirmas", texto: "Te pasamos el precio final y la imagen de cómo va a quedar. Nada entra a la impresora sin tu visto bueno." },
-  { titulo: "Se imprime", texto: "La pieza crece capa por capa y se limpia a mano. Cada pedido se hace desde cero, no sale de una caja." },
-  { titulo: "Te llega", texto: "Enviamos a todo Panamá. Coordinamos la entrega y te avisamos apenas sale, por el mismo chat." },
+  { icono: "mensaje", titulo: "Escribes", texto: "Nos mandas por WhatsApp qué quieres, en qué color y para cuándo. Si tienes un diseño propio, también sirve." },
+  { icono: "modelo", titulo: "Se modela", texto: "Tu idea se convierte en un archivo 3D. Puedes girarlo y verlo antes de que exista la pieza." },
+  { icono: "visto", titulo: "Confirmas", texto: "Te pasamos el precio final y la imagen de cómo va a quedar. Nada entra a la impresora sin tu visto bueno." },
+  { icono: "impresora", titulo: "Se imprime", texto: "La pieza crece capa por capa y se limpia a mano. Cada pedido se hace desde cero, no sale de una caja." },
+  { icono: "envio", titulo: "Te llega", texto: "Enviamos a todo Panamá. Coordinamos la entrega y te avisamos apenas sale, por el mismo chat." },
 ];
 
 /* Cómo se puede pagar. Los nombres de icono son los de lucide, que es la
@@ -57,12 +60,12 @@ export const PAGOS = [
 ];
 
 export const OCASIONES = [
-  { titulo: "Cumpleaños", texto: "Un llavero con el nombre cuesta menos que una tarjeta y dura años." },
-  { titulo: "Graduaciones", texto: "Con el año, la carrera o las iniciales. Se pueden hacer varios iguales." },
-  { titulo: "Recuerdos de fiesta", texto: "Pedidos de 20, 50 o 100 unidades con el mismo diseño y el precio baja." },
-  { titulo: "Regalos de empresa", texto: "Con el logo de la compañía. Mándanos el archivo y lo adaptamos." },
-  { titulo: "Bodas", texto: "Detalle para los invitados con la fecha o los nombres de los novios." },
-  { titulo: "Piezas de repuesto", texto: "Esa perilla o soporte que ya no se consigue. Manda la foto y la medida." },
+  { icono: "torta", titulo: "Cumpleaños", texto: "Un llavero con el nombre cuesta menos que una tarjeta y dura años." },
+  { icono: "birrete", titulo: "Graduaciones", texto: "Con el año, la carrera o las iniciales. Se pueden hacer varios iguales." },
+  { icono: "fiesta", titulo: "Recuerdos de fiesta", texto: "Pedidos de 20, 50 o 100 unidades con el mismo diseño y el precio baja." },
+  { icono: "empresa", titulo: "Regalos de empresa", texto: "Con el logo de la compañía. Mándanos el archivo y lo adaptamos." },
+  { icono: "boda", titulo: "Bodas", texto: "Detalle para los invitados con la fecha o los nombres de los novios." },
+  { icono: "repuesto", titulo: "Piezas de repuesto", texto: "Esa perilla o soporte que ya no se consigue. Manda la foto y la medida." },
 ];
 
 export const PREGUNTAS = [
