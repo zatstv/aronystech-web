@@ -1,8 +1,8 @@
 /* Todo el contenido editable de la página vive acá.
    Para cambiar un precio, un texto o una pregunta, se toca este archivo y nada más. */
 
-export const TEL = "50767955170";
-export const TEL_BONITO = "+507 6795 5170";
+export const TEL = "50670622458";
+export const TEL_BONITO = "+506 7062 2458";
 
 /* Redes sociales, para la fila de íconos del pie.
 
