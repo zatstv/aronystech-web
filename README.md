@@ -164,7 +164,7 @@ Estas dos cosas hay que tocarlas o el sitio sale mal, y ninguna avisa:
 
 ## Pendientes conocidos
 
-- Links de Instagram y Facebook (TikTok ya está) (`REDES` en `src/data/sitio.js`).
+- Link de Facebook (Instagram y TikTok ya están) (`REDES` en `src/data/sitio.js`).
 - Dominio propio: se va a comprar. Cuando esté, cambiar las tres direcciones de `index.html` y abrir `robots.txt` (ver arriba).
 - La zona de admin con PocketBase de `docs/STACK.md` es solo una idea: no está construida.
 

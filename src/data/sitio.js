@@ -6,7 +6,7 @@ export const TEL_BONITO = "+506 7062 2458";
 
 /* Redes sociales, para la fila de íconos del pie.
 
-   TikTok ya está. Instagram y Facebook siguen pendientes
+   Instagram y TikTok ya están. Facebook sigue pendiente
    (docs/PROYECTO.md §2) y un ícono que no lleva a ningún lado es peor que no
    tenerlo. Cuando haya cuenta se agrega acá y la celda aparece sola:
 
@@ -15,6 +15,7 @@ export const TEL_BONITO = "+506 7062 2458";
    El id solo tiene que ser distinto entre sí. Los íconos de marca no vienen
    en lucide 1.x: hoy todas entran con un eslabón genérico. */
 export const REDES = [
+  { id: "instagram", nombre: "Instagram", url: "https://www.instagram.com/aronystech" },
   { id: "tiktok", nombre: "TikTok", url: "https://www.tiktok.com/@aronystech_16" },
 ];
 

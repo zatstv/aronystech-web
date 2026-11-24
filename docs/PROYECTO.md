@@ -409,7 +409,7 @@ días hábiles") baja la fricción sin comprometerse a una fecha.
 ### Lo único que sigue pendiente
 
 - [x] **Precios reales** (2026-11-24): los de la página eran casi los reales; se bajaron un poco. Llavero de nombre y de números $8, soporte $6, monedero $12, caja de regalo $15.
-- [ ] Redes sociales: TikTok listo ([@aronystech_16](https://www.tiktok.com/@aronystech_16)); faltan Instagram y Facebook.
+- [ ] Redes sociales: Instagram ([@aronystech](https://www.instagram.com/aronystech)) y TikTok ([@aronystech_16](https://www.tiktok.com/@aronystech_16)) listos; falta Facebook.
 - [x] Letras por llavero: **máximo 10**, confirmado por Hugo.
 - [x] Tamaño de las piezas en cm: no hace falta ponerlo.
 - [x] Precio por volumen: baja **desde 10 unidades**.
