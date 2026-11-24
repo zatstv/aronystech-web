@@ -85,18 +85,59 @@
   .galeria__mosaico li { height: 80vh; }
 }
 
-/* Celular parado: una foto por fila, a todo el ancho y entera. */
-@media (max-aspect-ratio: 1/1) and (max-width: 480px) {
+/* Celular parado: dos columnas de fotos cuadradas. Una por fila y entera
+   hacía la galería larguísima; acá entran seis en poco más de una pantalla
+   y la foto completa se ve tocándola, en el visor. */
+@media (max-width: 480px) {
+  .galeria__mosaico {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .3em;
+    padding: .2em;
+  }
+  .galeria__mosaico::after { content: none; }
   .galeria__mosaico li {
-    width: 100%;
     height: auto;
+    aspect-ratio: 1;
+    margin: 0;
   }
   .galeria__mosaico img {
     width: 100%;
     min-width: 0;
-    height: auto;
-    max-height: 75vh;
   }
+}
+
+/* El botón para ver el resto. Mismo lenguaje que los demás botones del
+   sitio: filo, sombra dura y se hunde al tocarlo. */
+.galeria__mas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+  margin: 1.2rem auto 1.6rem;
+  padding: .85rem 1.4rem;
+  font-family: var(--mono);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+
+.galeria__mas:hover { transform: translate(-1px, -1px); box-shadow: var(--sombra-honda); }
+.galeria__mas:active { transform: translate(3px, 3px); box-shadow: var(--sombra-hundida); }
+
+.galeria__mas-cuenta {
+  padding: .15rem .45rem;
+  background: var(--acento);
+  color: var(--papel);
+  border-radius: 999px;
 }
 
 /* ============================================================
