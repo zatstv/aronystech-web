@@ -10,7 +10,14 @@
 
 import { instrucciones } from "./instrucciones.js";
 
-const MODELO_POR_DEFECTO = "gemini-2.5-flash";
+/* Con las llaves nuevas Google ya no deja usar gemini-2.5-flash ("no longer
+   available to new users"); el que acepta es este. Se cambia sin tocar
+   código con la variable GEMINI_MODEL en Cloudflare. */
+const MODELO_POR_DEFECTO = "gemini-3.8-flash";
+
+/* Si Gemini tarda más que esto, se corta y se reintenta una vez: mejor
+   avisar al cliente y mandarlo a WhatsApp que dejarlo esperando. */
+const ESPERA_MS = 20000;
 
 /* Topes para que nadie use el chat como IA gratis ni gaste la cuota:
    mensajes cortos, conversación acotada y respuestas breves. */
@@ -62,28 +69,38 @@ async function chat(request, env) {
 
   const modelo = env.GEMINI_MODEL || MODELO_POR_DEFECTO;
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`;
-  const r = await fetch(url, {
-    method: "POST",
-    headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-    body: JSON.stringify({
-      system_instruction: { parts: [{ text: instrucciones() }] },
-      contents: contenidos,
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 1024,
-        responseMimeType: "application/json",
-        responseSchema: ESQUEMA,
-        /* Sin "pensar": para atender un chat no hace falta, y así responde
-           más rápido y gasta menos de la cuota gratis. */
-        thinkingConfig: { thinkingBudget: 0 },
-      },
-    }),
+  const cuerpo = JSON.stringify({
+    system_instruction: { parts: [{ text: instrucciones() }] },
+    contents: contenidos,
+    generationConfig: {
+      temperature: 0.7,
+      maxOutputTokens: 1024,
+      responseMimeType: "application/json",
+      responseSchema: ESQUEMA,
+      /* Que piense poco: para atender un chat no hace falta más, y así
+         responde rápido y gasta menos de la cuota gratis. Este modelo no
+         acepta "minimal", el mínimo es "low". */
+      thinkingConfig: { thinkingLevel: "low" },
+    },
   });
+
+  const pedir = () =>
+    fetch(url, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+      body: cuerpo,
+      signal: AbortSignal.timeout(ESPERA_MS),
+    }).catch(() => new Response(null, { status: 504 }));
+
+  /* Un reintento si Gemini está saturado (503) o no contestó a tiempo. */
+  let r = await pedir();
+  if (r.status === 503 || r.status === 504) r = await pedir();
 
   if (!r.ok) {
     const detalle = await r.text();
     console.error("Gemini", r.status, detalle.slice(0, 500));
-    return json({ error: r.status === 429 ? "ocupado" : "fallo" }, 502);
+    const ocupado = [429, 503, 504].includes(r.status);
+    return json({ error: ocupado ? "ocupado" : "fallo" }, 502);
   }
 
   const datos = await r.json();
