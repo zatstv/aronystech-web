@@ -7,8 +7,10 @@ import react from '@vitejs/plugin-react'
 // carga bien pero deja de actualizarse sola.
 const enCodespace = Boolean(process.env.CODESPACE_NAME)
 
-// El catálogo se compila a archivos estáticos: no hay servidor detrás.
-// PocketBase (ver STACK.md) solo lo toca la zona de admin, aparte de esto.
+// El sitio se compila a archivos estáticos. Lo único con servidor es el
+// asistente (/api/chat, en worker/index.js). Para probarlo con `npm run dev`
+// hay que levantar el worker aparte con `npx wrangler dev` (puerto 8787) y
+// Vite le pasa las peticiones de /api.
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -24,6 +26,7 @@ export default defineConfig({
     // enlace público del Codespace responde "Blocked request".
     allowedHosts: ['.app.github.dev'],
     hmr: enCodespace ? { clientPort: 443, protocol: 'wss' } : undefined,
+    proxy: { '/api': 'http://localhost:8787' },
   },
   // `vite preview` no hereda la configuración de `server`, así que el
   // dominio del Codespace hay que repetirlo acá.

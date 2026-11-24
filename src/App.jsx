@@ -14,6 +14,7 @@ import Nosotros from "./components/Nosotros.jsx";
 import Proceso from "./components/Proceso.jsx";
 import Galeria from "./components/Galeria.jsx";
 import Preguntas from "./components/Preguntas.jsx";
+import Asistente from "./components/Asistente.jsx";
 import { useAnclaInicial } from "./hooks/useAnclaInicial.js";
 
 export default function App() {
@@ -71,6 +72,7 @@ export default function App() {
 
       <ModalPedido producto={pedido} alCerrar={cerrar} />
       <PedidoPersonalizado />
+      <Asistente />
     </>
   );
 }

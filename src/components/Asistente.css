@@ -1,0 +1,301 @@
+/* El chat del asistente. Mismo lenguaje físico que el resto: filo, sombra
+   dura sin desenfoque y piezas que se hunden al apretarlas. */
+
+.asistente {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .8rem;
+  font-family: var(--fuente);
+}
+
+/* --- El botón flotante --- */
+.asistente__boton {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  height: 3.25rem;
+  min-width: 3.25rem;
+  justify-content: center;
+  padding: 0 1.1rem;
+  background: var(--acento);
+  color: #fff;
+  border: var(--filo);
+  border-radius: 999px;
+  box-shadow: var(--sombra);
+  font-family: var(--mono);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+
+.asistente__boton:hover { transform: translate(-1px, -1px); box-shadow: var(--sombra-honda); }
+.asistente__boton:active { transform: translate(3px, 3px); box-shadow: var(--sombra-hundida); }
+
+.esta-abierto .asistente__boton {
+  padding: 0;
+  width: 3.25rem;
+  background: var(--papel);
+  color: var(--tinta);
+}
+
+/* --- El panel --- */
+.asistente__panel {
+  display: flex;
+  flex-direction: column;
+  width: min(24rem, calc(100vw - 2rem));
+  height: min(36rem, calc(100dvh - 7rem));
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-honda);
+  overflow: hidden;
+  animation: asistente-entra .22s cubic-bezier(.2, .8, .2, 1);
+  transform-origin: bottom right;
+}
+
+@keyframes asistente-entra {
+  from { opacity: 0; transform: translateY(10px) scale(.97); }
+}
+
+.asistente__cabeza {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .85rem 1rem;
+  border-bottom: var(--filo);
+  background: var(--papel-hondo);
+}
+
+.asistente__titulo { margin: 0; font-weight: 800; font-size: 1rem; }
+
+.asistente__sub {
+  margin: .15rem 0 0;
+  font-family: var(--mono);
+  font-size: .68rem;
+  color: var(--tinta-suave);
+}
+
+.asistente__cerrar {
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* --- Los mensajes --- */
+.asistente__mensajes {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  margin: 0;
+  padding: 1rem;
+  list-style: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.asistente__burbuja {
+  max-width: 85%;
+  padding: .6rem .8rem;
+  font-size: .92rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border: var(--filo);
+  border-radius: 12px;
+}
+
+.asistente__burbuja--asistente {
+  align-self: flex-start;
+  background: var(--papel-hondo);
+  border-bottom-left-radius: 3px;
+}
+
+.asistente__burbuja--cliente {
+  align-self: flex-end;
+  background: var(--tinta);
+  color: var(--papel);
+  border-bottom-right-radius: 3px;
+}
+
+/* Los tres puntitos mientras responde. */
+.asistente__escribiendo { display: flex; gap: .3rem; padding: .8rem .9rem; }
+
+.asistente__escribiendo span {
+  width: .45rem;
+  height: .45rem;
+  border-radius: 50%;
+  background: var(--tinta-suave);
+  animation: asistente-punto 1s infinite ease-in-out;
+}
+
+.asistente__escribiendo span:nth-child(2) { animation-delay: .15s; }
+.asistente__escribiendo span:nth-child(3) { animation-delay: .3s; }
+
+@keyframes asistente-punto {
+  0%, 60%, 100% { transform: translateY(0); opacity: .45; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.asistente__aviso {
+  padding: .7rem .8rem;
+  font-size: .82rem;
+  line-height: 1.45;
+  border: 1.5px dashed var(--acento);
+  border-radius: 10px;
+}
+
+.asistente__aviso a { color: var(--acento); font-weight: 700; }
+
+/* --- El pedido listo --- */
+.asistente__listo {
+  padding: .75rem 1rem;
+  border-top: var(--filo);
+}
+
+.asistente__whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .75rem;
+  background: #1F9D55;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  border: var(--filo);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+
+.asistente__whatsapp:hover { transform: translate(-1px, -1px); box-shadow: var(--sombra-honda); }
+.asistente__whatsapp:active { transform: translate(3px, 3px); box-shadow: var(--sombra-hundida); }
+
+.asistente__listo details { margin-top: .5rem; font-size: .78rem; }
+.asistente__listo summary { cursor: pointer; color: var(--tinta-suave); font-family: var(--mono); }
+
+.asistente__listo details p {
+  margin: .4rem 0 0;
+  max-height: 7rem;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  color: var(--tinta-suave);
+}
+
+/* --- Sugerencias del primer mensaje --- */
+.asistente__sugerencias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  padding: 0 1rem .75rem;
+}
+
+.asistente__sugerencias button {
+  padding: .45rem .7rem;
+  font: inherit;
+  font-size: .8rem;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.asistente__sugerencias button:hover { background: var(--papel-hondo); }
+
+/* --- Donde se escribe --- */
+.asistente__entrada {
+  display: flex;
+  align-items: flex-end;
+  gap: .5rem;
+  padding: .7rem 1rem;
+  border-top: var(--filo);
+}
+
+.asistente__entrada textarea {
+  flex: 1;
+  min-height: 2.6rem;
+  max-height: 7rem;
+  padding: .6rem .75rem;
+  font: inherit;
+  font-size: 16px; /* menos de 16px y el iPhone hace zoom al tocar */
+  resize: none;
+  field-sizing: content;
+  background: var(--papel);
+  color: var(--tinta);
+  border: var(--filo);
+  border-radius: 10px;
+}
+
+.asistente__entrada textarea:focus-visible { outline: 3px solid var(--acento); outline-offset: 1px; }
+
+.asistente__entrada button {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  flex-shrink: 0;
+  padding: 0;
+  background: var(--acento);
+  color: #fff;
+  border: var(--filo);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.asistente__entrada button:disabled { opacity: .4; cursor: default; }
+
+.asistente__pie {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  padding: 0 1rem .7rem;
+  font-family: var(--mono);
+  font-size: .68rem;
+}
+
+.asistente__pie a,
+.asistente__pie button {
+  padding: 0;
+  font: inherit;
+  color: var(--tinta-suave);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Celular: el panel ocupa casi toda la pantalla y el botón queda chico,
+   solo el ícono, para no tapar el contenido. */
+@media (max-width: 480px) {
+  .asistente { right: .75rem; bottom: .75rem; }
+  .asistente__boton-texto { display: none; }
+  .asistente__boton { padding: 0; width: 3.25rem; }
+  .asistente__panel {
+    width: calc(100vw - 1.5rem);
+    height: calc(100dvh - 5.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asistente__panel { animation: none; }
+  .asistente__escribiendo span { animation: none; opacity: .7; }
+}

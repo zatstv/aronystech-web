@@ -4,14 +4,24 @@
 // lo compilaba. En las ramas Cloudflare corre `wrangler versions upload`, que
 // no adivina nada: sin este archivo fallaba con "Missing entry-point". Acá se
 // le dice lo mismo a los dos: compilar con Vite y subir dist como archivos
-// estáticos, sin código de servidor.
+// estáticos.
+//
+// Desde el asistente hay también un poco de código de servidor
+// (worker/index.js): Cloudflare sirve los archivos de dist solo, y lo que no
+// es un archivo (/api/chat) pasa por el worker. La llave de Gemini va como
+// secreto: `npx wrangler secret put GEMINI_API_KEY`.
 {
   "name": "aronystech-web",
+  "main": "worker/index.js",
   "compatibility_date": "2026-09-25",
   "build": {
     "command": "npm run build"
   },
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
   }
 }
