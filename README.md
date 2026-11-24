@@ -4,7 +4,7 @@
 
 <p align="center">
   <strong>Diseñamos tu idea, y lo imprimimos en 3D.</strong><br />
-  Llaveros, soportes y piezas a medida en Panamá. Todo en PLA, pieza por pieza, desde una sola unidad.
+  Llaveros, soportes y piezas a medida en Panamá. En PLA o PETG, pieza por pieza, desde una sola unidad.
 </p>
 
 <p align="center">
@@ -164,6 +164,8 @@ Estas dos cosas hay que tocarlas o el sitio sale mal, y ninguna avisa:
 
 ## Pendientes conocidos
 
-- Los precios y textos son de ejemplo.
+- Links de Instagram, TikTok y Facebook (`REDES` en `src/data/sitio.js`).
+- Dominio propio: se va a comprar. Cuando esté, cambiar las tres direcciones de `index.html` y abrir `robots.txt` (ver arriba).
+- La zona de admin con PocketBase de `docs/STACK.md` es solo una idea: no está construida.
 
 Las decisiones de dónde publicar y con qué base de datos están en `docs/STACK.md`.
