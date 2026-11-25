@@ -52,15 +52,33 @@ export const PASOS = [
    gente busca antes de escribir para preguntar.
 
    `detalle` es lo que se lee debajo de cada método en el último paso del
-   pedido. Ninguno cobra desde la página: el pago siempre se coordina por el
-   chat, una vez confirmado el total. */
+   pedido. `enLinea: true` quiere decir que una pieza del catálogo se paga ahí
+   mismo: la página muestra la cuenta (CUENTAS_PAGO), el cliente pone el número
+   de comprobante, sale la factura y recién después se manda por WhatsApp. Los
+   demás métodos se coordinan por el chat como siempre. */
 export const PAGOS = [
   { icono: "efectivo", texto: "Efectivo", detalle: "Al recibir o al retirar el pedido" },
-  { icono: "yappy", texto: "Yappy", detalle: "Te pasamos el número por el chat" },
+  { icono: "yappy", texto: "Yappy", detalle: "Pagas aquí mismo y te sale la factura", enLinea: true },
+  { icono: "banco", texto: "Transferencia bancaria", detalle: "Pagas aquí mismo y te sale la factura", enLinea: true },
   { icono: "tarjeta", texto: "Tarjeta", detalle: "Te pasamos los datos por el chat" },
   { icono: "cripto", texto: "Criptomonedas", detalle: "Te pasamos la dirección por el chat" },
   { icono: "paypal", texto: "PayPal", detalle: "Te pasamos los datos por el chat" },
 ];
+
+/* A dónde se paga con los métodos `enLinea`. Los datos del banco quedan en
+   blanco hasta tenerlos. */
+export const CUENTAS_PAGO = {
+  Yappy: [
+    ["Yappy", "6711-0785"],
+    ["A nombre de", "Hugo Pineda"],
+  ],
+  "Transferencia bancaria": [
+    ["Banco", ""],
+    ["Tipo de cuenta", ""],
+    ["Número de cuenta", ""],
+    ["A nombre de", "Hugo Pineda"],
+  ],
+};
 
 export const OCASIONES = [
   { icono: "torta", titulo: "Cumpleaños", texto: "Un llavero con el nombre cuesta menos que una tarjeta y dura años." },
