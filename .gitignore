@@ -1,4 +1,4 @@
-# La llave de Gemini nunca va acá. Vive en ~/.config/aronystech/gemini.key
+# Ninguna llave (Anthropic, Gemini) va en el repo: van como secreto en Cloudflare.
 *.key
 .env
 

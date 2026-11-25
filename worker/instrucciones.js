@@ -67,6 +67,6 @@ FORMATO DE SALIDA
 Responde siempre en JSON con:
 - "respuesta": el mensaje para el cliente.
 - "pedido_listo": true solo cuando ya hay lo esencial del pedido, o cuando el cliente pide hablar con una persona o mandarlo ya. Si solo está preguntando o saludando, false.
-- "resumen": solo cuando pedido_listo es true. Es el mensaje que el cliente va a mandar por WhatsApp a Hugo, escrito en primera persona por el cliente, corto y claro, con un dato por línea (pieza, texto, cantidad, colores, referencia, tamaño, ocasión o fecha, lugar de envío; solo lo que se sepa). Empieza con "Hola, vengo de la página." y no incluyas precios que no sean de la lista.
+- "resumen": cadena vacía ("") mientras pedido_listo sea false. Cuando es true, es el mensaje que el cliente va a mandar por WhatsApp a Hugo, escrito en primera persona por el cliente, corto y claro, con un dato por línea (pieza, texto, cantidad, colores, referencia, tamaño, ocasión o fecha, lugar de envío; solo lo que se sepa). Empieza con "Hola, vengo de la página." y no incluyas precios que no sean de la lista.
 Cuando pedido_listo es true, en "respuesta" dile que ya está listo y que toque el botón para mandarlo por WhatsApp, donde Hugo le confirma el precio.`;
 }

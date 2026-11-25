@@ -3,38 +3,39 @@
    para lo que no es un archivo: hoy, /api/chat, el asistente que atiende a
    los clientes y arma el pedido antes de mandarlo a WhatsApp.
 
-   La llave de Gemini NO va en el repositorio. Se guarda en Cloudflare:
-     npx wrangler secret put GEMINI_API_KEY
+   La IA es Claude Haiku. La llave NO va en el repositorio. Se guarda en
+   Cloudflare:
+     npx wrangler secret put ANTHROPIC_API_KEY
    y para probar en local, en un archivo .dev.vars (ignorado por git):
-     GEMINI_API_KEY=...                                                    */
+     ANTHROPIC_API_KEY=...                                                 */
+
+import Anthropic from "@anthropic-ai/sdk";
+import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
+import { z } from "zod";
 
 import { instrucciones } from "./instrucciones.js";
 
-/* Con las llaves nuevas Google ya no deja usar gemini-2.5-flash ("no longer
-   available to new users"); el que acepta es este. Se cambia sin tocar
-   código con la variable GEMINI_MODEL en Cloudflare. */
-const MODELO_POR_DEFECTO = "gemini-3.8-flash";
+/* Se puede cambiar sin tocar código con la variable CLAUDE_MODEL. */
+const MODELO_POR_DEFECTO = "claude-haiku-5-5";
 
-/* Si Gemini tarda más que esto, se corta y se reintenta una vez: mejor
-   avisar al cliente y mandarlo a WhatsApp que dejarlo esperando. */
-const ESPERA_MS = 20000;
-
-/* Topes para que nadie use el chat como IA gratis ni gaste la cuota:
-   mensajes cortos, conversación acotada y respuestas breves. */
+/* Topes para que nadie use el chat como IA gratis ni gaste de más:
+   mensajes cortos y conversación acotada. */
 const MAX_MENSAJES = 30;
 const MAX_LARGO = 1200;
 
-/* Lo que Gemini tiene que devolver siempre: la respuesta para el cliente y,
-   cuando ya hay lo necesario, el pedido resumido para WhatsApp. */
-const ESQUEMA = {
-  type: "OBJECT",
-  properties: {
-    respuesta: { type: "STRING" },
-    pedido_listo: { type: "BOOLEAN" },
-    resumen: { type: "STRING" },
-  },
-  required: ["respuesta", "pedido_listo"],
-};
+/* Lo que Claude tiene que devolver siempre: la respuesta para el cliente y,
+   cuando ya hay lo necesario, el pedido resumido para WhatsApp. La API
+   garantiza que la salida cumple este formato. */
+const SALIDA = z.object({
+  respuesta: z.string(),
+  pedido_listo: z.boolean(),
+  resumen: z.string(),
+});
+
+/* Las instrucciones no cambian entre pedidos: se arman una vez y se marcan
+   para la caché de Anthropic, así cada mensaje después del primero las lee
+   a una décima parte del precio. */
+const SISTEMA = [{ type: "text", text: instrucciones(), cache_control: { type: "ephemeral" } }];
 
 function json(datos, estado = 200) {
   return new Response(JSON.stringify(datos), {
@@ -43,9 +44,26 @@ function json(datos, estado = 200) {
   });
 }
 
+/* La conversación que manda la página, en el formato de la API: empieza
+   por el cliente y alterna. Si un mensaje quedó sin respuesta (porque falló
+   la red, por ejemplo), dos seguidos del cliente se juntan en uno. */
+function armarMensajes(mensajes) {
+  const salida = [];
+  for (const m of mensajes.slice(-MAX_MENSAJES)) {
+    if (!m || typeof m.texto !== "string" || !m.texto.trim()) continue;
+    const role = m.de === "asistente" ? "assistant" : "user";
+    const texto = m.texto.slice(0, MAX_LARGO);
+    if (!salida.length && role !== "user") continue; // el saludo de bienvenida lo pone la página
+    const ultimo = salida[salida.length - 1];
+    if (ultimo && ultimo.role === role) ultimo.content += `\n\n${texto}`;
+    else salida.push({ role, content: texto });
+  }
+  return salida;
+}
+
 async function chat(request, env) {
   if (request.method !== "POST") return json({ error: "Método no permitido" }, 405);
-  if (!env.GEMINI_API_KEY) return json({ error: "sin_llave" }, 503);
+  if (!env.ANTHROPIC_API_KEY) return json({ error: "sin_llave" }, 503);
 
   let mensajes;
   try {
@@ -53,68 +71,48 @@ async function chat(request, env) {
   } catch {
     return json({ error: "Formato inválido" }, 400);
   }
-  if (!Array.isArray(mensajes) || mensajes.length === 0) return json({ error: "Sin mensajes" }, 400);
+  if (!Array.isArray(mensajes)) return json({ error: "Sin mensajes" }, 400);
+  const conversacion = armarMensajes(mensajes);
+  if (!conversacion.length || conversacion.at(-1).role !== "user") return json({ error: "Sin mensajes" }, 400);
 
-  const contenidos = mensajes
-    .slice(-MAX_MENSAJES)
-    .filter((m) => m && typeof m.texto === "string" && m.texto.trim())
-    .map((m) => ({
-      role: m.de === "asistente" ? "model" : "user",
-      parts: [{ text: m.texto.slice(0, MAX_LARGO) }],
-    }));
-  /* Gemini exige que la conversación empiece por el cliente. El saludo de
-     bienvenida lo pone la página, así que se descarta si viene primero. */
-  while (contenidos.length && contenidos[0].role !== "user") contenidos.shift();
-  if (!contenidos.length) return json({ error: "Sin mensajes" }, 400);
+  /* Si tarda más de 20 s se corta y se reintenta una vez: mejor avisar al
+     cliente y mandarlo a WhatsApp que dejarlo esperando. */
+  const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, timeout: 20_000, maxRetries: 1 });
 
-  const modelo = env.GEMINI_MODEL || MODELO_POR_DEFECTO;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`;
-  const cuerpo = JSON.stringify({
-    system_instruction: { parts: [{ text: instrucciones() }] },
-    contents: contenidos,
-    generationConfig: {
-      temperature: 0.7,
-      maxOutputTokens: 1024,
-      responseMimeType: "application/json",
-      responseSchema: ESQUEMA,
-      /* Que piense poco: para atender un chat no hace falta más, y así
-         responde rápido y gasta menos de la cuota gratis. Este modelo no
-         acepta "minimal", el mínimo es "low". */
-      thinkingConfig: { thinkingLevel: "low" },
-    },
-  });
-
-  const pedir = () =>
-    fetch(url, {
-      method: "POST",
-      headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-      body: cuerpo,
-      signal: AbortSignal.timeout(ESPERA_MS),
-    }).catch(() => new Response(null, { status: 504 }));
-
-  /* Un reintento si Gemini está saturado (503) o no contestó a tiempo. */
-  let r = await pedir();
-  if (r.status === 503 || r.status === 504) r = await pedir();
-
-  if (!r.ok) {
-    const detalle = await r.text();
-    console.error("Gemini", r.status, detalle.slice(0, 500));
-    const ocupado = [429, 503, 504].includes(r.status);
-    return json({ error: ocupado ? "ocupado" : "fallo" }, 502);
-  }
-
-  const datos = await r.json();
-  const texto = datos?.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("") || "";
   try {
-    const salida = JSON.parse(texto);
-    return json({
-      respuesta: String(salida.respuesta || "").trim(),
-      pedido_listo: Boolean(salida.pedido_listo),
-      resumen: salida.pedido_listo ? String(salida.resumen || "").trim() : "",
+    const r = await client.messages.parse({
+      model: env.CLAUDE_MODEL || MODELO_POR_DEFECTO,
+      max_tokens: 4000,
+      system: SISTEMA,
+      messages: conversacion,
+      /* Esfuerzo bajo: para atender un chat alcanza, y responde más rápido. */
+      output_config: { effort: "low", format: zodOutputFormat(SALIDA) },
     });
-  } catch {
-    /* Si por algo no vino como JSON, al menos se muestra el texto. */
-    return json({ respuesta: texto.trim() || "Perdón, no te entendí. ¿Me lo repites?", pedido_listo: false, resumen: "" });
+
+    if (r.stop_reason === "refusal" || !r.parsed_output) {
+      console.error("Sin respuesta usable", r.stop_reason, JSON.stringify(r.stop_details ?? null));
+      return json({
+        respuesta: "Eso mejor lo ve Hugo directamente. Escríbele por WhatsApp y te atiende ahí.",
+        pedido_listo: false,
+        resumen: "",
+      });
+    }
+
+    const { respuesta, pedido_listo, resumen } = r.parsed_output;
+    return json({
+      respuesta: respuesta.trim(),
+      pedido_listo,
+      resumen: pedido_listo ? resumen.trim() : "",
+    });
+  } catch (error) {
+    if (error instanceof Anthropic.RateLimitError) return json({ error: "ocupado" }, 502);
+    if (error instanceof Anthropic.APIConnectionTimeoutError) return json({ error: "ocupado" }, 502);
+    if (error instanceof Anthropic.APIError) {
+      console.error("Claude", error.status, error.message);
+      return json({ error: error.status === 529 ? "ocupado" : "fallo" }, 502);
+    }
+    console.error("Claude", error);
+    return json({ error: "fallo" }, 502);
   }
 }
 

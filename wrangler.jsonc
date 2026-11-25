@@ -8,8 +8,8 @@
 //
 // Desde el asistente hay también un poco de código de servidor
 // (worker/index.js): Cloudflare sirve los archivos de dist solo, y lo que no
-// es un archivo (/api/chat) pasa por el worker. La llave de Gemini va como
-// secreto: `npx wrangler secret put GEMINI_API_KEY`.
+// es un archivo (/api/chat) pasa por el worker. La llave de Anthropic (Claude)
+// va como secreto: `npx wrangler secret put ANTHROPIC_API_KEY`.
 {
   "name": "aronystech-web",
   "main": "worker/index.js",
