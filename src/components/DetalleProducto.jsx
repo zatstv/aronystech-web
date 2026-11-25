@@ -189,8 +189,9 @@ export default function DetalleProducto({ producto, alPedir }) {
                 <ArrowRight size={18} strokeWidth={2.4} aria-hidden="true" />
               </button>
               <p className="detalle__ayuda">
-                Eliges las opciones y el pedido llega armado a WhatsApp. El precio
-                final y la fecha de entrega se confirman ahí, antes de imprimir.
+                Eliges el color, el texto y la cantidad, pagas con Yappy o
+                transferencia y te sale la factura al instante. Después la mandas por
+                WhatsApp para coordinar la entrega.
               </p>
             </div>
           </div>

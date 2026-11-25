@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { MessageCircle, Minus, Plus, X } from "lucide-react";
+import { CreditCard, Minus, Plus, X } from "lucide-react";
 
 import { PALETA, TAMANOS } from "../data/sitio.js";
 import PasoPago from "./PasoPago.jsx";
+import { dinero, precioNumero, sePagaEnLinea } from "../lib/factura.js";
+import { MAYOREO } from "../data/sitio.js";
 import "./ModalPedido.css";
 
 /* Arma el mensaje de WhatsApp con todo lo que eligió el cliente, para que no
@@ -143,7 +145,7 @@ export default function ModalPedido({ producto, inicial, alCerrar }) {
 
           <fieldset className="modal__campo">
             <legend className="rotulo">Tamaño orientativo</legend>
-            <p className="modal__ayuda">Confirmamos las medidas y el precio final por WhatsApp. Si necesitas una medida exacta, escríbela en las notas.</p>
+            <p className="modal__ayuda">Si necesitas una medida exacta, escríbela en las notas y te la confirmamos.</p>
             <div className="modal__opciones">
               {TAMANOS.map((t) => (
                 <button
@@ -209,13 +211,20 @@ export default function ModalPedido({ producto, inicial, alCerrar }) {
           <p>Color: {color} · Tamaño orientativo: {tamano}</p>
           {producto.textoLibre && <p>Texto: {textoLibre.trim() || "Pendiente de completar"}</p>}
           {notas.trim() && <p>Notas: {notas.trim()}</p>}
-          <p className="modal__ayuda">El total y las medidas se confirman antes de encargar.</p>
+          <p className="modal__ayuda">
+            {sePagaEnLinea(producto, cantidad)
+              ? "En el siguiente paso pagas y te sale la factura."
+              : `Desde ${MAYOREO} unidades el precio baja: te lo confirmamos por WhatsApp.`}
+          </p>
         </section>
         <div className="modal__pie">
-          {/* El precio se muestra por unidad y no se multiplica: el total lo
-              confirma el vendedor, porque baja por volumen y por cantidad de letras. */}
+          {/* Por debajo de mayoreo se muestra el total, que es lo que se paga en el
+              paso siguiente. Desde mayoreo, el precio por unidad: el total lo
+              confirma Hugo porque baja por volumen. */}
           <p className="modal__precio">
-            {producto.precio} <span>{producto.unidad}</span>
+            {sePagaEnLinea(producto, cantidad)
+              ? <>{dinero(precioNumero(producto) * cantidad)} <span>total</span></>
+              : <>{producto.precio} <span>{producto.unidad}</span></>}
           </p>
           <button type="button" className="boton" onClick={(e) => {
             if (producto.textoLibre && !textoLibre.trim()) {
@@ -226,7 +235,7 @@ export default function ModalPedido({ producto, inicial, alCerrar }) {
             }
             setPasoPago(true);
           }}>
-            <MessageCircle size={17} strokeWidth={2.4} />
+            <CreditCard size={17} strokeWidth={2.4} />
             Elegir método de pago
           </button>
         </div>
