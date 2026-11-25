@@ -139,6 +139,27 @@ function aLaVista(el) {
 
 const ENTERA = { x: 0, y: 0, scale: 1, clipPath: "inset(0px 0px 0px 0px)" };
 
+/* Cuántas fotos se ven antes del botón "Ver todas". Con las 23 a la vista
+   la galería quedaba larguísima, sobre todo en celular, y había que bajar
+   un buen rato para llegar al catálogo. El visor igual recorre todas. */
+const CELULAR = "(max-width: 480px)";
+const VISIBLES = { celular: 6, compu: 10 };
+
+function useCuantasVisibles() {
+  const consulta = () =>
+    typeof window !== "undefined" && window.matchMedia(CELULAR).matches
+      ? VISIBLES.celular
+      : VISIBLES.compu;
+  const [cuantas, setCuantas] = useState(consulta);
+  useEffect(() => {
+    const mq = window.matchMedia(CELULAR);
+    const alCambiar = () => setCuantas(consulta());
+    mq.addEventListener("change", alCambiar);
+    return () => mq.removeEventListener("change", alCambiar);
+  }, []);
+  return cuantas;
+}
+
 /* ============================================================
    El visor. Es un <dialog> nativo abierto con showModal(), como el pedido
    personalizado: el resto de la página queda inerte, el foco no se escapa
@@ -339,11 +360,15 @@ export default function Galeria() {
   const miniaturas = useRef([]);
   const [abierta, setAbierta] = useState(null);
   const cerrar = useCallback(() => setAbierta(null), []);
+  const cuantas = useCuantasVisibles();
+  const [todas, setTodas] = useState(false);
+  const fotos = todas ? GALERIA : GALERIA.slice(0, cuantas);
+  const faltan = GALERIA.length - fotos.length;
 
   return (
     <section className="galeria" id="galeria" aria-label="Galería de piezas impresas">
       <ul className="galeria__mosaico" ref={mosaicoRef}>
-        {GALERIA.map((foto, i) => (
+        {fotos.map((foto, i) => (
           <Foto
             key={foto.src}
             foto={foto}
@@ -353,6 +378,26 @@ export default function Galeria() {
           />
         ))}
       </ul>
+
+      {faltan > 0 ? (
+        <button type="button" className="galeria__mas" onClick={() => setTodas(true)}>
+          Ver las {GALERIA.length} fotos
+          <span className="galeria__mas-cuenta">+{faltan}</span>
+        </button>
+      ) : (
+        todas && (
+          <button
+            type="button"
+            className="galeria__mas"
+            onClick={() => {
+              setTodas(false);
+              document.getElementById("galeria")?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            Ver menos
+          </button>
+        )
+      )}
 
       <Visor indice={abierta} miniaturas={miniaturas} alCambiar={setAbierta} alCerrar={cerrar} />
     </section>
