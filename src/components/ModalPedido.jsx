@@ -25,7 +25,9 @@ function armarMensaje({ producto, color, tamano, cantidad, textoLibre, notas }) 
   return lineas.join("\n");
 }
 
-export default function ModalPedido({ producto, alCerrar }) {
+/* `inicial` llega cuando el pedido lo armó el asistente del chat: trae el
+   color, la cantidad y el texto, y el modal abre directo en el pago. */
+export default function ModalPedido({ producto, inicial, alCerrar }) {
   const [pasoPago, setPasoPago] = useState(false);
   const [color, setColor] = useState("");
   const [tamano, setTamano] = useState(TAMANOS[1]);
@@ -48,14 +50,15 @@ export default function ModalPedido({ producto, alCerrar }) {
   /* Cada vez que se abre con otro producto, el formulario vuelve a cero. */
   useEffect(() => {
     if (!producto) return;
-    setColor(colores[0].nombre);
+    const colorPedido = colores.find((c) => c.nombre === inicial?.color?.toLowerCase());
+    setColor(colorPedido ? colorPedido.nombre : (inicial?.color || colores[0].nombre));
     setTamano(TAMANOS[1]);
-    setCantidad(1);
-    setTextoLibre("");
+    setCantidad(inicial?.cantidad || 1);
+    setTextoLibre(inicial?.texto || "");
     setNotas("");
     setError("");
-    setPasoPago(false);
-  }, [producto, colores]);
+    setPasoPago(Boolean(inicial));
+  }, [producto, colores, inicial]);
 
   /* Escape cierra, y mientras está abierto la página de atrás no hace scroll. */
   useEffect(() => {
@@ -97,6 +100,13 @@ export default function ModalPedido({ producto, alCerrar }) {
 
   if (!producto) return null;
 
+  /* Lo que se eligió, en líneas cortas para la factura. */
+  const lineas = [
+    `Color: ${color}`,
+    `Tamaño: ${tamano}`,
+    ...(producto.textoLibre && textoLibre.trim() ? [`Texto: ${textoLibre.trim()}`] : []),
+  ];
+
   return (
     <div className="modal" role="dialog" aria-modal="true" aria-label={`Pedir ${producto.nombre}`}>
       <button type="button" className="modal__fondo" aria-label="Cerrar" tabIndex={-1} onClick={alCerrar} />
@@ -112,7 +122,7 @@ export default function ModalPedido({ producto, alCerrar }) {
           </button>
         </div>
 
-        {pasoPago ? <PasoPago mensaje={mensaje} producto={producto} cantidad={cantidad} alVolver={() => setPasoPago(false)} /> : <>
+        {pasoPago ? <PasoPago mensaje={mensaje} producto={producto} cantidad={cantidad} lineas={lineas} alVolver={() => setPasoPago(false)} /> : <>
         <div className="modal__cuerpo">
           <fieldset className="modal__campo">
             <legend className="rotulo">Color</legend>

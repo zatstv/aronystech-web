@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Banknote, Bitcoin, CreditCard, MessageCircle, Plus, Smartphone, Wallet } from "lucide-react";
+import { Banknote, Bitcoin, Landmark, CreditCard, MessageCircle, Plus, Smartphone, Wallet } from "lucide-react";
 
 import { PAGOS, PREGUNTAS } from "../data/sitio.js";
 import { ENCABEZADO, useEntradaEscalonada } from "../hooks/useEntradaEscalonada.js";
@@ -21,6 +21,7 @@ import "./Preguntas.css";
 const ICONOS = {
   efectivo: Banknote,
   yappy: Smartphone,
+  banco: Landmark,
   tarjeta: CreditCard,
   cripto: Bitcoin,
   paypal: Wallet,
@@ -130,8 +131,8 @@ export default function Preguntas() {
                 })}
               </ul>
               <p className="pagos__nota">
-                El pago se coordina por WhatsApp al confirmar el pedido. No se cobra nada por la
-                página.
+                Las piezas del catálogo se pagan con Yappy o transferencia al hacer el pedido y te
+                sale la factura. Los pedidos personalizados se cotizan primero por WhatsApp.
               </p>
             </div>
 

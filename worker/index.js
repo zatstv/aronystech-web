@@ -14,6 +14,7 @@ import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
 
 import { instrucciones } from "./instrucciones.js";
+import { MAYOREO, PRODUCTOS } from "../src/data/sitio.js";
 
 /* Se puede cambiar sin tocar código con la variable CLAUDE_MODEL. */
 const MODELO_POR_DEFECTO = "claude-haiku-5-5";
@@ -24,13 +25,27 @@ const MAX_MENSAJES = 30;
 const MAX_LARGO = 1200;
 
 /* Lo que Claude tiene que devolver siempre: la respuesta para el cliente y,
-   cuando ya hay lo necesario, el pedido resumido para WhatsApp. La API
-   garantiza que la salida cumple este formato. */
+   cuando ya hay lo necesario, el pedido resumido para WhatsApp. Si el pedido
+   es una pieza del catálogo, también cuál es, para que la página abra el
+   pago con eso ya llenado. La API garantiza que la salida cumple este formato. */
 const SALIDA = z.object({
   respuesta: z.string(),
   pedido_listo: z.boolean(),
   resumen: z.string(),
+  producto_id: z.string(),
+  cantidad: z.number(),
+  color: z.string(),
+  texto: z.string(),
 });
+
+/* Solo se ofrece pagar en la página si es una pieza real del catálogo, con
+   cantidad válida y por debajo de mayoreo. Si no, el pedido va a WhatsApp. */
+function pagoDelCatalogo({ pedido_listo, producto_id, cantidad, color, texto }) {
+  const producto = PRODUCTOS.find((p) => p.id === producto_id);
+  const n = Math.round(cantidad);
+  if (!pedido_listo || !producto || !(n >= 1 && n < MAYOREO)) return null;
+  return { producto_id, cantidad: n, color: color.trim(), texto: producto.textoLibre ? texto.trim().slice(0, 10) : "" };
+}
 
 /* Las instrucciones no cambian entre pedidos: se arman una vez y se marcan
    para la caché de Anthropic, así cada mensaje después del primero las lee
@@ -103,6 +118,7 @@ async function chat(request, env) {
       respuesta: respuesta.trim(),
       pedido_listo,
       resumen: pedido_listo ? resumen.trim() : "",
+      pago: pagoDelCatalogo(r.parsed_output),
     });
   } catch (error) {
     if (error instanceof Anthropic.RateLimitError) return json({ error: "ocupado" }, 502);

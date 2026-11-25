@@ -1,1 +1,69 @@
 .pago{padding:1.25rem}.pago h3{font-size:1.65rem;margin-block:.5rem}.pago__volver{display:flex;align-items:center;gap:.5rem;border:0;background:none;color:var(--tinta-suave);padding:0;margin-bottom:1.5rem}.pago__intro{font-size:.85rem;color:var(--tinta-suave);margin-block:.5rem 1rem}.pago__aviso{padding:.8rem;border:1px solid var(--tinta-suave);border-radius:10px;font-size:.8rem;line-height:1.5}.pago__metodos{display:grid;gap:.6rem;border:0;padding:0;margin:1.2rem 0}.pago__metodo{display:flex;align-items:center;gap:.8rem;padding:.9rem;border:1px solid var(--tinta-suave);border-radius:12px;cursor:pointer}.pago__metodo.seleccionado{border-color:var(--acento);background:var(--papel-hondo)}.pago__metodo input{accent-color:var(--acento);width:18px;height:18px}.pago__metodo strong,.pago__metodo small{display:block}.pago__metodo small{font-size:.75rem;color:var(--tinta-suave);margin-top:.3rem}.pago__continuar{width:100%;justify-content:center}.pago__resumen{margin-top:1.4rem;font-size:.85rem}.pago__resumen summary{cursor:pointer}.pago__resumen p{white-space:pre-wrap;overflow-wrap:anywhere;padding-block:1rem}
+
+/* Pago en línea y factura. Mismo lenguaje que el resto de la página:
+   filo de 1.5px, sombra dura sin desenfoque y rótulos en mono. */
+.pasos-pago{display:flex;gap:.4rem;list-style:none;padding:0;margin:0 0 1.2rem;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tinta-suave)}
+.pasos-pago li{display:flex;align-items:center;gap:.4rem;flex:1}
+.pasos-pago li:not(:last-child)::after{content:"";flex:1;height:1.5px;background:currentColor;opacity:.35}
+.pasos-pago span{display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:50%;border:1.5px solid currentColor;font-weight:700;flex:none}
+.pasos-pago .actual{color:var(--tinta)}
+.pasos-pago .actual span{background:var(--acento);border-color:var(--acento);color:#fff}
+.pasos-pago .hecho{color:var(--acento)}
+.pasos-pago .hecho span{background:var(--acento);color:#fff}
+
+.pago__metodo--linea strong{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.pago__chip{font-style:normal;font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .45rem;border-radius:999px;background:var(--acento);color:#fff}
+
+.pago__monto{position:relative;padding:1.1rem 1.1rem 1rem;border:var(--filo);border-radius:var(--radio);box-shadow:var(--sombra);background:var(--papel);margin-bottom:1.3rem}
+.pago__icono{position:absolute;top:1rem;right:1rem;display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:50%;background:var(--papel-hondo);color:var(--acento)}
+.pago__cifra{font-size:2.6rem;font-weight:800;line-height:1;margin:.5rem 0 .3rem;letter-spacing:-.02em}
+.pago__monto .pago__intro{margin:0}
+.pago__instruccion{font-size:.85rem;margin:0 0 .6rem}
+.pago__instruccion b{color:var(--acento);font-family:var(--mono)}
+.pago__cuenta{display:grid;gap:.6rem;margin:0 0 1.3rem;padding:1rem;border-radius:var(--radio);background:var(--papel-hondo)}
+.pago__cuenta div,.factura__pie div{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.pago__cuenta dt,.factura__pie dt{font-size:.8rem;color:var(--tinta-suave)}
+.pago__cuenta dd,.factura__pie dd{display:flex;align-items:center;gap:.5rem;margin:0;font-weight:600;text-align:right;overflow-wrap:anywhere}
+.pago__cuenta dd{font-family:var(--mono);font-size:.9rem}
+.pago__copiar{display:grid;place-items:center;width:1.9rem;height:1.9rem;border:var(--filo);border-radius:8px;background:var(--papel);color:var(--tinta);cursor:pointer;flex:none}
+.pago__copiar:active{transform:translate(1px,1px)}
+.pago__campo{display:grid;gap:.4rem;margin-bottom:.9rem}
+.pago__campo input{font:inherit;padding:.8rem .9rem;border:var(--filo);border-radius:var(--radio);background:var(--papel);color:inherit}
+.pago__campo input:focus-visible{outline:none;box-shadow:3px 3px 0 var(--acento)}
+.pago__error{min-height:1.2em;font-size:.8rem;color:var(--acento);margin:0 0 .6rem}
+.pago__ok{display:flex;align-items:center;gap:.5rem;font-weight:700;color:var(--acento);margin:0 0 1rem}
+.pago__whatsapp{background:#1F9D55}
+.pago__secundario{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;margin-top:.8rem;padding:.75rem;border:var(--filo);border-radius:var(--radio);background:var(--papel);color:inherit;font:inherit;font-weight:600;cursor:pointer}
+
+/* La factura: un papel con borde de recibo cortado abajo. */
+.factura{position:relative;border:var(--filo);border-radius:var(--radio) var(--radio) 0 0;border-bottom:0;padding:1.3rem 1.2rem 1.6rem;margin-bottom:1.6rem;background:var(--papel);box-shadow:var(--sombra)}
+.factura::after{content:"";position:absolute;left:-1.5px;right:-1.5px;bottom:-10px;height:10px;background:linear-gradient(-45deg,transparent 7px,var(--papel) 0) 0 0/14px 10px repeat-x,linear-gradient(45deg,transparent 7px,var(--papel) 0) 0 0/14px 10px repeat-x}
+.factura__cabeza{display:flex;justify-content:space-between;gap:1rem;padding-bottom:1rem;border-bottom:1.5px dashed var(--tinta-suave)}
+.factura__emisor{display:flex;flex-direction:column;gap:.35rem}
+.factura__emisor img{width:120px;height:48px;object-fit:contain;object-position:left center}
+.factura__marca{font-weight:800;font-size:1.15rem;margin:0}
+.factura__sub,.factura__datos p{font-size:.72rem;color:var(--tinta-suave);margin:0}
+.factura__datos{text-align:right;font-family:var(--mono)}
+.factura__datos .factura__titulo{font-family:var(--fuente);font-size:.95rem;font-weight:800;color:var(--acento);text-transform:uppercase;letter-spacing:.12em}
+.factura__cliente{display:flex;justify-content:space-between;align-items:baseline;margin:1rem 0;font-weight:700}
+.factura__cliente span{font-weight:400;font-size:.8rem;color:var(--tinta-suave)}
+.factura__tabla{width:100%;border-collapse:collapse;font-size:.85rem}
+.factura__tabla th{text-align:left;font-family:var(--mono);font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-suave);padding:.45rem .3rem;border-bottom:1.5px solid var(--tinta)}
+.factura__tabla td{padding:.7rem .3rem;vertical-align:top}
+.factura__tabla th:not(:first-child),.factura__tabla td:not(:first-child){text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.factura__tabla small{display:block;font-size:.74rem;color:var(--tinta-suave);margin-top:.2rem}
+.factura__total{display:grid;grid-template-columns:1fr auto;align-items:center;row-gap:.5rem;margin:.4rem 0 1rem;padding-top:.9rem;border-top:1.5px dashed var(--tinta-suave)}
+.factura__total span{font-size:.85rem;font-weight:700}
+.factura__total strong{font-size:1.7rem;font-weight:800;letter-spacing:-.02em}
+.factura__sello{grid-column:1/-1;justify-self:start;font-style:normal;font-family:var(--mono);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1F9D55;border:1.5px solid #1F9D55;border-radius:6px;padding:.25rem .55rem;transform:rotate(-2deg)}
+.factura__pie{display:grid;gap:.45rem;margin:0;font-size:.85rem}
+.factura__gracias{margin:1.1rem 0 0;padding-top:.9rem;border-top:1.5px dashed var(--tinta-suave);font-size:.75rem;color:var(--tinta-suave);text-align:center}
+
+/* Al imprimir sale solo la factura, en blanco y negro. */
+@media print{
+  body{background:#fff!important}
+  body *{visibility:hidden}
+  .factura,.factura *{visibility:visible}
+  .factura{position:fixed;inset:0 auto auto 0;width:100%;max-width:640px;margin:2rem;box-shadow:none;background:#fff;color:#111;border-bottom:1.5px solid #111;border-radius:10px}
+  .factura::after{display:none}
+}

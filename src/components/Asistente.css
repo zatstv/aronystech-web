@@ -187,6 +187,7 @@
 
 .asistente__whatsapp:hover { transform: translate(-1px, -1px); box-shadow: var(--sombra-honda); }
 .asistente__whatsapp:active { transform: translate(3px, 3px); box-shadow: var(--sombra-hundida); }
+.asistente__pagar { width: 100%; background: var(--acento); font: inherit; font-weight: 700; cursor: pointer; }
 
 .asistente__listo details { margin-top: .5rem; font-size: .78rem; }
 .asistente__listo summary { cursor: pointer; color: var(--tinta-suave); font-family: var(--mono); }

@@ -8,7 +8,7 @@
 import { PRODUCTOS, PAGOS, PREGUNTAS, PALETA, MAYOREO } from "../src/data/sitio.js";
 
 export function instrucciones() {
-  const catalogo = PRODUCTOS.map((p) => `- ${p.nombre}: ${p.precio} (${p.unidad}). ${p.texto}`).join("\n");
+  const catalogo = PRODUCTOS.map((p) => `- [id ${p.id}] ${p.nombre}: ${p.precio} (${p.unidad}). ${p.textoLibre ? "Lleva texto de hasta 10 caracteres. " : ""}${p.texto}`).join("\n");
   const pagos = PAGOS.map((p) => `${p.texto} (${p.detalle.toLowerCase()})`).join("; ");
   const preguntas = PREGUNTAS.map((q) => `P: ${q.pregunta}\nR: ${q.respuesta}`).join("\n\n");
   const colores = PALETA.map((c) => c.nombre).join(", ");
@@ -23,7 +23,7 @@ CÓMO HABLAS
 LO QUE HACE EL TALLER
 Piezas impresas en 3D por encargo, desde 1 unidad. El cliente trae su idea (una foto, un dibujo, un logo, un archivo STL/3MF o solo la idea) y se modela e imprime a su medida. Material PLA; para piezas que van a estar al sol o a la intemperie, PETG. Envíos a todo Panamá; en la ciudad de Panamá entrega un repartidor aliado.
 Colores de filamento que más se usan: ${colores}. Puede haber otros: si el cliente pide un color que no está en la lista (blanco, rosado, dorado...), no digas que no está ni le ofrezcas cambiarlo: anótalo tal cual en el pedido y, a lo sumo, comenta de pasada que Hugo le confirma ese color. Un color nunca frena el pedido.
-Pagos: ${pagos}. Nunca se paga en la página: el pago se coordina por WhatsApp cuando el total está confirmado.
+Pagos: ${pagos}. Las piezas del catálogo (menos de ${MAYOREO} unidades) se pueden pagar en la misma página con Yappy o transferencia bancaria: el cliente toca "Pagar ahora", ve la cuenta y el total, pone el número de comprobante y le sale la factura, que después manda por WhatsApp. Lo personalizado y lo de mayoreo no se paga en la página: Hugo lo cotiza primero por WhatsApp.
 Desde ${MAYOREO} unidades iguales el precio por pieza baja; si piden esa cantidad o más, menciónalo.
 
 Piezas con precio de lista:
@@ -67,6 +67,7 @@ FORMATO DE SALIDA
 Responde siempre en JSON con:
 - "respuesta": el mensaje para el cliente.
 - "pedido_listo": true solo cuando ya hay lo esencial del pedido, o cuando el cliente pide hablar con una persona o mandarlo ya. Si solo está preguntando o saludando, false.
-- "resumen": cadena vacía ("") mientras pedido_listo sea false. Cuando es true, es el mensaje que el cliente va a mandar por WhatsApp a Hugo, escrito en primera persona por el cliente, corto y claro, con un dato por línea (pieza, texto, cantidad, colores, referencia, tamaño, ocasión o fecha, lugar de envío; solo lo que se sepa). Empieza con "Hola, vengo de la página." y no incluyas precios que no sean de la lista.
-Cuando pedido_listo es true, en "respuesta" dile que ya está listo y que toque el botón para mandarlo por WhatsApp, donde Hugo le confirma el precio.`;
+- "producto_id", "cantidad", "color", "texto": llénalos solo cuando pedido_listo es true y el pedido es exactamente una pieza del catálogo (usa su id, por ejemplo "p1"), sin cambios de diseño, con menos de ${MAYOREO} unidades. "color" es el color que eligió (un solo nombre) y "texto" lo que dicen los cubos si es un llavero. En cualquier otro caso (personalizado, mayoreo, varias piezas distintas, todavía preguntando): producto_id "", cantidad 0, color "", texto "".
+- "resumen": cadena vacía ("") mientras pedido_listo sea false. Cuando es true, es el mensaje que el cliente va a mandar por WhatsApp a Hugo, escrito en primera persona por el cliente, corto y claro, con un dato por línea (pieza, texto, cantidad, colores, referencia, tamaño, ocasión o fecha, lugar de envío; solo lo que se sepa). Empieza con "Hola, vengo de la página." y no incluyas precios que no sean de la lista ni el id del producto.
+Cuando pedido_listo es true: si es una pieza del catálogo (producto_id lleno), dile el total (precio de lista × cantidad) y que toque "Pagar ahora" para pagar con Yappy o transferencia y recibir su factura. Si es personalizado o de mayoreo, dile que toque el botón para mandarlo por WhatsApp, donde Hugo le confirma el precio.`;
 }

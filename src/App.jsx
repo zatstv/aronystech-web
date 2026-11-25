@@ -45,7 +45,11 @@ export default function App() {
 
   /* Qué producto está abierto en el modal de pedido. null = cerrado. */
   const [pedido, setPedido] = useState(null);
-  const cerrar = useCallback(() => setPedido(null), []);
+  /* Si el pedido viene armado del chat, sus datos (ver ModalPedido). */
+  const [inicial, setInicial] = useState(null);
+  const pedir = useCallback((p) => { setInicial(null); setPedido(p); }, []);
+  const pagarDesdeChat = useCallback((p, datos) => { setInicial(datos); setPedido(p); }, []);
+  const cerrar = useCallback(() => { setPedido(null); setInicial(null); }, []);
 
   return (
     <>
@@ -66,13 +70,13 @@ export default function App() {
 
         {/* La key la monta de nuevo al pasar de una ficha a otra desde "Otras
             piezas", así la entrada se repite con la pieza nueva. */}
-        {esDetalle && <DetalleProducto key={ruta} producto={producto} alPedir={setPedido} />}
+        {esDetalle && <DetalleProducto key={ruta} producto={producto} alPedir={pedir} />}
         <Footer />
       </div>
 
-      <ModalPedido producto={pedido} alCerrar={cerrar} />
+      <ModalPedido producto={pedido} inicial={inicial} alCerrar={cerrar} />
       <PedidoPersonalizado />
-      <Asistente />
+      <Asistente alPagar={pagarDesdeChat} />
     </>
   );
 }

@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp, MessageCircle, X } from "lucide-react";
+import { ArrowUp, CreditCard, MessageCircle, X } from "lucide-react";
+
+import { PRODUCTOS } from "../data/sitio.js";
+import { dinero, precioNumero } from "../lib/factura.js";
 
 import { linkWhatsApp } from "../lib/whatsapp.js";
 import "./Asistente.css";
@@ -31,7 +34,7 @@ function leerGuardado() {
   } catch {
     /* sin almacenamiento: se arranca de cero */
   }
-  return { mensajes: [BIENVENIDA], resumen: "" };
+  return { mensajes: [BIENVENIDA], resumen: "", pago: null };
 }
 
 const ERRORES = {
@@ -39,9 +42,9 @@ const ERRORES = {
   otro: "El asistente no está disponible ahora. Escríbenos directo por WhatsApp y te atendemos ahí.",
 };
 
-export default function Asistente() {
+export default function Asistente({ alPagar }) {
   const [abierto, setAbierto] = useState(false);
-  const [{ mensajes, resumen }, setChat] = useState(leerGuardado);
+  const [{ mensajes, resumen, pago = null }, setChat] = useState(leerGuardado);
   const [texto, setTexto] = useState("");
   const [esperando, setEsperando] = useState(false);
   const [error, setError] = useState("");
@@ -51,11 +54,11 @@ export default function Asistente() {
 
   useEffect(() => {
     try {
-      sessionStorage.setItem(GUARDADO, JSON.stringify({ mensajes, resumen }));
+      sessionStorage.setItem(GUARDADO, JSON.stringify({ mensajes, resumen, pago }));
     } catch {
       /* no pasa nada si no se puede guardar */
     }
-  }, [mensajes, resumen]);
+  }, [mensajes, resumen, pago]);
 
   /* Siempre a la vista el último mensaje. */
   useEffect(() => {
@@ -76,7 +79,7 @@ export default function Asistente() {
     const limpio = contenido.trim();
     if (!limpio || esperando) return;
     const nuevos = [...mensajes, { de: "cliente", texto: limpio }];
-    setChat({ mensajes: nuevos, resumen });
+    setChat({ mensajes: nuevos, resumen, pago });
     setTexto("");
     setError("");
     setEsperando(true);
@@ -94,6 +97,7 @@ export default function Asistente() {
       setChat({
         mensajes: [...nuevos, { de: "asistente", texto: datos.respuesta }],
         resumen: datos.pedido_listo && datos.resumen ? datos.resumen : resumen,
+        pago: datos.pedido_listo ? datos.pago ?? null : pago,
       });
     } catch {
       setError(ERRORES.otro);
@@ -104,11 +108,19 @@ export default function Asistente() {
   };
 
   const reiniciar = () => {
-    setChat({ mensajes: [BIENVENIDA], resumen: "" });
+    setChat({ mensajes: [BIENVENIDA], resumen: "", pago: null });
     setError("");
   };
 
   const soloBienvenida = mensajes.length === 1;
+
+  /* Pieza del catálogo: primero se paga en la página y la factura va después
+     por WhatsApp. Personalizado o mayoreo: directo a WhatsApp. */
+  const productoPago = pago && PRODUCTOS.find((p) => p.id === pago.producto_id);
+  const pagar = () => {
+    alPagar?.(productoPago, { color: pago.color, cantidad: pago.cantidad, texto: pago.texto });
+    setAbierto(false);
+  };
 
   return (
     <div className={`asistente ${abierto ? "esta-abierto" : ""}`}>
@@ -122,7 +134,7 @@ export default function Asistente() {
           <header className="asistente__cabeza">
             <div>
               <p className="asistente__titulo">Asistente AronysTech</p>
-              <p className="asistente__sub">Te ayuda a armar el pedido para WhatsApp</p>
+              <p className="asistente__sub">Te ayuda a armar y pagar tu pedido</p>
             </div>
             <button type="button" className="asistente__cerrar" onClick={cerrar} aria-label="Cerrar el chat">
               <X size={18} strokeWidth={2.4} aria-hidden="true" />
@@ -151,10 +163,17 @@ export default function Asistente() {
 
           {resumen && (
             <div className="asistente__listo">
-              <a className="asistente__whatsapp" href={linkWhatsApp(resumen)} target="_blank" rel="noopener">
-                <MessageCircle size={18} strokeWidth={2.4} aria-hidden="true" />
-                Mandar el pedido por WhatsApp
-              </a>
+              {productoPago ? (
+                <button type="button" className="asistente__whatsapp asistente__pagar" onClick={pagar}>
+                  <CreditCard size={18} strokeWidth={2.4} aria-hidden="true" />
+                  Pagar ahora · {dinero(precioNumero(productoPago) * pago.cantidad)}
+                </button>
+              ) : (
+                <a className="asistente__whatsapp" href={linkWhatsApp(resumen)} target="_blank" rel="noopener">
+                  <MessageCircle size={18} strokeWidth={2.4} aria-hidden="true" />
+                  Mandar el pedido por WhatsApp
+                </a>
+              )}
               <details>
                 <summary>Ver el mensaje</summary>
                 <p>{resumen}</p>
