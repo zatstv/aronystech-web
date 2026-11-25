@@ -1,5 +1,7 @@
 # Decisión técnica — dónde vive la página y con qué base de datos
 
+> **Estado al 2026-11-24:** esta propuesta no se construyó. La página salió como sitio estático (React + Vite) en Cloudflare, sin base de datos. Esto queda como idea para una zona de admin futura.
+
 Investigado el 2026-09-07, a partir de dos cosas que pediste:
 "algo con Docker en vez de Vercel" y "una base de datos diferente".
 
@@ -113,7 +115,7 @@ de facturación de un banco, no.
 ## 4. La arquitectura propuesta
 
 ```
-   VISITANTE                          JUAN Y VOS
+   VISITANTE                          LOS DOS HUGO
        │                                   │
        ▼                                   ▼
  ┌─────────────┐                  ┌──────────────────┐
@@ -137,7 +139,7 @@ de facturación de un banco, no.
   esté apagado. Nadie que entre a ver llaveros toca la base de datos.
 - **PocketBase corre en Docker** y guarda productos, precios en dólares, colores y fotos.
 - **La zona de admin es el panel de PocketBase**, protegido con su propio login. Dos
-  usuarios: vos y Juan.
+  usuarios: Hugo Pineda (hijo) y Hugo Pineda (padre).
 - Cuando cambiás un precio en el panel, el catálogo se vuelve a generar y se publica.
 
 Esto reemplaza los tres niveles de la sección 9b del PROYECTO.md: PocketBase ES el
@@ -162,7 +164,7 @@ para ver esto funcionando esta misma semana.
 ## 6. Decisiones que quedan tomadas
 
 - **Moneda: dólares (USD).** Todos los precios del catálogo en $.
-- **Admin: 2 personas** al inicio (vos y Juan), con capacidad de agregar más después.
+- **Admin: 2 personas** al inicio (Hugo Pineda hijo y padre), con capacidad de agregar más después.
 - Contenedores con **Docker**, panel **Coolify** cuando se publique.
 - Base de datos **PocketBase**.
 - Catálogo público **estático**; la base de datos solo la toca el admin.

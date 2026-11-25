@@ -63,7 +63,7 @@ export default function Footer() {
         <div className="pie__celda pie__quienes">
           <p className="pie__copy">AronysTech © {anio}</p>
           <p className="pie__texto">
-            Impresiones 3D por encargo en Panamá. Todo en PLA, pieza por pieza,
+            Impresiones 3D por encargo en Panamá. En PLA o PETG, pieza por pieza,
             desde una sola unidad.
           </p>
           <div className="pie__sello" aria-hidden="true">

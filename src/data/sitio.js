@@ -6,7 +6,7 @@ export const TEL_BONITO = "+506 7062 2458";
 
 /* Redes sociales, para la fila de íconos del pie.
 
-   Va vacío a propósito: Instagram, TikTok y Facebook siguen pendientes
+   Instagram y TikTok ya están. Facebook sigue pendiente
    (docs/PROYECTO.md §2) y un ícono que no lleva a ningún lado es peor que no
    tenerlo. Cuando haya cuenta se agrega acá y la celda aparece sola:
 
@@ -14,7 +14,10 @@ export const TEL_BONITO = "+506 7062 2458";
 
    El id solo tiene que ser distinto entre sí. Los íconos de marca no vienen
    en lucide 1.x: hoy todas entran con un eslabón genérico. */
-export const REDES = [];
+export const REDES = [
+  { id: "instagram", nombre: "Instagram", url: "https://www.instagram.com/aronystech" },
+  { id: "tiktok", nombre: "TikTok", url: "https://www.tiktok.com/@aronystech_16" },
+];
 
 /* Los colores de filamento que hay. De acá salen los que se ofrecen en el
    pedido de cada pieza (filtrados por `colores` de PRODUCTOS) y las
@@ -62,7 +65,7 @@ export const PAGOS = [
 export const OCASIONES = [
   { icono: "torta", titulo: "Cumpleaños", texto: "Un llavero con el nombre cuesta menos que una tarjeta y dura años." },
   { icono: "birrete", titulo: "Graduaciones", texto: "Con el año, la carrera o las iniciales. Se pueden hacer varios iguales." },
-  { icono: "fiesta", titulo: "Recuerdos de fiesta", texto: "Pedidos de 20, 50 o 100 unidades con el mismo diseño y el precio baja." },
+  { icono: "fiesta", titulo: "Recuerdos de fiesta", texto: "Pedidos de 10, 20 o 50 unidades con el mismo diseño y el precio baja." },
   { icono: "empresa", titulo: "Regalos de empresa", texto: "Con el logo de la compañía. Mándanos el archivo y lo adaptamos." },
   { icono: "boda", titulo: "Bodas", texto: "Detalle para los invitados con la fecha o los nombres de los novios." },
   { icono: "repuesto", titulo: "Piezas de repuesto", texto: "Esa perilla o soporte que ya no se consigue. Manda la foto y la medida." },
@@ -83,7 +86,7 @@ export const PREGUNTAS = [
   },
   {
     pregunta: "¿Cuántas letras caben en un llavero?",
-    respuesta: "Recomendamos hasta 10 cubos. Más largo se vuelve incómodo de cargar y pesa. Si necesitas una palabra larga, se puede repartir en dos llaveros.",
+    respuesta: "El máximo es 10 cubos. Más largo se vuelve incómodo de cargar y pesa. Si necesitas una palabra larga, se puede repartir en dos llaveros.",
   },
   {
     pregunta: "¿Cómo se limpia?",
@@ -91,7 +94,7 @@ export const PREGUNTAS = [
   },
   {
     pregunta: "¿Hacen pedidos grandes?",
-    respuesta: "Sí, y es donde más conviene el precio. A partir de 20 unidades iguales el costo por pieza baja bastante. Escríbenos con la cantidad y la fecha que necesitas.",
+    respuesta: "Sí, y es donde más conviene el precio. A partir de 10 unidades iguales el costo por pieza baja bastante. Escríbenos con la cantidad y la fecha que necesitas.",
   },
 ];
 
@@ -132,8 +135,8 @@ export const REFERENCIAS = [
 
 /* Los botones rápidos de cantidad. A partir de MAYOREO el formulario avisa
    que el precio por pieza baja (ver PREGUNTAS, "¿Hacen pedidos grandes?"). */
-export const CANTIDADES = [1, 5, 20, 50, 100];
-export const MAYOREO = 20;
+export const CANTIDADES = [1, 5, 10, 20, 50];
+export const MAYOREO = 10;
 
 /* La galería: un mosaico de fotos justo después de la portada, en filas
    del mismo alto que se llenan a lo ancho.
@@ -178,7 +181,7 @@ export const PRODUCTOS = [
     textoLibre: true,
     categoria: "Llaveros",
     nombre: "Llavero de nombre",
-    precio: "$9",
+    precio: "$8",
     unidad: "hasta 10 letras",
     texto: "Cubos con letras que se enganchan entre sí, uno por letra. Cada cubo puede llevar su propio color, así que dos llaveros con el mismo nombre nunca son iguales. El enganche es parte de la pieza, no una argolla pegada.",
     colores: ["#E5402B", "#24B5A6", "#2E6FE8", "#F2A00E"],
@@ -194,7 +197,7 @@ export const PRODUCTOS = [
     textoLibre: true,
     categoria: "Llaveros",
     nombre: "Llavero de números",
-    precio: "$9",
+    precio: "$8",
     unidad: "hasta 10 dígitos",
     texto: "El mismo sistema de cubos pero con dígitos. Sirve para el número de placa, un teléfono o una fecha que importa. Se puede combinar con letras en el mismo llavero.",
     colores: ["#24B5A6", "#E5402B", "#22252A"],
@@ -212,7 +215,7 @@ export const PRODUCTOS = [
     id: "p3",
     categoria: "Soportes y utilidades",
     nombre: "Soporte de celular",
-    precio: "$7",
+    precio: "$6",
     unidad: "por unidad",
     texto: "Plegable, aguanta el peso del teléfono sin moverse y cabe en cualquier bolso. Funciona en vertical y en horizontal, y el borde inferior deja pasar el cable del cargador.",
     colores: ["#F2803C", "#24B5A6", "#22252A", "#8B4FD6"],
@@ -227,7 +230,7 @@ export const PRODUCTOS = [
     id: "p4",
     categoria: "Decoración y hogar",
     nombre: "Monedero manzana",
-    precio: "$14",
+    precio: "$12",
     unidad: "por unidad",
     texto: "La tapa es una malla impresa que deja ver lo que hay adentro. El tallo y la hoja van aparte y se pueden pedir en otro color. Sirve para monedas, dulces o audífonos.",
     colores: ["#E5402B", "#22252A"],
@@ -242,7 +245,7 @@ export const PRODUCTOS = [
     id: "p5",
     categoria: "Regalos",
     nombre: "Caja de regalo armada",
-    precio: "$18",
+    precio: "$15",
     unidad: "caja completa",
     texto: "La pieza que elijas, empacada con dulces y cinta en caja transparente, lista para entregar. Es la opción para cuando el regalo es para hoy y no hay tiempo de envolver nada.",
     colores: [],

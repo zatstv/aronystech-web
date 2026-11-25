@@ -408,13 +408,13 @@ días hábiles") baja la fricción sin comprometerse a una fecha.
 
 ### Lo único que sigue pendiente
 
-- [ ] **Precios reales.** Es lo único que falta para quitar el aviso de prueba.
-- [ ] Redes sociales (Instagram, TikTok, Facebook).
-- [ ] ¿Cuántas letras caben en un llavero? **La página dice 10 en los tres lugares** (armador, precio, preguntas). Estaba contradiciéndose: decía 6 en el precio y 10 en el resto. A confirmar el número real, y si el precio sube con la cantidad de letras.
-- [ ] Tamaño de las piezas en cm.
-- [ ] ¿Desde cuántas unidades baja el precio por volumen? (hoy dice 20)
+- [x] **Precios reales** (2026-11-24): los de la página eran casi los reales; se bajaron un poco. Llavero de nombre y de números $8, soporte $6, monedero $12, caja de regalo $15.
+- [ ] Redes sociales: Instagram ([@aronystech](https://www.instagram.com/aronystech)) y TikTok ([@aronystech_16](https://www.tiktok.com/@aronystech_16)) listos; falta Facebook.
+- [x] Letras por llavero: **máximo 10**, confirmado por Hugo.
+- [x] Tamaño de las piezas en cm: no hace falta ponerlo.
+- [x] Precio por volumen: baja **desde 10 unidades**.
 - [ ] Confirmar que **sí vendés de una unidad** (de eso depende la sección "El mínimo es 1").
-- [ ] Dominio y dónde publicarla.
+- [ ] Dominio propio: **sí va a haber**, falta pagarlo. Hoy se publica en Cloudflare (`aronystech-web.aronys160604.workers.dev`).
 
 ---
 
@@ -422,17 +422,19 @@ días hábiles") baja la fricción sin comprometerse a una fecha.
 
 **Requisito (Hugo):** zona de admin que no aparezca como sección normal de la página.
 Al detectar a la persona específica que entró, se le muestra el panel.
-**Al inicio 2 personas** (vos y Juan), con capacidad de sumar más después.
+**Al inicio 2 personas**: Hugo Pineda (hijo), que atiende, cotiza, modela y programa, y Hugo Pineda (padre), que imprime. Se pueden sumar más después.
 
-### Resuelto por PocketBase
+### Propuesta: PocketBase (no construida)
 
-La decisión de stack (sección 8 / `STACK.md`) resuelve esto sin trabajo extra:
+> **Estado al 2026-11-24:** esto nunca se construyó. La página sigue sin backend y todo el contenido se edita en `src/data/sitio.js`. Lo de abajo queda como idea para cuando haga falta.
+
+La decisión de stack (sección 8 / `STACK.md`) resolvería esto sin trabajo extra:
 
 - El panel de PocketBase **ya existe y está terminado** — se entra por su propia URL con
   usuario y contraseña. No aparece en el menú del catálogo, nadie lo ve.
 - El login es **de verdad**, no un truco de JavaScript: el servidor no entrega nada a quien
   no está autenticado.
-- Dar de alta a Juan es crear un usuario en el panel. Sumar una tercera persona después es
+- Dar de alta a Hugo Pineda (padre) es crear un usuario en el panel. Sumar una tercera persona después es
   otro click.
 - Desde ahí se editan productos, precios en dólares, colores y fotos, desde el navegador
   o el teléfono.
@@ -443,7 +445,7 @@ cuentas de GitHub.)*
 
 ### Pendiente
 
-- [ ] **¿Quién es "Juan"?** ¿Es otra persona del negocio, o sos vos?
+- [x] ~~¿Quién es "Juan"?~~ No existe: los dos del negocio son Hugo Pineda (hijo) y Hugo Pineda (padre).
 - [ ] **¿Qué hace cada uno?** ¿Los dos pueden editar todo, o uno solo mira?
 - [ ] ¿Va a haber algo sensible ahí (costos, márgenes, datos de clientes)?
 
@@ -471,3 +473,4 @@ cuentas de GitHub.)*
 | 2026-09-07 | **Reforma de composición**: hero a sangre con el armador montado sobre la foto, y el modelo 3D fijo mientras pasan los pasos. Ver §6e. |
 | 2026-09-07 | Visor 3D con el `.glb` real de Hugo + las fotos que se imprimen al entrar. Se descarta el scroll-driven de CSS por no funcionar. |
 | 2026-09-07 | Auditoría anti-plantilla completa. Corregidos: contraste del botón en oscuro (3.94:1), gris chico en claro (2.87:1) y en oscuro (4.41:1), y la contradicción de 6 vs 10 letras. |
+| 2026-11-24 | Precios bajados un poco ($8, $8, $6, $12, $15), mayoreo desde 10 unidades, máximo 10 letras confirmado. Se corrige "Juan" por Hugo Pineda (padre) y se aclara que PocketBase no está construido. |
