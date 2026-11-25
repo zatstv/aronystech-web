@@ -1,4 +1,4 @@
-# La llave de Gemini nunca va acá. Vive en ~/.config/aronystech/gemini.key
+# Ninguna llave (Anthropic, Gemini) va en el repo: van como secreto en Cloudflare.
 *.key
 .env
 
@@ -33,3 +33,7 @@ fotos/
 # Las fotos que llegan para la rueda. Las que usa la página, ya livianas y
 # con nombre, están en public/img/rueda.
 /fotos pagina aronys tech/
+
+# Llaves para probar el worker en local (wrangler dev)
+.dev.vars
+.wrangler/
